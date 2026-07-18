@@ -202,6 +202,7 @@ function initializeSaveSystem() {
     }
   }
   saveEnvelope = newSaveEnvelope(captureSaveState());
+  applySaveState(saveEnvelope.state);
   writeSave(true);
 }
 function saveTimeLabel() {

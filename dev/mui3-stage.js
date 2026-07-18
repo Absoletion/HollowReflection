@@ -386,7 +386,7 @@ const Stage = (() => {
   function hitBeat(h, big) {
     if (!h.b) return;
     const u = unitOf(h.b);
-    const heavy = u && u.alive && h.amt >= Math.max(1, Math.floor(u.maxHp * 0.24));
+    const heavy = u && u.alive && h.amt >= Math.max(1, Math.floor(u.maxhp * 0.24));
     const reaction = heavy ? 'stagger' : 'hit';
     h.b.anim = reaction; h.b.animT = clock;
     spark(h.b.home.x + h.b.off.x, h.b.home.y - 24, '#fff', big ? 16 : 8, big ? 1.5 : 1);

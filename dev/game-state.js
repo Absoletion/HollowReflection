@@ -106,6 +106,7 @@ const GameState = (function (E) {
       if (item.effect.xp) {
         if (!targetUnit || !draft.owned.includes(targetUnit)) fail('UNKNOWN_ID', 'Choose an owned unit for the manual.');
         if (!draft.unitProgress[targetUnit]) draft.unitProgress[targetUnit] = { level: 1, stars: E.UNIT_PROGRESSION[targetUnit].baseStars, xp: 0 };
+        if (draft.unitProgress[targetUnit].level >= E.LEVEL_CAPS[draft.unitProgress[targetUnit].stars]) fail('LEVEL_CAP_REACHED', 'This unit is already at max level.');
         const gain = E.grantUnitXP(draft.unitProgress[targetUnit], item.effect.xp);
         rewards.push({ type: 'xp', unit: targetUnit, quantity: item.effect.xp, levelsGained: gain.levelsGained });
       }

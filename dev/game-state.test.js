@@ -54,7 +54,7 @@ assert.strictEqual(evolved.ok, true);
 assert.strictEqual(evolved.state.unitProgress.cinnia.stars, 5);
 assert.strictEqual(evolved.state.libraryUnlocked['cinnia:5'], true);
 assert.strictEqual(evolved.state.challengeItems.ember_challenge_crest, 0);
-assert.strictEqual(Engine.migrateSaveEnvelope({ schemaVersion: 1, state: {} }).schemaVersion, 5);
+assert.strictEqual(Engine.migrateSaveEnvelope({ schemaVersion: 1, state: {} }).schemaVersion, 6);
 
 let marketState = Engine.normalizeSaveState({ owned: ['hale', 'cinnia'], activeParty: ['hale'], storyStep: 1, gold: 2500 });
 assert.strictEqual(GameState.purchaseMarketItem(marketState, 'essence_bundle', null, { transactionId: 'locked' }).errorCode, 'LOCKED');

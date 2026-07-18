@@ -415,11 +415,13 @@ function runHollowingSelfTests(E, print) {
     ok(cappedFormation.activeParty.length === E.PARTY_SIZE && !cappedFormation.activeParty.includes('marlowe'), 'active party is normalized to the four-unit deployment cap');
     ok(JSON.stringify(E.normalizeSaveState({ owned: ['hale', 'cinnia'] }).activeParty) === JSON.stringify(['hale', 'cinnia']), 'older saves derive a safe active party from owned units');
     ok(E.normalizeSaveState({ act1MissionProgress: 99 }).act1MissionProgress === 10 && E.normalizeSaveState({}).act1MissionProgress === 0, 'expanded Act 1 mission progress persists with safe bounds');
-    const legacyMissionClears = E.normalizeSaveState({ act1MissionProgress: 3 }).missionClears;
+    const exactMissionClears = E.normalizeSaveState({ storyStep: 2, act1MissionProgress: 3, missionClears: { act2_1: true } }).missionClears;
+    ok(JSON.stringify(exactMissionClears) === JSON.stringify({ act2_1: true }), 'current-schema normalization preserves the exact mission clear set');
+    const legacyMissionClears = E.migrateSaveEnvelope({ schemaVersion: 5, state: { act1MissionProgress: 3 } }).state.missionClears;
     ok(legacyMissionClears.act1_1 && legacyMissionClears.act1_2 && legacyMissionClears.act1_3 && !legacyMissionClears.act1_4, 'legacy Act 1 progress migrates into durable per-mission clear flags');
     const filteredMissionClears = E.normalizeSaveState({ missionClears: { act1_5: true, act4_7: true, act0_1: true, act1_0: true, act1_99: true, act2_2: false, nonsense: true } }).missionClears;
     ok(filteredMissionClears.act1_5 && filteredMissionClears.act4_7 && Object.keys(filteredMissionClears).length === 2, 'mission clear migration retains only valid true story-mission identifiers');
-    const legacyChapters = E.normalizeSaveState({ storyStep: 3 }).missionClears;
+    const legacyChapters = E.migrateSaveEnvelope({ schemaVersion: 5, state: { storyStep: 3 } }).state.missionClears;
     ok(legacyChapters.act1_10 && legacyChapters.act2_8 && legacyChapters.act3_7 && !legacyChapters.act4_1, 'legacy chapter-spine progress unlocks the equivalent expanded mission chapters without skipping Greywick');
     const migrated = E.migrateSaveEnvelope({ schemaVersion: 0, payload: { sigils: 77, owned: ['hale'] } });
     ok(migrated.schemaVersion === E.SAVE_SCHEMA_VERSION && migrated.state.sigils === 77, 'schema-zero saves migrate to the current format');

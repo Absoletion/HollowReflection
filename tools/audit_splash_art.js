@@ -7,6 +7,7 @@ const RUNTIME_ART = path.join(ROOT, 'assets', 'splash-art-runtime');
 const MUI = fs.readFileSync(path.join(ROOT, 'dev', 'mui1.js'), 'utf8');
 const BUILD = fs.readFileSync(path.join(ROOT, 'dev', 'build-mobile.js'), 'utf8');
 const DEMO = fs.readFileSync(path.join(ROOT, 'hollowing-demo.html'), 'utf8');
+const auditMasters = process.argv.includes('--masters');
 
 const expected = [
   'hale_4star_splash_main',
@@ -32,13 +33,8 @@ function pngSize(file) {
 }
 
 const files = {};
+let totalRuntimeBytes = 0;
 for (const key of expected) {
-  const file = path.join(ART, `${key}.png`);
-  if (!fs.existsSync(file)) throw new Error(`Missing splash master: ${key}.png`);
-  const size = pngSize(file);
-  if (size.width !== size.height || size.width < 1024) {
-    throw new Error(`${key} is not a square high-resolution master: ${size.width}x${size.height}`);
-  }
   if (!MUI.includes(`${key}'`) && !MUI.includes(`'${key}`)) {
     throw new Error(`${key} is not registered in the UI splash map.`);
   }
@@ -47,7 +43,16 @@ for (const key of expected) {
   if (!fs.existsSync(runtimeFile) || fs.statSync(runtimeFile).size < 50000) {
     throw new Error(`${key} has no valid optimized runtime export.`);
   }
-  files[key] = size;
+  totalRuntimeBytes += fs.statSync(runtimeFile).size;
+  if (auditMasters) {
+    const file = path.join(ART, `${key}.png`);
+    if (!fs.existsSync(file)) throw new Error(`Missing splash master: ${key}.png`);
+    const size = pngSize(file);
+    if (size.width !== size.height || size.width < 1024) {
+      throw new Error(`${key} is not a square high-resolution master: ${size.width}x${size.height}`);
+    }
+    files[key] = size;
+  }
 }
 
 for (const token of [
@@ -63,8 +68,10 @@ for (const token of [
 
 console.log(JSON.stringify({
   ok: true,
-  splashMasters: expected.length,
-  dimensions: [...new Set(Object.values(files).map(v => `${v.width}x${v.height}`))],
-  totalSourceBytes: Object.values(files).reduce((sum, v) => sum + v.bytes, 0),
+  runtimeAssets: expected.length,
+  totalRuntimeBytes,
+  splashMasters: auditMasters ? expected.length : 'skipped (use --masters)',
+  masterDimensions: [...new Set(Object.values(files).map(v => `${v.width}x${v.height}`))],
+  totalMasterBytes: Object.values(files).reduce((sum, v) => sum + v.bytes, 0),
   iconStrategy: 'deterministic runtime crops from matching splash masters'
 }, null, 2));

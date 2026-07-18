@@ -47,6 +47,7 @@ const Engine = (function () {
     return LIVE_SKILL_GAIN[u.role] == null ? 0.45 : LIVE_SKILL_GAIN[u.role];
   }
   const LIVE_GESTURE_THRESHOLDS = Object.freeze({ art: 36, burst: 82 });
+  const PARTY_SIZE = 4;
   function liveGestureTier(distance) {
     if (distance >= LIVE_GESTURE_THRESHOLDS.burst) return 'Burst';
     if (distance >= LIVE_GESTURE_THRESHOLDS.art) return 'Art';
@@ -278,7 +279,7 @@ const Engine = (function () {
     };
     integer('sigils', 0, 999999999); integer('gold', 0, 999999999); integer('glassDust', 0, 999999999); integer('storyStep', 0, 5); integer('act1MissionProgress', 0, 10);
     if (present('owned') && (!Array.isArray(s.owned) || !s.owned.length || new Set(s.owned).size !== s.owned.length || s.owned.some(id => !unitKeys.has(id)))) errors.push('owned must contain unique known unit IDs');
-    if (present('activeParty') && (!Array.isArray(s.activeParty) || !s.activeParty.length || s.activeParty.length > 5 || new Set(s.activeParty).size !== s.activeParty.length || s.activeParty.some(id => !unitKeys.has(id) || (Array.isArray(s.owned) && !s.owned.includes(id))))) errors.push('activeParty must contain one to five unique owned units');
+    if (present('activeParty') && (!Array.isArray(s.activeParty) || !s.activeParty.length || s.activeParty.length > PARTY_SIZE || new Set(s.activeParty).size !== s.activeParty.length || s.activeParty.some(id => !unitKeys.has(id) || (Array.isArray(s.owned) && !s.owned.includes(id))))) errors.push(`activeParty must contain one to ${PARTY_SIZE} unique owned units`);
     if (present('ranks')) {
       if (!s.ranks || typeof s.ranks !== 'object' || Array.isArray(s.ranks)) errors.push('ranks must be an object');
       else for (const [id, value] of Object.entries(s.ranks)) if (!unitKeys.has(id) || !Number.isSafeInteger(value) || value < 0 || value > 5) errors.push(`ranks.${id} is invalid`);
@@ -347,8 +348,8 @@ const Engine = (function () {
     const unitKeys = new Set(Object.keys(UNITS));
     const libraryIds = new Set(UNIT_LIBRARY.map(x => x.id));
     const owned = Array.isArray(s.owned) ? [...new Set(s.owned.filter(k => unitKeys.has(k)))] : ['hale', 'cinnia', 'tobin'];
-    const requestedParty = Array.isArray(s.activeParty) ? [...new Set(s.activeParty.filter(k => owned.includes(k)))].slice(0, 5) : [];
-    const activeParty = requestedParty.length ? requestedParty : owned.slice(0, 5);
+    const requestedParty = Array.isArray(s.activeParty) ? [...new Set(s.activeParty.filter(k => owned.includes(k)))].slice(0, PARTY_SIZE) : [];
+    const activeParty = requestedParty.length ? requestedParty : owned.slice(0, PARTY_SIZE);
     const ranks = {};
     for (const [key, value] of Object.entries(s.ranks || {})) if (unitKeys.has(key)) ranks[key] = intIn(value, 0, 5, 0);
     const unitProgress = {};
@@ -1619,7 +1620,7 @@ const Engine = (function () {
     availableLiveActions, chooseLiveAIAction, liveAct, liveEnemyPhase, liveUpkeep, liveSkillGain, LIVE_SKILL_GAIN, AI_PRESETS,
     livingParty, livingEnemies, partyHPfrac, byKey, byUid,
     UNITS, ENEMIES, BATTLES, HALE_AWAKENED, ELEM_ICON, UNIT_PROGRESSION, LEVEL_CAPS, xpToNext, grantUnitXP, applyStoryEvolutions, UNIT_LIBRARY, recordOwnedDiscoveries,
-    LIVE_GESTURE_THRESHOLDS, liveGestureTier,
+    LIVE_GESTURE_THRESHOLDS, liveGestureTier, PARTY_SIZE,
     SAVE_SCHEMA_VERSION, normalizeSaveState, validateSaveState, migrateSaveEnvelope,
     CHALLENGES, CHALLENGE_ITEMS, challengeUnlocked, evaluateChallengeMastery,
     MARKET_ITEMS, marketRestockTier, marketItemUnlocked, BANNERS, bannerPool,

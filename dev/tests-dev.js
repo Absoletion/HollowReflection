@@ -411,6 +411,8 @@ function runHollowingSelfTests(E, print) {
     ok(clean.libraryUnlocked['hale:base'] && !clean.libraryUnlocked['fake:base'] && clean.lastHub === 'home', 'save validation filters discoveries and navigation state');
     const formation = E.normalizeSaveState({ owned: ['hale', 'cinnia', 'katie'], activeParty: ['katie', 'fake', 'hale', 'katie'] });
     ok(JSON.stringify(formation.activeParty) === JSON.stringify(['katie', 'hale']), 'active party persists ordered, unique, owned units only');
+    const cappedFormation = E.normalizeSaveState({ owned: ['hale', 'cinnia', 'tobin', 'katie', 'marlowe'], activeParty: ['hale', 'cinnia', 'tobin', 'katie', 'marlowe'] });
+    ok(cappedFormation.activeParty.length === E.PARTY_SIZE && !cappedFormation.activeParty.includes('marlowe'), 'active party is normalized to the four-unit deployment cap');
     ok(JSON.stringify(E.normalizeSaveState({ owned: ['hale', 'cinnia'] }).activeParty) === JSON.stringify(['hale', 'cinnia']), 'older saves derive a safe active party from owned units');
     ok(E.normalizeSaveState({ act1MissionProgress: 99 }).act1MissionProgress === 10 && E.normalizeSaveState({}).act1MissionProgress === 0, 'expanded Act 1 mission progress persists with safe bounds');
     const legacyMissionClears = E.normalizeSaveState({ act1MissionProgress: 3 }).missionClears;

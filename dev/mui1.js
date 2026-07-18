@@ -687,7 +687,7 @@ function showParty() {
   rememberOwnedUnits();
   app.innerHTML = `
     <div class="shead"><h2>Party</h2>${sigilPill()}</div>
-    <div class="party-toolbar"><button id="editparty"><b>Edit Formation</b><span>${META.activeParty.length} / 5 active</span></button><button class="library-open" id="openlibrary"><b>Unit Library</b><span>${Object.keys(META.libraryUnlocked).length} / ${Engine.UNIT_LIBRARY.length} pages discovered</span></button></div>
+    <div class="party-toolbar"><button id="editparty"><b>Edit Formation</b><span>${META.activeParty.length} / ${Engine.PARTY_SIZE} active</span></button><button class="library-open" id="openlibrary"><b>Unit Library</b><span>${Object.keys(META.libraryUnlocked).length} / ${Engine.UNIT_LIBRARY.length} pages discovered</span></button></div>
     <div class="pgrid">
       ${META.owned.map(k => {
         const t = Engine.UNITS[k]; const rank = META.ranks[k] || 0; const p = unitProgress(k);
@@ -709,12 +709,12 @@ function showParty() {
 }
 
 function showPartyEditor() {
-  const selected = new Set(META.activeParty.filter(k => META.owned.includes(k)).slice(0, 5));
+  const selected = new Set(META.activeParty.filter(k => META.owned.includes(k)).slice(0, Engine.PARTY_SIZE));
   const draw = () => {
-    app.innerHTML = `<div class="shead"><h2>Edit Formation</h2>${sigilPill()}</div><p class="small formation-note">Choose one to five units. Selection order becomes battlefield order.</p><div class="formation-slots">${[0,1,2,3,4].map(i => { const key = [...selected][i], t = key && Engine.UNITS[key]; return `<div class="formation-slot ${key ? 'filled e-' + t.elem : ''}"><b>${i + 1}</b><span>${key ? esc(t.name) : 'EMPTY'}</span></div>`; }).join('')}</div><div class="pgrid pick">${META.owned.map(k => { const t = Engine.UNITS[k]; return `<button class="pcard e-${t.elem} ${selected.has(k) ? 'picked' : ''}" data-party-pick="${k}">${partyPortraitHTML(k)}<div class="uname">${esc(t.name)}</div><div class="urole">${roleShort(t.role)}</div></button>`; }).join('')}</div><div class="formation-actions"><button id="saveparty" ${selected.size ? '' : 'disabled'}>Save Formation</button><button id="cancelparty">Cancel</button></div>`;
+    app.innerHTML = `<div class="shead"><h2>Edit Formation</h2>${sigilPill()}</div><p class="small formation-note">Choose one to four units. Selection order becomes battlefield order.</p><div class="formation-slots">${[0,1,2,3].map(i => { const key = [...selected][i], t = key && Engine.UNITS[key]; return `<div class="formation-slot ${key ? 'filled e-' + t.elem : ''}"><b>${i + 1}</b><span>${key ? esc(t.name) : 'EMPTY'}</span></div>`; }).join('')}</div><div class="pgrid pick">${META.owned.map(k => { const t = Engine.UNITS[k]; return `<button class="pcard e-${t.elem} ${selected.has(k) ? 'picked' : ''}" data-party-pick="${k}">${partyPortraitHTML(k)}<div class="uname">${esc(t.name)}</div><div class="urole">${roleShort(t.role)}</div></button>`; }).join('')}</div><div class="formation-actions"><button id="saveparty" ${selected.size ? '' : 'disabled'}>Save Formation</button><button id="cancelparty">Cancel</button></div>`;
     app.querySelectorAll('[data-party-pick]').forEach(card => card.onclick = () => {
       const key = card.dataset.partyPick;
-      if (selected.has(key)) selected.delete(key); else if (selected.size < 5) selected.add(key); else return toast('The active party can contain up to five units.');
+      if (selected.has(key)) selected.delete(key); else if (selected.size < Engine.PARTY_SIZE) selected.add(key); else return toast(`The active party can contain up to ${Engine.PARTY_SIZE} units.`);
       draw();
     });
     document.getElementById('saveparty').onclick = () => {
@@ -767,7 +767,7 @@ function kitRowHTML(a, awk, role) {
 }
 function cap(s) { return s ? s[0].toUpperCase() + s.slice(1) : s; }
 function launchTraining(featuredKey, returnToLibrary) {
-  const party = [featuredKey, ...META.activeParty.filter(k => k !== featuredKey), ...META.owned.filter(k => k !== featuredKey)].filter((k, i, a) => Engine.UNITS[k] && a.indexOf(k) === i).slice(0, 5);
+  const party = [featuredKey, ...META.activeParty.filter(k => k !== featuredKey), ...META.owned.filter(k => k !== featuredKey)].filter((k, i, a) => Engine.UNITS[k] && a.indexOf(k) === i).slice(0, Engine.PARTY_SIZE);
   chrome('battle');
   startBattle('training', party, () => {
     go('party');

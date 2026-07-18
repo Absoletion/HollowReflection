@@ -16,6 +16,8 @@ const changed = GameState.setActiveParty(state, ['cinnia', 'hale'], { transactio
 assert.strictEqual(changed.ok, true);
 assert.deepStrictEqual(changed.state.activeParty, ['cinnia', 'hale']);
 assert.strictEqual(GameState.setActiveParty(state, ['fake']).errorCode, 'UNKNOWN_ID');
+const fullRoster = Engine.normalizeSaveState({ owned: ['hale', 'cinnia', 'tobin', 'katie', 'marlowe'], activeParty: ['hale'] });
+assert.strictEqual(GameState.setActiveParty(fullRoster, fullRoster.owned).errorCode, 'LIMIT_REACHED');
 const ai = GameState.setAIPreset(state, 'hale', 'burst', { transactionId: 'tx_ai' });
 assert.strictEqual(ai.ok, true);
 assert.strictEqual(ai.state.unitAI.hale.preset, 'burst');

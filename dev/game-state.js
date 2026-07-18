@@ -24,7 +24,7 @@ const GameState = (function (E) {
   }
   function setActiveParty(state, party, context) {
     return execute('setActiveParty', state, draft => {
-      if (!Array.isArray(party) || !party.length || party.length > 5) fail('LIMIT_REACHED', 'Choose one to five units.');
+      if (!Array.isArray(party) || !party.length || party.length > E.PARTY_SIZE) fail('LIMIT_REACHED', `Choose one to ${E.PARTY_SIZE} units.`);
       const next = [...new Set(party)];
       if (next.length !== party.length || next.some(id => !draft.owned.includes(id))) fail('UNKNOWN_ID', 'The formation contains an unavailable unit.');
       const before = draft.activeParty;

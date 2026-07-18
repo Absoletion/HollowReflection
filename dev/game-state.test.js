@@ -2,6 +2,7 @@
 
 const assert = require('assert');
 const Engine = require('./engine-dev.js');
+const StoryRegistry = require('./story-registry.js');
 const GameState = require('./game-state.js');
 
 class Storage {
@@ -22,6 +23,49 @@ const ai = GameState.setAIPreset(state, 'hale', 'burst', { transactionId: 'tx_ai
 assert.strictEqual(ai.ok, true);
 assert.strictEqual(ai.state.unitAI.hale.preset, 'burst');
 assert.strictEqual(GameState.setAIPreset(state, 'hale', 'unknown').errorCode, 'UNKNOWN_ID');
+
+const freshMissionState = Engine.normalizeSaveState({ owned: ['hale', 'cinnia', 'tobin'], activeParty: ['hale', 'cinnia', 'tobin'] });
+const missionWin = { battleId: 'act1-3-win', encounterId: 'act1_3', outcome: 'victory', victory: true };
+assert.strictEqual(GameState.completeMission(freshMissionState, 'act1_3', missionWin, ['hale']).errorCode, 'LOCKED');
+const missionState = Engine.normalizeSaveState({ ...freshMissionState, missionClears: { act1_1: true, act1_2: true }, act1MissionProgress: 2 });
+const mission = GameState.completeMission(missionState, 'act1_3', missionWin, ['hale', 'cinnia', 'tobin', 'hearthgar']);
+assert.strictEqual(mission.ok, true);
+assert.strictEqual(missionState.gold, 0, 'mission commands do not mutate their input');
+assert.strictEqual(mission.state.missionClears.act1_3, true);
+assert.ok(mission.state.owned.includes('hearthgar'));
+assert.strictEqual(mission.rewards[0].units.length, Engine.PARTY_SIZE);
+assert.strictEqual(mission.state.gold, Engine.BATTLES.act1_3.rewards.first.gold);
+assert.strictEqual(mission.state.sigils, Engine.BATTLES.act1_3.sigils);
+const missionDuplicate = GameState.completeMission(mission.state, 'act1_3', missionWin, ['hale']);
+assert.strictEqual(missionDuplicate.rewards.length, 0);
+assert.strictEqual(missionDuplicate.state.gold, mission.state.gold);
+const missionRepeat = GameState.completeMission(mission.state, 'act1_3', { ...missionWin, battleId: 'act1-3-repeat' }, ['hale']);
+assert.strictEqual(missionRepeat.rewards[0].firstClear, false);
+assert.strictEqual(missionRepeat.state.gold, mission.state.gold + Engine.BATTLES.act1_3.rewards.repeat.gold);
+assert.strictEqual(missionRepeat.state.sigils, mission.state.sigils);
+assert.strictEqual(GameState.completeMission(missionState, 'act1_3', { ...missionWin, encounterId: 'act1_2' }, ['hale']).errorCode, 'INVALID_RESULT');
+assert.strictEqual(GameState.completeMission(missionState, 'act1_3', { ...missionWin, outcome: 'defeat', victory: false }, ['hale']).errorCode, 'INVALID_RESULT');
+assert.strictEqual(GameState.completeMission(missionState, 'act1_3', { encounterId: 'act1_3', outcome: 'victory', victory: true }, ['hale']).errorCode, 'INVALID_RESULT');
+assert.strictEqual(GameState.completeMission(missionState, 'act1_3', { ...missionWin, battleId: 'bad-party-1' }, ['hale', 'hale']).errorCode, 'INVALID_PARTY');
+assert.strictEqual(GameState.completeMission(missionState, 'act1_3', { ...missionWin, battleId: 'bad-party-2' }, ['nix']).errorCode, 'INVALID_PARTY');
+assert.strictEqual(GameState.completeMission(missionState, 'act1_3', { ...missionWin, battleId: 'bad-party-3' }, []).errorCode, 'INVALID_PARTY');
+assert.strictEqual(GameState.completeMission(missionState, 'act1_3', { ...missionWin, battleId: 'bad-party-4' }, ['hale', 'cinnia', 'tobin', 'hearthgar', 'nix']).errorCode, 'INVALID_PARTY');
+assert.strictEqual(GameState.completeMission(missionState, 'act1_3', { ...missionWin, battleId: 'bad-party-5' }, ['fake']).errorCode, 'INVALID_PARTY');
+const act1Through8 = Object.fromEntries(Array.from({ length: 8 }, (_, i) => [`act1_${i + 1}`, true]));
+const summonUnlock = GameState.completeMission(Engine.normalizeSaveState({ missionClears: act1Through8, act1MissionProgress: 8 }), 'act1_9', { battleId: 'story-act1-9', encounterId: null, outcome: 'victory', victory: true }, []);
+assert.strictEqual(summonUnlock.state.featureUnlocks.summon, true);
+assert.strictEqual(summonUnlock.state.storyStep, 0, 'partial chapters do not advance story projection');
+const chapterReady = Engine.normalizeSaveState({ missionClears: Object.fromEntries(Array.from({ length: 9 }, (_, i) => [`act1_${i + 1}`, true])), act1MissionProgress: 9 });
+const chapterComplete = GameState.completeMission(chapterReady, 'act1_10', { battleId: 'act1-chapter-clear', encounterId: 'act1_10', outcome: 'victory', victory: true }, ['hale']);
+assert.strictEqual(chapterComplete.state.act1MissionProgress, 10);
+assert.strictEqual(chapterComplete.state.storyStep, 1);
+const beforeAct4Finale = Object.fromEntries(StoryRegistry.chapters.flatMap(chapter => chapter.missions).filter(item => item.id !== 'act4_7').map(item => [item.id, true]));
+const scriptedState = Engine.normalizeSaveState({ missionClears: beforeAct4Finale, storyStep: 3 });
+const scriptedVictory = { battleId: 'act4-7-wrong', encounterId: 'act4_7', outcome: 'victory', victory: true };
+assert.strictEqual(GameState.completeMission(scriptedState, 'act4_7', scriptedVictory, ['hale']).errorCode, 'INVALID_RESULT');
+const scriptedLoss = GameState.completeMission(scriptedState, 'act4_7', { ...scriptedVictory, battleId: 'act4-7-scripted', outcome: 'scripted_loss', victory: false }, ['hale']);
+assert.strictEqual(scriptedLoss.ok, true);
+assert.strictEqual(scriptedLoss.state.storyStep, 4);
 
 const envelope = { schemaVersion: 1, gameVersion: '0.41.0', saveId: 'test', revision: 1, state };
 const prior = JSON.stringify({ ...envelope, revision: 0 });

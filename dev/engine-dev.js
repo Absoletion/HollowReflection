@@ -321,7 +321,7 @@ const Engine = (function () {
       if (!s.unitAI || typeof s.unitAI !== 'object' || Array.isArray(s.unitAI)) errors.push('unitAI must be an object');
       else for (const [id, value] of Object.entries(s.unitAI)) if (!unitKeys.has(id) || !value || typeof value !== 'object' || !AI_PRESETS[value.preset]) errors.push(`unitAI.${id} is invalid`);
     }
-    trueMap('evolutionUnlocks', unitKeys); trueMap('libraryUnlocked', libraryIds);
+    trueMap('evolutionUnlocks', unitKeys); trueMap('libraryUnlocked', libraryIds); trueMap('featureUnlocks', new Set(['summon']));
     if (present('missionClears')) {
       const caps = { 1: 10, 2: 8, 3: 7, 4: 7 };
       if (!s.missionClears || typeof s.missionClears !== 'object' || Array.isArray(s.missionClears)) errors.push('missionClears must be an object');
@@ -396,6 +396,7 @@ const Engine = (function () {
     return {
       sigils: intIn(s.sigils, 0, 999999999, 0), gold: intIn(s.gold, 0, 999999999, 0), glassDust: intIn(s.glassDust, 0, 999999999, 0), ranks, owned, activeParty, unitProgress, challengeItems, challengeProgress, completedTransactions, marketState, summonState, summonHistory, telemetry, economyLedger, unitAI,
       evolutionUnlocks: boolMap(s.evolutionUnlocks, unitKeys),
+      featureUnlocks: boolMap(s.featureUnlocks, new Set(['summon'])),
       libraryUnlocked,
       storyStep,
       act1MissionProgress,

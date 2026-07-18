@@ -236,7 +236,14 @@ const Engine = (function () {
   const BANNERS = Object.freeze({ standard: Object.freeze({ id: 'standard', family: 'standard', name: 'The Still Basin', cost: { 1: 10, 10: 90 }, fourStarRate: .25, guaranteeAt: 10, featured: 'cinnia', featuredRate: .5,
     pools: { 3: [{ id: 'nix', weight: 1 }, { id: 'brigga', weight: 1, after: 'act4_4' }], 4: [{ id: 'hale', weight: 1 }, { id: 'cinnia', weight: 1 }, { id: 'tobin', weight: 1 }, { id: 'hearthgar', weight: 1, after: 'act1_3' }, { id: 'marlowe', weight: 1, after: 'act2_4' }, { id: 'brant', weight: 1, after: 'act2_4' }, { id: 'milla', weight: 1, after: 'act2_8' }] } }) });
   function bannerPool(state, bannerId, rarity) { const b = BANNERS[bannerId]; return b ? (b.pools[rarity] || []).filter(x => !x.after || state.missionClears[x.after]) : []; }
-  const SAVE_SCHEMA_VERSION = 4;
+  const AI_PRESETS = Object.freeze({
+    balanced: Object.freeze({ id: 'balanced', name: 'Balanced', desc: 'Uses ready abilities while saving major attacks for useful windows.' }),
+    break: Object.freeze({ id: 'break', name: 'Break', desc: 'Prioritizes Break pressure and spends into stagger windows.' }),
+    sustain: Object.freeze({ id: 'sustain', name: 'Sustain', desc: 'Protects, heals, and cleanses before committing damage.' }),
+    burst: Object.freeze({ id: 'burst', name: 'Burst', desc: 'Builds and holds Arts for staggered or weakened enemies.' }),
+    manual: Object.freeze({ id: 'manual', name: 'Manual Reserve', desc: 'Automates Skills only, except for critical defensive recovery.' }),
+  });
+  const SAVE_SCHEMA_VERSION = 5;
   function intIn(value, min, max, fallback) {
     const n = Number.isFinite(Number(value)) ? Math.floor(Number(value)) : fallback;
     return Math.max(min, Math.min(max, n));
@@ -300,6 +307,10 @@ const Engine = (function () {
     for (const key of ['telemetry', 'economyLedger']) if (present(key) && (!Array.isArray(s[key]) || s[key].length > 100 || s[key].some(x => !x || typeof x !== 'object' || Array.isArray(x)))) errors.push(`${key} is invalid`);
     if (present('summonHistory') && (!Array.isArray(s.summonHistory) || s.summonHistory.length > 100 || s.summonHistory.some(x => !x || !UNITS[x.unitId] || !BANNERS[x.bannerId]))) errors.push('summonHistory is invalid');
     if (present('summonState') && (!s.summonState || typeof s.summonState !== 'object' || !s.summonState.standard || !Number.isSafeInteger(s.summonState.standard.pullsSinceFourStar) || s.summonState.standard.pullsSinceFourStar < 0 || s.summonState.standard.pullsSinceFourStar > 9 || !Number.isSafeInteger(s.summonState.standard.featuredMisses) || s.summonState.standard.featuredMisses < 0 || s.summonState.standard.featuredMisses > 1)) errors.push('summonState is invalid');
+    if (present('unitAI')) {
+      if (!s.unitAI || typeof s.unitAI !== 'object' || Array.isArray(s.unitAI)) errors.push('unitAI must be an object');
+      else for (const [id, value] of Object.entries(s.unitAI)) if (!unitKeys.has(id) || !value || typeof value !== 'object' || !AI_PRESETS[value.preset]) errors.push(`unitAI.${id} is invalid`);
+    }
     trueMap('evolutionUnlocks', unitKeys); trueMap('libraryUnlocked', libraryIds);
     if (present('missionClears')) {
       const caps = { 1: 10, 2: 8, 3: 7, 4: 7 };
@@ -354,6 +365,8 @@ const Engine = (function () {
     const economyLedger = Array.isArray(s.economyLedger) ? s.economyLedger.filter(x => x && typeof x === 'object' && !Array.isArray(x)).slice(-100).map(x => ({ id: String(x.id || '').slice(0, 128), type: String(x.type || '').slice(0, 32), gold: intIn(x.gold, -999999999, 999999999, 0), itemId: String(x.itemId || '').slice(0, 64), quantity: intIn(x.quantity, -999999, 999999, 0) })) : [];
     const summonState = { standard: { pullsSinceFourStar: intIn(s.summonState && s.summonState.standard && s.summonState.standard.pullsSinceFourStar, 0, 9, 0), featuredMisses: intIn(s.summonState && s.summonState.standard && s.summonState.standard.featuredMisses, 0, 1, 0) } };
     const summonHistory = Array.isArray(s.summonHistory) ? s.summonHistory.filter(x => x && UNITS[x.unitId] && BANNERS[x.bannerId]).slice(-100).map(x => ({ transactionId: String(x.transactionId || '').slice(0, 128), bannerId: x.bannerId, unitId: x.unitId, rarity: intIn(x.rarity, 3, 4, 3), newUnit: !!x.newUnit, rank: intIn(x.rank, 0, 5, 0), dust: intIn(x.dust, 0, 999999, 0) })) : [];
+    const unitAI = {};
+    for (const [id, value] of Object.entries(s.unitAI || {})) if (unitKeys.has(id) && value && AI_PRESETS[value.preset]) unitAI[id] = { preset: value.preset };
     const lastHub = ['home', 'story', 'party', 'summon', 'town'].includes(s.lastHub) ? s.lastHub : 'home';
     const storyStep = intIn(s.storyStep, 0, 5, 0);
     let act1MissionProgress = intIn(s.act1MissionProgress, 0, 10, 0);
@@ -377,7 +390,7 @@ const Engine = (function () {
     const libraryUnlocked = boolMap(s.libraryUnlocked, libraryIds);
     if (haleStars >= 5) libraryUnlocked['hale:5'] = true;
     return {
-      sigils: intIn(s.sigils, 0, 999999999, 0), gold: intIn(s.gold, 0, 999999999, 0), glassDust: intIn(s.glassDust, 0, 999999999, 0), ranks, owned, activeParty, unitProgress, challengeItems, challengeProgress, completedTransactions, marketState, summonState, summonHistory, telemetry, economyLedger,
+      sigils: intIn(s.sigils, 0, 999999999, 0), gold: intIn(s.gold, 0, 999999999, 0), glassDust: intIn(s.glassDust, 0, 999999999, 0), ranks, owned, activeParty, unitProgress, challengeItems, challengeProgress, completedTransactions, marketState, summonState, summonHistory, telemetry, economyLedger, unitAI,
       evolutionUnlocks: boolMap(s.evolutionUnlocks, unitKeys),
       libraryUnlocked,
       storyStep,
@@ -403,6 +416,7 @@ const Engine = (function () {
     if (save.schemaVersion === 1) save = Object.assign({}, save, { schemaVersion: 2, state: Object.assign({ challengeProgress: {}, completedTransactions: [] }, save.state || {}) });
     if (save.schemaVersion === 2) save = Object.assign({}, save, { schemaVersion: 3, state: Object.assign({ marketState: { tier: 0, purchases: {} }, telemetry: [], economyLedger: [] }, save.state || {}) });
     if (save.schemaVersion === 3) save = Object.assign({}, save, { schemaVersion: 4, state: Object.assign({ glassDust: 0, summonState: { standard: { pullsSinceFourStar: 0, featuredMisses: 0 } }, summonHistory: [] }, save.state || {}) });
+    if (save.schemaVersion === 4) save = Object.assign({}, save, { schemaVersion: 5, state: Object.assign({ unitAI: {} }, save.state || {}) });
     if (save.schemaVersion !== SAVE_SCHEMA_VERSION) throw new Error('No migration path exists for this save.');
     if (options && options.strict) validateSaveState(save.state, true);
     const migrated = {
@@ -860,6 +874,43 @@ const Engine = (function () {
       if (a.tier === 'Skill') { a.ok = true; a.reason = ''; a.cost = 0; }
     }
     return list;
+  }
+
+  function chooseLiveAIAction(s, uid, options) {
+    options = options || {};
+    const u = byUid(s, uid), preset = AI_PRESETS[options.preset] ? options.preset : 'balanced';
+    if (!u || !u.alive || s.result) return Object.freeze({ actionId: null, preset, trace: Object.freeze([]) });
+    const enemies = livingEnemies(s), allies = livingParty(s);
+    const weakestEnemy = enemies.reduce((min, x) => Math.min(min, x.hp / Math.max(1, x.maxhp)), 1);
+    const weakestAlly = allies.reduce((min, x) => Math.min(min, x.hp / Math.max(1, x.maxhp)), 1);
+    const breakWindow = enemies.some(x => x.staggered || (x.breakMax > 0 && x.breakCur / x.breakMax <= 0.35));
+    const vulnerable = breakWindow || weakestEnemy <= 0.45 || Number(options.elapsedMs || s.battleTimeMs || 0) >= 45000;
+    const defensiveRole = ['Healer', 'Supporter', 'Defender'].includes(u.role);
+    const trace = availableLiveActions(s, uid).map(action => {
+      const reasons = [];
+      const allowed = action.tier === 'Skill' ? options.allowSkill !== false : action.tier === 'Art' ? !!options.allowArts : action.tier === 'Burst' ? !!options.allowBurst : false;
+      if (!allowed) reasons.push(`${action.tier} automation disabled`);
+      if (!action.ok) reasons.push(action.reason || 'not ready');
+      if (typeof options.cooldownReady === 'function' && !options.cooldownReady(action)) reasons.push('cooldown active');
+      let score = action.tier === 'Skill' ? 30 : action.tier === 'Art' ? 50 : 70;
+      if (preset === 'break') {
+        if (u.role === 'Breaker') score += 45;
+        if (breakWindow && action.tier !== 'Skill') score += 60;
+        if (!breakWindow && action.tier === 'Burst') score -= 80;
+      } else if (preset === 'sustain') {
+        if (defensiveRole && weakestAlly < 0.7) score += action.tier === 'Skill' ? 55 : 100;
+        if (weakestAlly >= 0.85 && action.tier !== 'Skill') score -= 45;
+      } else if (preset === 'burst') {
+        if (action.tier === 'Burst' && vulnerable) score += 100;
+        if (action.tier === 'Burst' && !vulnerable) reasons.push('holding Burst for a vulnerability window');
+        if (action.tier === 'Art' && !vulnerable) score -= 35;
+      } else if (preset === 'manual') {
+        if (action.tier !== 'Skill' && !(defensiveRole && weakestAlly < 0.3)) reasons.push('reserved for manual control');
+      } else if (action.tier === 'Burst' && !vulnerable) score -= 35;
+      return Object.freeze({ actionId: action.id, tier: action.tier, score, rejected: reasons.length > 0, reasons: Object.freeze(reasons) });
+    });
+    const selected = trace.filter(x => !x.rejected).sort((a, b) => b.score - a.score || b.tier.localeCompare(a.tier))[0] || null;
+    return Object.freeze({ actionId: selected && selected.actionId || null, preset, trace: Object.freeze(trace) });
   }
 
   function liveAct(s, uid, actionId, targetUid, opts) {
@@ -1555,7 +1606,7 @@ const Engine = (function () {
    * ------------------------------------------------------------------ */
   return {
     newBattle, availableActions, playerAct, elemMult, intentText,
-    availableLiveActions, liveAct, liveEnemyPhase, liveUpkeep, liveSkillGain, LIVE_SKILL_GAIN,
+    availableLiveActions, chooseLiveAIAction, liveAct, liveEnemyPhase, liveUpkeep, liveSkillGain, LIVE_SKILL_GAIN, AI_PRESETS,
     livingParty, livingEnemies, partyHPfrac, byKey, byUid,
     UNITS, ENEMIES, BATTLES, HALE_AWAKENED, ELEM_ICON, UNIT_PROGRESSION, LEVEL_CAPS, xpToNext, grantUnitXP, applyStoryEvolutions, UNIT_LIBRARY, recordOwnedDiscoveries,
     LIVE_GESTURE_THRESHOLDS, liveGestureTier,

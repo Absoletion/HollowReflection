@@ -36,6 +36,7 @@ function startBattle(key, partyKeys, onEnd) {
   let gesture = null;
   let suppressSelectUntil = 0;
   let autoScanTimer = 0;
+  const aiTrace = [];
   let logOpen = false;
   let elapsed = 0;
   let burstUsed = false;
@@ -441,11 +442,16 @@ function startBattle(key, partyKeys, onEnd) {
   function autoUseReadyAbilities() {
     if ((!autoSkill && !autoArts && !autoBurst) || gesture || ended || paused || S.lock) return;
     for (const u of Engine.livingParty(S)) {
-      const skill = actionsFor(u).find(a => a.tier === 'Skill');
-      if (autoSkill && skill && skill.ok && cdLeft(u.uid, skill.id) <= 0) execute(u.uid, skill.id, true);
-      const actions = actionsFor(u);
-      const special = (autoBurst && actions.find(a => a.tier === 'Burst' && a.ok)) || (autoArts && actions.find(a => a.tier === 'Art' && a.ok));
-      if (special) execute(u.uid, special.id, true);
+      const preset = (META.unitAI[u.key] || {}).preset || 'balanced';
+      const decision = Engine.chooseLiveAIAction(S, u.uid, {
+        preset, allowSkill: autoSkill, allowArts: autoArts, allowBurst: autoBurst,
+        elapsedMs: Math.round(elapsed * 1000), cooldownReady: action => cdLeft(u.uid, action.id) <= 0,
+      });
+      const action = decision.actionId && actionsFor(u).find(a => a.id === decision.actionId);
+      const targetUid = action ? targetFor(u, action) : null;
+      aiTrace.push({ battleTimeMs: Math.round(elapsed * 1000), unitId: u.uid, unitKey: u.key, preset, selected: decision.actionId, targetUid, candidates: decision.trace });
+      if (aiTrace.length > 80) aiTrace.shift();
+      if (decision.actionId) execute(u.uid, decision.actionId, true);
       if (ended || S.lock) break;
     }
   }
@@ -560,6 +566,7 @@ function startBattle(key, partyKeys, onEnd) {
     autoArts: v => { autoArts = !!v; META.settings.autoArts = autoArts; writeSave(true); render(); },
     autoBurst: v => { autoBurst = !!v; META.settings.autoBurst = autoBurst; writeSave(true); render(); },
     isAutoSkill: () => autoSkill,
+    aiTrace: () => aiTrace.slice(),
     gestureTier: Engine.liveGestureTier,
   };
   window.__start = startBattle;

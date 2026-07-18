@@ -16,6 +16,10 @@ const changed = GameState.setActiveParty(state, ['cinnia', 'hale'], { transactio
 assert.strictEqual(changed.ok, true);
 assert.deepStrictEqual(changed.state.activeParty, ['cinnia', 'hale']);
 assert.strictEqual(GameState.setActiveParty(state, ['fake']).errorCode, 'UNKNOWN_ID');
+const ai = GameState.setAIPreset(state, 'hale', 'burst', { transactionId: 'tx_ai' });
+assert.strictEqual(ai.ok, true);
+assert.strictEqual(ai.state.unitAI.hale.preset, 'burst');
+assert.strictEqual(GameState.setAIPreset(state, 'hale', 'unknown').errorCode, 'UNKNOWN_ID');
 
 const envelope = { schemaVersion: 1, gameVersion: '0.41.0', saveId: 'test', revision: 1, state };
 const prior = JSON.stringify({ ...envelope, revision: 0 });
@@ -48,7 +52,7 @@ assert.strictEqual(evolved.ok, true);
 assert.strictEqual(evolved.state.unitProgress.cinnia.stars, 5);
 assert.strictEqual(evolved.state.libraryUnlocked['cinnia:5'], true);
 assert.strictEqual(evolved.state.challengeItems.ember_challenge_crest, 0);
-assert.strictEqual(Engine.migrateSaveEnvelope({ schemaVersion: 1, state: {} }).schemaVersion, 4);
+assert.strictEqual(Engine.migrateSaveEnvelope({ schemaVersion: 1, state: {} }).schemaVersion, 5);
 
 let marketState = Engine.normalizeSaveState({ owned: ['hale', 'cinnia'], activeParty: ['hale'], storyStep: 1, gold: 2500 });
 assert.strictEqual(GameState.purchaseMarketItem(marketState, 'essence_bundle', null, { transactionId: 'locked' }).errorCode, 'LOCKED');

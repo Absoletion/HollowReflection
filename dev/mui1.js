@@ -50,6 +50,7 @@ const META = {
   marketState: { tier: 0, purchases: {} },
   telemetry: [],
   economyLedger: [],
+  unitAI: {},                       // { unitKey: { preset } }
   evolutionUnlocks: {},            // story or Challenge gates that reveal recipes
   libraryUnlocked: {},              // permanent discoveries; deliberately separate from owned
   devClicks: 0,
@@ -104,7 +105,7 @@ function rememberOwnedUnits() {
  *  the envelope but requires a real authentication/cloud provider.
  * --------------------------------------------------------------- */
 const SAVE_STORAGE_KEY = 'projectHollowing.singleSave';
-const SAVE_GAME_VERSION = '0.46.0';
+const SAVE_GAME_VERSION = '0.47.0';
 let saveEnvelope = null;
 let saveLastStateJSON = '';
 let saveLastAt = null;
@@ -116,7 +117,7 @@ function captureSaveState() {
   return Engine.normalizeSaveState({
     sigils: META.sigils, gold: META.gold, glassDust: META.glassDust, ranks: META.ranks, owned: META.owned, activeParty: META.activeParty,
     unitProgress: META.unitProgress, challengeItems: META.challengeItems, challengeProgress: META.challengeProgress, completedTransactions: META.completedTransactions,
-    marketState: META.marketState, summonState: META.summonState, summonHistory: META.summonHistory, telemetry: META.telemetry, economyLedger: META.economyLedger,
+    marketState: META.marketState, summonState: META.summonState, summonHistory: META.summonHistory, telemetry: META.telemetry, economyLedger: META.economyLedger, unitAI: META.unitAI,
     evolutionUnlocks: META.evolutionUnlocks, libraryUnlocked: META.libraryUnlocked,
     storyStep: META.storyStep, act1MissionProgress: META.act1MissionProgress, missionClears: META.missionClears, haleAwakened: META.haleAwakened, lastHub: META.lastHub,
     settings: META.settings,
@@ -861,7 +862,8 @@ function showUnitSheet(key, requestedForm, returnToLibrary) {
     const portId = awk ? 'p-hale-awk' : 'p-' + key;
     const splash = unitSplashSource(key, awk);
     const specials = awk ? Engine.HALE_AWAKENED.specials : t.specials;
-    const passive = awk ? HALE_AWK_PASSIVE : PASSIVES[key];
+    const passiveDef = awk ? Engine.HALE_AWAKENED.passive : t.passive;
+    const passive = passiveDef ? [passiveDef.name, passiveDef.desc] : (PASSIVES[key] || ['', '']);
     const atk = awk ? Engine.HALE_AWAKENED.basicMain : t.basic.d;
     sheet.className = `sheet e-${awk ? 'hollow' : t.elem}`;
     sheet.innerHTML = `
@@ -876,7 +878,7 @@ function showUnitSheet(key, requestedForm, returnToLibrary) {
         <span class="tagchip">Lv. ${progress.level} / ${levelCap(progress.stars)}</span>
         ${awk ? '<span class="tagchip">Awakened</span>' : ''}
       </div>
-      <div class="sheet-tools"><button id="testunit">Test Animations</button></div>
+      <div class="sheet-tools"><button id="testunit">Test Animations</button><label>Auto AI<select id="aipreset">${Object.values(Engine.AI_PRESETS).map(preset => `<option value="${preset.id}" ${((META.unitAI[key] || {}).preset || 'balanced') === preset.id ? 'selected' : ''}>${esc(preset.name)}</option>`).join('')}</select></label></div>
       <div class="statline">
         <div class="st"><b>${t.hp}</b><span>HP</span></div>
         <div class="st"><b>${atk}</b><span>${awk ? 'Blade ATK' : 'ATK'}</span></div>
@@ -898,6 +900,11 @@ function showUnitSheet(key, requestedForm, returnToLibrary) {
       </div>`;
     sheet.querySelector('#sheetclose').onclick = () => sheet.remove();
     sheet.querySelector('#testunit').onclick = () => { sheet.remove(); showUnitAnimationPreview(key, form, returnToLibrary); };
+    sheet.querySelector('#aipreset').onchange = event => {
+      const result = GameState.setAIPreset(captureSaveState(), key, event.target.value);
+      if (!result.ok) { toast(result.message); draw(); return; }
+      applySaveState(result.state); writeSave(true); toast(`${t.name} AI: ${Engine.AI_PRESETS[event.target.value].name}.`);
+    };
     const evolve = sheet.querySelector('#evolveunit');
     if (evolve) evolve.onclick = () => { if (evolveUnit(key)) { form = key === 'hale' ? 'awk' : 'base'; draw(); } };
     if (isHale) sheet.querySelectorAll('.formtabs button').forEach(b => b.onclick = () => {

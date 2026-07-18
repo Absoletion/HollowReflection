@@ -360,6 +360,17 @@ function runHollowingSelfTests(E, print) {
     E.liveUpkeep(s);
     ok(s.round === round + 1, 'live upkeep advances timed effects and encounter scripts');
   }
+  {
+    const s = fresh('ch1', ['hale', 'cinnia']);
+    const hale = E.byKey(s, 'hale'), cinnia = E.byKey(s, 'cinnia');
+    hale.energy = 3; cinnia.energy = 3; hale.hp = Math.floor(hale.maxhp * .2);
+    const reserve = E.chooseLiveAIAction(s, hale.uid, { preset: 'burst', allowSkill: true, allowArts: true, allowBurst: true, elapsedMs: 1000 });
+    ok(reserve.actionId === 'cross_slash' && reserve.trace.some(x => x.tier === 'Burst' && x.rejected), 'Burst AI holds its finisher outside a vulnerability window and records why');
+    s.enemies[0].staggered = true;
+    ok(E.chooseLiveAIAction(s, hale.uid, { preset: 'burst', allowSkill: true, allowArts: true, allowBurst: true }).actionId === 'nightmares_end', 'Burst AI releases its finisher during stagger');
+    ok(E.chooseLiveAIAction(s, cinnia.uid, { preset: 'sustain', allowSkill: true, allowArts: true, allowBurst: true }).actionId === 'feast', 'Sustain AI prioritizes maximum recovery for a critical ally');
+    ok(E.chooseLiveAIAction(s, hale.uid, { preset: 'manual', allowSkill: true, allowArts: true, allowBurst: true }).actionId === 'cross_slash', 'Manual Reserve automates only the core Skill for an attacker');
+  }
 
   /* --- 30. Rarity, level caps, and evolution recipes --- */
   {

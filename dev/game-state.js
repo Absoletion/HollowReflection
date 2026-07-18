@@ -32,6 +32,15 @@ const GameState = (function (E) {
       return { deltas: { activeParty: { before, after: next } }, uiEvents: ['party_updated'] };
     }, context);
   }
+  function setAIPreset(state, unitId, presetId, context) {
+    return execute('setAIPreset', state, draft => {
+      if (!E.UNITS[unitId] || !draft.owned.includes(unitId)) fail('UNKNOWN_ID', 'The unit is unavailable.');
+      if (!E.AI_PRESETS[presetId]) fail('UNKNOWN_ID', 'Unknown AI preset.');
+      const before = (draft.unitAI[unitId] || {}).preset || 'balanced';
+      draft.unitAI[unitId] = { preset: presetId };
+      return { deltas: { unitId, preset: { before, after: presetId } }, uiEvents: ['ai_preset_updated'] };
+    }, context);
+  }
   function completeChallenge(state, challengeId, result, context) {
     const transactionId = context && context.transactionId || result && result.battleId && `challenge:${challengeId}:${result.battleId}`;
     return execute('completeChallenge', state, draft => {
@@ -193,7 +202,7 @@ const GameState = (function (E) {
       throw error;
     }
   }
-  return Object.freeze({ execute, setActiveParty, completeChallenge, recordTelemetry, purchaseMarketItem, performSummon, recruitStoryUnit, evolutionEligibility, evolveUnit, commitEnvelope });
+  return Object.freeze({ execute, setActiveParty, setAIPreset, completeChallenge, recordTelemetry, purchaseMarketItem, performSummon, recruitStoryUnit, evolutionEligibility, evolveUnit, commitEnvelope });
 })(typeof Engine !== 'undefined' ? Engine : require('./engine-dev.js'));
 
 if (typeof module !== 'undefined') module.exports = GameState;

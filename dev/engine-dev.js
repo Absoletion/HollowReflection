@@ -253,7 +253,7 @@ const Engine = (function () {
     burst: Object.freeze({ id: 'burst', name: 'Burst', desc: 'Builds and holds Arts for staggered or weakened enemies.' }),
     manual: Object.freeze({ id: 'manual', name: 'Manual Reserve', desc: 'Automates Skills only, except for critical defensive recovery.' }),
   });
-  const SAVE_SCHEMA_VERSION = 5;
+  const SAVE_SCHEMA_VERSION = 6;
   function intIn(value, min, max, fallback) {
     const n = Number.isFinite(Number(value)) ? Math.floor(Number(value)) : fallback;
     return Math.max(min, Math.min(max, n));
@@ -379,19 +379,13 @@ const Engine = (function () {
     for (const [id, value] of Object.entries(s.unitAI || {})) if (unitKeys.has(id) && value && AI_PRESETS[value.preset]) unitAI[id] = { preset: value.preset };
     const lastHub = ['home', 'story', 'party', 'summon', 'town'].includes(s.lastHub) ? s.lastHub : 'home';
     const storyStep = intIn(s.storyStep, 0, 5, 0);
-    let act1MissionProgress = intIn(s.act1MissionProgress, 0, 10, 0);
-    // Legacy chapter-spine saves predate per-mission flags. Treat chapters they
-    // already cleared as complete so the expanded map never rolls progress back.
-    if (storyStep >= 1) act1MissionProgress = 10;
+    const act1MissionProgress = intIn(s.act1MissionProgress, 0, 10, 0);
     const missionClears = {};
     const missionCaps = { 1: 10, 2: 8, 3: 7, 4: 7 };
     for (const [id, cleared] of Object.entries(s.missionClears || {})) {
       const match = /^act([1-9])_([1-9][0-9]?)$/.exec(id);
       if (cleared === true && match && missionCaps[Number(match[1])] >= Number(match[2])) missionClears[id] = true;
     }
-    for (let i = 1; i <= act1MissionProgress; i++) missionClears[`act1_${i}`] = true;
-    if (storyStep >= 2) for (let i = 1; i <= 8; i++) missionClears[`act2_${i}`] = true;
-    if (storyStep >= 3) for (let i = 1; i <= 7; i++) missionClears[`act3_${i}`] = true;
     let haleStars = (unitProgress.hale || {}).stars || UNIT_PROGRESSION.hale.baseStars;
     if ((s.haleAwakened === true || storyStep >= 5) && haleStars < 5) {
       unitProgress.hale = { level: (unitProgress.hale || {}).level || 1, stars: 5, xp: (unitProgress.hale || {}).xp || 0 };
@@ -427,6 +421,16 @@ const Engine = (function () {
     if (save.schemaVersion === 2) save = Object.assign({}, save, { schemaVersion: 3, state: Object.assign({ marketState: { tier: 0, purchases: {} }, telemetry: [], economyLedger: [] }, save.state || {}) });
     if (save.schemaVersion === 3) save = Object.assign({}, save, { schemaVersion: 4, state: Object.assign({ glassDust: 0, summonState: { standard: { pullsSinceFourStar: 0, featuredMisses: 0 } }, summonHistory: [] }, save.state || {}) });
     if (save.schemaVersion === 4) save = Object.assign({}, save, { schemaVersion: 5, state: Object.assign({ unitAI: {} }, save.state || {}) });
+    if (save.schemaVersion === 5) {
+      const state = Object.assign({}, save.state || {});
+      const storyStep = intIn(state.storyStep, 0, 5, 0);
+      const act1MissionProgress = storyStep >= 1 ? 10 : intIn(state.act1MissionProgress, 0, 10, 0);
+      const missionClears = Object.assign({}, state.missionClears || {});
+      for (let i = 1; i <= act1MissionProgress; i++) missionClears[`act1_${i}`] = true;
+      if (storyStep >= 2) for (let i = 1; i <= 8; i++) missionClears[`act2_${i}`] = true;
+      if (storyStep >= 3) for (let i = 1; i <= 7; i++) missionClears[`act3_${i}`] = true;
+      save = Object.assign({}, save, { schemaVersion: 6, state: Object.assign(state, { act1MissionProgress, missionClears }) });
+    }
     if (save.schemaVersion !== SAVE_SCHEMA_VERSION) throw new Error('No migration path exists for this save.');
     if (options && options.strict) validateSaveState(save.state, true);
     const migrated = {

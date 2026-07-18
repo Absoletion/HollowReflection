@@ -1,0 +1,89 @@
+# Initial Cast Sprite Completion Manifest
+
+**Scope:** the seven playable units that began this production pass without an approved PixelLab combat library. All seven now have structurally approved runtime libraries; final in-app visual QA remains before promotion.  
+**Evidence date:** 2026-07-16  
+**Complete production references:** Cinnia 4-star, Hale 4-star, Hale 5-star, and Katie 5-star. These are style and runtime references, not part of the incomplete count.
+
+## 1. Completion definition
+
+A unit is complete only when every applicable gate below has authoritative evidence in the project. Engine registration or an SVG portrait alone does not count as sprite completion.
+
+| Gate | Required evidence |
+| --- | --- |
+| P0 — Canon | A production brief resolves personality, story continuity, rarity, kit, silhouette, and animation intent. |
+| P1 — Base reference | Approved 256 × 256 transparent, full-body, perfectly front-facing, weaponless anime pixel reference. Essential body rigs such as Nix’s mobility chair or Hearthgar’s bonded suit are not “weapons” and remain present. |
+| P2 — Base QA | Correct anatomy, unique identity, no duplicated limbs, transparent background, documented visible-body height and foot anchor. |
+| P3 — Rotations | PixelLab base character and rotation set exported; Southwest inspected at 1× and approved for combat production. Other directions are diagnostic only. |
+| P4 — Equipped state | Separate battle-ready equipment/weapon state generated without changing body proportions, height, costume, face, or palette. |
+| P5 — Core motion | Drift-free Idle and Move loops; energetic Skill; Arts when the kit has one; Burst; Hit; Flinch/Stagger; Victory; Defeat. `attack` aliases Skill only where the renderer requires it. |
+| P6 — Effects/audio | Synchronized effect, hit-event, shake/flash, and audio hooks express the kit. Effects are separate layers and may exceed the unit canvas. |
+| P7 — Runtime package | Frames are embedded, scale profile and anchor registered, metadata records fps/loop/hold/event frames, and no legacy placeholder wins resolution. |
+| P8 — Verification | Per-animation Unit Library preview and live combat both show the correct unit, complete effects, correct facing, stable scale, no clipping/bleed/drift/zoom/morphing, and correct victory/defeat behavior. |
+| P9 — Provenance | PixelLab character/state/animation IDs, prompts, selected direction, source/export paths, visible-height measurement, cleanup changes, and QA result are recorded. |
+
+## 2. Height and framing standard
+
+All new PixelLab identity references use a 256 × 256 transparent canvas with feet anchored at **(128, 238)**. Canvas dimensions do not determine character height. Measure from the highest persistent body/hair pixel to the foot baseline, excluding weapons, floating effects, loose cloth trails, and temporary VFX.
+
+**Combat-facing lock (2026-07-16):** every character produced going forward must use the PixelLab **Southwest** rotation, reading toward screen-left. This applies to the approved combat base, equipped state, and every animation phase. The front-facing weaponless master remains the identity input. South and other rotations may be inspected diagnostically, but they are not alternate production selections. No equipped-state or animation credits are spent until Southwest passes scale, anatomy, silhouette, and clipping review. Existing completed non-Southwest libraries are legacy assets until intentionally regenerated.
+
+| Scale class | Target visible height | Approved tolerance | Use |
+| --- | ---: | ---: | --- |
+| Small child | 144 px | 140–148 px | Tobin; adult detail scale is preserved while limbs and torso remain child-proportioned. |
+| Dwarf adult | 160 px | 156–164 px | Brigga; broad adult anatomy, never a child/chibi substitute. |
+| Seated mobility rig | 182 px overall silhouette | 178–186 px | Nix in her essential tank-chair; document seated body and full rig measurements separately. |
+| Compact adult | 183 px | 180–186 px | Milla and other intentionally slight or short adults. |
+| Standard adult | 192 px | 188–196 px | Hale, Cinnia, Marlowe; body width does not change the height target. |
+| Large adult | 199 px | 196–202 px | Brant; added stature is modest, with most mass expressed through width. |
+| Towering bonded suit | 206 px | 204–208 px | Hearthgar’s ember-golem suit; facial pixel density must still match the cast. |
+
+The head remains approximately 23–27% of the visible figure. Heavy armor and stocky builds add width, not extra anatomy scale. Signature weapons and unrestricted VFX are excluded from height measurement and must receive enough independent canvas space to avoid clipping.
+
+## 3. Initial-cast production register
+
+Current evidence: all seven units have approved identity references, PixelLab rotation/equipment provenance, repaired animation libraries, runtime scale contracts, and embedded staging packages. `tools/audit_initial_cast_sprites.js` verifies **709 required frames** across these seven units and the current standalone build contains **1,218 embedded frames** including the established reference cast. Sprite contracts pass, the standalone validator passes, and engine self-tests report 158/158. The final 183-sample visual board at `assets/animations/initial-cast-final-qa-board.png` reports zero hard canvas-edge contacts. Runtime reaction timing, terminal-animation holds, and post-defeat fading are integrated. P0–P7 and P9 are complete for every unit below. P8 remains partial until the Unit Library and live-combat presentation are inspected directly.
+
+| Priority | Unit | Canonical form | Height | Story/identity hook | Applicable animation set | Gate status |
+| ---: | --- | --- | ---: | --- | --- | --- |
+| 1 | **Brigga** (`brigga`) | 3-star Fire Breaker — “the Demolitionist” | 160 px | Independent dwarf geologist; joins at 4-4 after reading Greywick’s false-crystal fault lines. Dry, precise, apparently reckless because she understands the structure. | Idle, Move, Kegcracker Skill, Blast Mining Arts, Grand Opening Burst, Hit, Flinch, Victory, Defeat | **P0–P7 and P9 complete.** Brief: `BRIGGA-PRODUCTION-BRIEF.md`. Approved front weaponless master: `assets/character-references/brigga-front-weaponless-256-pixellab-v1.png`, exactly 160 px visible height with feet y=238 and clean transparent corners. Approved clean Southwest identity state `e53852b1-cfb4-432b-bb66-beac87766846`: `assets/character-references/brigga-pixellab-base-southwest-clean-state-v1.png`, 164 px measured height. Approved equipped Southwest state `793ab0cf-6f86-4570-86f0-70fcbaa2ca52`: `assets/character-references/brigga-pixellab-equipped-southwest-v1.png`, coherent two-handed maul and 161 px measured silhouette. Complete approved frames: `assets/animations/brigga/`; deterministic repairs and authored demolition effects: `tools/build_brigga_repairs.py`. Embedded by `tools/build_embedded_pixellab_sprites.py`; sprite contracts pass, standalone validator reports 738 embedded frames, engine reports 158/158 tests. Production evidence: `production-records/brigga.json`. **P8 partial:** contact-sheet and structural QA passed; final Unit Library and live-combat visual inspection remains before promotion. |
+| 2 | **Tobin** (`tobin`) | 4-star Water Supporter — “the Tide-Reader” | 145 px | Small foundling boy and starter; quiet, eerie, polite certainty. Three patient water orbs and an oversized scholar coat. Must be notably shorter than the adult cast. | Idle, Move, Dampen Skill, Read the Currents Arts, The Tide Confides Burst, Hit, Flinch, Victory, Defeat | **P0–P7 and P9 complete.** Brief: `TOBIN-SPRITE-ANIMATION-BRIEF.md`. Approved 256×256 base: `assets/character-references/tobin-front-weaponless-256-pixellab-v1.png`, visible height 145 px, feet y=238. PixelLab base `a72c9a7d-f434-4e43-826f-c40da35300bf`; equipped grimoire state `58cc91cd-4dbf-4c1e-9034-db92623c721a`; South combat direction. Complete frames and stitched previews: `assets/animations/tobin/`. Embedded by `tools/build_embedded_pixellab_sprites.py`; sprite contract tests pass, standalone validator reports 520 frames, engine reports 158/158 tests. **P8 partial:** structural/frame QA passed; final Unit Library and live-combat visual inspection remains before promotion. |
+| 3 | **Hearthgar** (`hearthgar`) | 4-star Fire Defender — “the Ember-Golem” | 206 px suit | Scrawny anxious teenager bonded inside a towering matte-black furnace-golem. Fear in the eyes; courage in every planted defensive action. | Idle, Move, Brace the Hearth Skill, Bank the Coals Arts, Open the Furnace Burst, Hit, Flinch, Victory, Defeat | **P0–P7 and P9 complete.** Brief: `HEARTHGAR-SPRITE-ANIMATION-BRIEF.md`. Approved front bonded-suit master: `assets/character-references/hearthgar-front-bonded-suit-256-pixellab-v2.png`. Approved Southwest combat state `14514cfc-091b-4c9f-a3f9-d75194021fa0`; 211 px export normalized to the 206 px towering-suit contract at runtime. Complete approved frames: `assets/animations/hearthgar/`; deterministic repairs remove recurring helmet objects without changing body anatomy. Production evidence: `production-records/hearthgar.json`. Embedded by `tools/build_embedded_pixellab_sprites.py`. **P8 partial:** contact-sheet QA passed; final Unit Library and live-combat visual inspection remains before promotion. The bonded suit remains in P1 because it is his body rig, not removable equipment. |
+| 4 | **Marlowe** (`marlowe`) | 4-star Water Attacker — “the Foppish Blade” | 191 px | Pirate duelist who needs an audience; graceful conductor-like rapier timing, theatrical confidence, acts strongest after allies. Joins with Brant at 2-4. | Idle, Move, Riposte Stance Skill, Coup de Grâce Arts, Curtain Call Burst, Hit, Flinch, Victory, Defeat | **P0–P7 and P9 complete; P8 partial.** Brief: `MARLOWE-SPRITE-ANIMATION-BRIEF.md`. Approved front weaponless master: `assets/character-references/marlowe-front-weaponless-256-pixellab-v1.png`, exactly 191 px visible height with feet y=238. Approved compact-feather Southwest identity `a39dcde2-a42b-4c7e-8de2-a2888918c90b` and equipped Southwest state `beeb5940-6ca4-40dd-9d24-38410398cdaf`. The raw library was repaired by `tools/build_marlowe_repairs.py`: locked no-drift combat idle, compact fencing advance, staged Riposte invitation/counter/refund, authored failed Arts measure plus explosive lunge, and an exact five-contact Curtain Call with deterministic water trails. Hit no longer transforms into an attack; defeat holds the kneeling end pose. Embedded and structurally verified through the sprite contract and standalone validators. Production evidence: `production-records/marlowe.json`. **P8 partial:** contact-sheet QA passed; final Unit Library/live-combat review remains. |
+| 5 | **Brant** (`brant`) | 4-star Water Breaker — “the Anchor” | 199 px | Barrel-chested, taciturn first mate; Marlowe’s stable counterweight. Weight, rope tension, and absolute stops define motion. Joins at 2-4. | Idle, Move, Anchor Drop Skill, Keelhaul Burst, Hit, Flinch, Victory, Defeat. No Arts animation unless his kit changes. | **P0–P7 and P9 complete; P8 partial.** Front master: `assets/character-references/brant-front-weaponless-256-pixellab-v1.png`. Original base `66ff1cbf-91b5-4987-88e2-947951628c08` was rejected for a detached head artifact; clean Southwest identity `d6c0416e-9e45-461d-b01b-d18d702bc2f8` passes. Approved equipped state `6cfe639a-b1a8-43e8-9541-241ff2b2f9dc`: `assets/character-references/brant-pixellab-equipped-southwest-v1.png`, one readable anchor and continuous chain in a broad protective stance. Raw animations were repaired by `tools/build_brant_repairs.py`: compact hit recoil, held low-brace defeat, and deterministic Anchor Drop/Keelhaul impact layers. Embedded by `tools/build_embedded_pixellab_sprites.py`; sprite contract and standalone validators pass with 966 embedded frames, and engine self-tests report 158/158. Production evidence: `production-records/brant.json`. **P8 partial:** structural QA passed; final Unit Library/live-combat visual inspection remains. |
+| 6 | **Milla** (`milla`) | 4-star Thunder Supporter — “the Courier” | 183 px | Urgent, optimistic courier who is always already moving; route knowledge and exact delivery timing become Energy logistics. Joins at 2-8. | Idle, Move, Hand-Off Skill, Express Route Arts, Special Delivery Burst, Hit, Flinch, Victory, Defeat | **P0–P7 and P9 complete; P8 partial.** Front master: `assets/character-references/milla-front-weaponless-256-pixellab-v1.png`. Base `0f841f80-a6c0-4219-80fe-ec38bf227f25` produced a clean Southwest. Approved final equipped state `39851fa2-f8ee-47b8-99ed-3422b6a18fed`: `assets/character-references/milla-pixellab-equipped-southwest-clean-v2.png`, fixed satchel/strap, empty delivery hand, energetic sprint-ready pose, 181 px export normalized to the 183 px contract at runtime. `tools/build_milla_repairs.py` replaces walking idle, floating symbols, parcel mutations, over-the-head satchel hit, and standing defeat with locked courier acting and deterministic delivery effects. Embedded and structurally verified: 1,107 frames, sprite contracts pass, standalone validator passes, and engine self-tests report 158/158. Production evidence: `production-records/milla.json`. **P8 partial:** final Unit Library/live-combat visual inspection remains. |
+| 7 | **Nix** (`nix`) | 3-star Water Healer — “the Apothecary” | 182 px rig | Scowling mermaid apothecary in a brass tank-chair; abrasive grief expressed as exacting care. Strongest emergency single-target healer. | Idle, Move, Bitter Draught Skill, Panacea Burst, Hit, Flinch, Victory, Defeat. No Arts animation unless her kit changes. | **P0–P7 and P9 complete; P8 partial.** Neutral-affiliation front master: `assets/character-references/nix-front-weaponless-256-pixellab-v1.png`. Original base `4431a7ef-be7f-416e-856a-b837ee1edeeb` was rejected for a detached teal head artifact; clean base `8fc20160-bf70-4ad2-a2d9-a7da19b79266` passes. Approved medical state `15f2da2e-5434-4a99-80ba-30f90cc8ff47`: `assets/character-references/nix-pixellab-equipped-southwest-v1.png`, stable tail/tank-chair plus readable bottle rack and dosing arm. `tools/build_nix_repairs.py` replaces oversized generated spell strokes with clinical water tools, keeps bottles secured, preserves Southwest reactions, and turns defeat into a held chair power-down. Embedded and structurally verified: 1,221 frames, sprite contracts pass, standalone validator passes, and engine self-tests report 158/158. Recruitment continuity remains unresolved, so no faction-specific damage or affiliation was added. Production evidence: `production-records/nix.json`. **P8 partial:** final Unit Library/live-combat visual inspection remains. |
+
+**Current-evidence clarification:** cumulative frame totals embedded in individual historical row notes record the build state at that unit’s integration milestone. The authoritative current totals are 709 required remaining-cast frames and 1,218 runtime frames. Tobin’s listed South-facing library is also a legacy exception from the earlier production pass; every regeneration and every newly produced character must use Southwest.
+
+## 4. Completed production order
+
+1. **Brigga** — brief complete; first remaining generator candidate and the cleanest test of a nonstandard height plus oversized weapon.
+2. **Tobin** — validates the child-height contract before later child characters are attempted.
+3. **Hearthgar** — validates the opposite scale extreme and essential body-rig exception.
+4. **Marlowe and Brant** — produce as a paired story milestone while keeping their animation languages intentionally opposite.
+5. **Milla** — completes all revised-story recruits currently unlocked through Chapter 4.
+6. **Nix** — resolve recruitment continuity before visual generation, then handle the mobility-rig exception.
+
+This sequence is now historical production evidence. Future characters still follow the same gates: up to ten independent PixelLab generations may run concurrently only after each unit’s P0–P4 identity work is approved, and parallelism must not spend animation tokens before Southwest direction, height, and equipment are locked.
+
+## 5. Shared failure conditions
+
+Reject and regenerate or repair any asset with:
+
+- a slight unwanted three-quarter base reference;
+- realistic or painterly anatomy instead of the established anime pixel proportions;
+- body-height drift between base, rotation, equipped state, or animation;
+- camera zoom, anchor movement, foot sliding, or adjacent-frame bleed;
+- duplicated/missing limbs or a character disappearing mid-sequence;
+- weapon clipping, morphing, shrinking, hand switching, or inconsistent construction;
+- lazy combat motion without anticipation, committed action, impact, and recovery;
+- VFX baked into body frames when they should be independently timed;
+- a looping defeat or a victory pose that resets before the result screen exits;
+- an animation tester that shows multiple units or omits the selected ability’s effects.
+
+## 6. Source corrections to carry forward
+
+- **Brigga:** revised canon is Chapter 4 / Mission 4-4, not the roster’s older Chapter 2/Chapter 5 references.
+- **Hearthgar:** current story uses him in Chapter 1 as an established guild member; the roster’s Chapter 3 recruitment line is stale.
+- **Nix:** the roster says Chapter 3, but no recruitment/unlock exists in the current four-chapter registry. Do not invent a visual-era affiliation until her P0 brief resolves this.
+- **System terminology:** the runtime uses Skill-generated Arts Energy and has no automatic basic attack. Legacy codex “Basic +1 Energy / Skill costs one bar” language should not drive animation naming. For sprite packaging, the combat Skill is the unit’s fundamental attack or support action.

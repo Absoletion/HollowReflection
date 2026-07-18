@@ -1,0 +1,84 @@
+{
+  "unit": "hearthgar",
+  "form": "4star",
+  "status": "animation-library-integrated-staging",
+  "canvas": {
+    "width": 256,
+    "height": 256,
+    "anchor": { "x": 128, "y": 238 }
+  },
+  "visibleBody": {
+    "targetHeightPx": 206,
+    "combatStateMeasuredWidthPx": 151,
+    "combatStateMeasuredHeightPx": 211,
+    "combatStateFeetY": 242,
+    "renderScale": "0.355 * (206 / 211)"
+  },
+  "requiredBattleDirection": "south-west",
+  "sourceReference": "assets/character-references/hearthgar-front-bonded-suit-256-pixellab-v2.png",
+  "chromaSource": "assets/character-references/hearthgar-front-bonded-suit-chroma-v2.png",
+  "pixellab": {
+    "baseCharacterId": "18115b7a-145b-4325-985a-f03d0903f090",
+    "equippedStateId": "14514cfc-091b-4c9f-a3f9-d75194021fa0",
+    "approvedSourceAnimations": {
+      "idle": "ebbd6fee-4e69-4d0d-888f-3a1296264d25",
+      "move": "c725d585-3533-4b67-ab33-6c1cf3e6ee38",
+      "hit": "2a87b6f0-c83d-4086-a33b-07895e652aa5",
+      "skillStepIn": "2ded32d8-5e66-48b1-807a-20789661e9d9",
+      "artsGather": "9d154d7a-a172-48ad-9e97-472d46bc24c5",
+      "artsShield": "425656ab-a6e2-4a46-973b-51d9147ea751",
+      "burstFear": "b27e04e6-b3a4-430b-be8e-75f3addd116f",
+      "burstOpen": "5950c17a-8d22-41de-854a-cacde4e55c49",
+      "burstAnswer": "2e82c75d-f3d2-44ec-8590-fb738c63a597",
+      "victoryBody": "0af8d0d9-5abb-483b-adce-5b1cdf0d3eb4",
+      "defeatBody": "dbdc236b-ec60-4da8-822b-33640c53f6d2"
+    },
+    "rejected": {
+      "stagger-one-knee-v1": "detached overhead and ground objects",
+      "stagger-one-knee-v2-clean": "generation failed",
+      "stagger-one-knee-v3-clean": "persistent helmet lightbulb artifact and no readable kneel",
+      "defeat-covering-kneel-v2-clean": "large light rod and halo grew from helmet",
+      "skill-brace-lock-v1": "detached fist halos and card-shaped panel over face",
+      "arts-bank-gather-v1": "question-mark exhaust artifacts",
+      "victory-relieved-thumbs-up-v2-clean": "detached white ring and missing readable thumbs-up"
+    }
+  },
+  "approvedRuntimeFolders": {
+    "idle": ["assets/animations/hearthgar/idle-scared-still-standing-v1"],
+    "move": ["assets/animations/hearthgar/move-protective-rearguard-v1"],
+    "skill": [
+      "assets/animations/hearthgar/skill-brace-step-in-approved-v1",
+      "assets/animations/hearthgar/skill-brace-lock-authored-v1"
+    ],
+    "arts": [
+      "assets/animations/hearthgar/arts-bank-gather-approved-v1",
+      "assets/animations/hearthgar/arts-bank-shield-v1"
+    ],
+    "burst": [
+      "assets/animations/hearthgar/burst-open-furnace-fear-v1",
+      "assets/animations/hearthgar/burst-open-furnace-open-v1",
+      "assets/animations/hearthgar/burst-open-furnace-answer-v1"
+    ],
+    "hit": ["assets/animations/hearthgar/hit-cinder-ignite-v1"],
+    "stagger": ["assets/animations/hearthgar/stagger-one-knee-approved-v1"],
+    "victory": ["assets/animations/hearthgar/victory-relieved-thumbs-up-approved-v1"],
+    "defeat": ["assets/animations/hearthgar/defeat-covering-kneel-approved-v1"]
+  },
+  "qa": {
+    "structural": "passed",
+    "spriteContract": "passed",
+    "standaloneValidator": "passed",
+    "engineSelfTests": "158/158",
+    "finalVisualQaBoard": "assets/animations/initial-cast-final-qa-board.png",
+    "edgeContacts": 0,
+    "runtimePresentation": "reaction timing, terminal animation hold, and post-defeat fade fixes integrated",
+    "unitLibraryAndLiveCombat": "pending"
+  },
+  "identityLocks": [
+    "bonded suit remains part of the base body",
+    "nervous human eyes remain readable in the visor",
+    "sealed furnace geometry remains stable",
+    "no handheld weapon or external shield",
+    "fear precedes commitment in protective actions"
+  ]
+}

@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 820">
+<g stroke="#101a1c" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
+  <!-- ===== BULL from chunky crystal blocks, facing right ===== -->
+  <!-- hindquarter block (left) -->
+  <path d="M110 420 L150 330 L300 300 L340 380 L330 600 L140 620 Z" fill="#242e32"/>
+  <!-- shoulder hump (center, tallest) -->
+  <path d="M280 340 L330 220 L520 190 L620 260 L600 540 L320 560 Z" fill="#2a363a"/>
+  <!-- chest block (right, drops toward forelegs) -->
+  <path d="M560 280 L720 250 L810 330 L800 500 L740 610 L580 600 Z" fill="#222c30"/>
+  <!-- belly connector -->
+  <path d="M300 560 L620 540 L740 600 L700 660 L330 660 L280 620 Z" fill="#1c2428"/>
+  <!-- legs: 4 distinct angular pillars -->
+  <path d="M130 610 L200 616 L190 750 L170 770 L128 764 L124 700 Z" fill="#1c2428"/>
+  <path d="M250 640 L320 646 L316 756 L292 772 L252 764 L246 706 Z" fill="#242e32"/>
+  <path d="M580 640 L650 634 L662 754 L636 772 L594 764 L582 700 Z" fill="#1c2428"/>
+  <path d="M716 610 L790 596 L830 720 L810 758 L762 752 L730 690 Z" fill="#242e32"/>
+  <!-- facets -->
+  <path d="M170 360 L280 330 L300 420 L200 460 Z" fill="#2e3a3e" stroke-width="4"/>
+  <path d="M350 250 L480 220 L520 300 L400 340 Z" fill="#1c2428" stroke-width="4"/>
+  <path d="M360 380 L540 350 L560 470 L380 500 Z" fill="#323e44" stroke-width="4"/>
+  <path d="M610 300 L740 280 L780 380 L660 420 Z" fill="#28343a" stroke-width="4"/>
+  <path d="M620 440 L760 420 L750 540 L640 560 Z" fill="#1c2428" stroke-width="4"/>
+  <!-- interior glow seams -->
+  <g stroke="#3d5a56" stroke-width="6" fill="none" opacity=".9">
+    <path d="M482 224 L516 296 M542 354 L556 464 M742 284 L776 376 M282 332 L298 416"/>
+  </g>
+  <g stroke="#9adfd4" stroke-width="3" fill="none" opacity=".6">
+    <path d="M482 224 L516 296 M742 284 L776 376 M542 354 L556 464"/>
+  </g>
+  <!-- raked spine shards on the hump -->
+  <path d="M310 240 L220 90 L380 210 Z" fill="#324044"/>
+  <path d="M420 208 L390 60 L520 194 Z" fill="#2e3a3e"/>
+  <path d="M540 196 L580 80 L630 230 Z" fill="#324044"/>
+  <!-- ===== THE MAN, fused at the neck-stump (front-top of chest block) ===== -->
+  <!-- stump collar -->
+  <path d="M720 254 L800 236 L836 296 L810 340 L742 336 Z" fill="#1c2428"/>
+  <path d="M736 300 L800 252 M756 330 L822 284" stroke="#3d5a56" stroke-width="5" fill="none"/>
+  <!-- torso rising, arched slightly right, too thin, too long -->
+  <path d="M760 300 C752 240 756 176 772 128 C780 104 796 90 814 90 C834 90 848 106 852 132 C858 172 852 234 838 290 C826 314 806 328 784 326 C770 324 762 314 760 300 Z" fill="#d8d4cc"/>
+  <path d="M838 136 C844 176 840 232 828 280 C838 272 844 262 846 248 C852 210 852 168 846 136 C843 124 839 126 838 136 Z" fill="#a8b0ac" stroke="none"/>
+  <!-- ribs -->
+  <path d="M772 186 C794 192 818 192 838 186 M770 216 C792 222 818 222 840 216" fill="none" stroke="#a8b0ac" stroke-width="4" opacity=".8"/>
+  <!-- crystal creeping up the fusion -->
+  <path d="M764 306 L742 276 L766 254 L782 288 Z" fill="#324044"/>
+  <path d="M830 300 L852 270 L840 244 L820 272 Z" fill="#2e3a3e"/>
+  <path d="M776 322 L760 300 L778 284 L792 308 Z" fill="#28343a"/>
+  <!-- LEFT arm: hangs, elbow bent WRONG (juts toward viewer) -->
+  <path d="M768 140 L744 150 C734 172 730 198 734 222 L754 218 C756 196 760 166 768 140 Z" fill="#cfc9c0"/>
+  <path d="M736 220 L756 216 C764 240 766 268 762 292 L742 296 C736 272 734 244 736 220 Z" fill="#cfc9c0"/>
+  <ellipse cx="752" cy="304" rx="13" ry="16" fill="#cfc9c0"/>
+  <path d="M744 218 L756 217" stroke-width="6"/>
+  <!-- RIGHT arm -->
+  <path d="M846 138 L868 150 C878 172 882 198 878 222 L858 218 C857 194 853 164 846 138 Z" fill="#d8d4cc"/>
+  <path d="M876 220 L857 216 C850 240 848 268 852 292 L872 294 C878 270 879 244 876 220 Z" fill="#d8d4cc"/>
+  <ellipse cx="862" cy="304" rx="13" ry="16" fill="#d8d4cc"/>
+  <path d="M858 218 L870 219" stroke-width="6"/>
+  <!-- head: tilted right, face erased -->
+  <path d="M778 84 C770 56 782 30 810 26 C838 22 858 40 858 68 C858 92 842 110 818 112 C796 112 782 102 778 84 Z" fill="#d8d4cc"/>
+  <path d="M848 42 C856 58 855 80 844 96 C853 90 859 78 860 64 C859 52 854 44 848 42 Z" fill="#a8b0ac" stroke="none"/>
+  <!-- eye shadow-band -->
+  <path d="M780 62 C806 52 834 50 856 58 L854 76 C834 68 806 70 782 80 Z" fill="#3a4448" stroke="none"/>
+  <!-- the lowing mouth -->
+  <path d="M806 94 C814 100 826 100 834 94 C832 108 824 114 818 114 C810 114 806 104 806 94 Z" fill="#5a4448"/>
+</g>
+<!-- rim light: right edges -->
+<g stroke="#9adfd4" stroke-width="6" fill="none" opacity=".8" stroke-linecap="round">
+  <path d="M852 138 C857 176 852 234 839 288"/>
+  <path d="M858 66 C858 84 848 102 828 110"/>
+  <path d="M810 334 L800 496"/>
+  <path d="M830 722 L812 756"/>
+</g>
+</svg>

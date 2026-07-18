@@ -1,0 +1,16 @@
+{
+  "name": "hollow-reflections-demo",
+  "private": true,
+  "scripts": {
+    "validate:ids": "node tools/validate_content_ids.js --self-test",
+    "test:engine": "node dev/tests-dev.js",
+    "test:state": "node dev/game-state.test.js",
+    "test:summon": "node tools/summon-simulation.js",
+    "build": "node dev/build-mobile.js",
+    "validate:standalone": "node tools/validate_standalone_update.js hollowing-demo.html",
+    "test:browser": "node tools/browser-smoke.js"
+  },
+  "devDependencies": {
+    "playwright": "1.61.1"
+  }
+}

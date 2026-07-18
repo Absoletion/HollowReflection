@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 1040">
+<g stroke="#241a16" stroke-width="4" stroke-linejoin="round" stroke-linecap="round">
+  <!-- skirt: warm bell shape, mid-calf -->
+  <path d="M196 560 C168 640 152 720 150 800 C200 826 330 826 380 800 C378 718 362 638 336 560 C292 544 238 544 196 560 Z" fill="#7a4a38"/>
+  <path d="M330 566 C352 640 366 716 370 792 C376 788 380 784 380 800 L380 796 C378 716 362 638 336 562 Z" fill="#603a2c" stroke="none"/>
+  <path d="M170 742 C230 764 320 764 366 744" fill="none" stroke="#603a2c" stroke-width="5"/>
+  <!-- legs + shoes -->
+  <path d="M226 812 L262 814 L258 936 L226 934 Z" fill="#e8dcc8"/>
+  <path d="M292 814 L328 812 L330 934 L296 936 Z" fill="#e8dcc8"/>
+  <path d="M218 928 L266 930 L262 980 C260 996 250 1004 234 1004 L200 1002 C186 1002 180 990 186 976 Z" fill="#5a3a28"/>
+  <path d="M292 930 L338 928 L354 974 C360 988 354 1000 340 1000 L306 1002 C292 1002 286 994 288 980 Z" fill="#5a3a28"/>
+  <!-- apron over skirt -->
+  <path d="M222 556 C210 620 204 690 206 756 C240 772 296 772 326 758 C330 692 326 622 316 558 C286 546 250 546 222 556 Z" fill="#e8dcc8"/>
+  <path d="M306 562 C316 624 320 692 318 752 C322 750 325 748 326 746 C328 688 324 620 316 560 Z" fill="#cfc0a4" stroke="none"/>
+  <path d="M232 588 C260 598 288 598 308 590" fill="none" stroke="#cfc0a4" stroke-width="5"/>
+  <!-- apron pocket w/ wooden spoon -->
+  <path d="M240 660 L292 660 L288 706 L244 706 Z" fill="#cfc0a4"/>
+  <path d="M262 618 L270 618 L268 662 L263 662 Z" fill="#8c6a44"/>
+  <ellipse cx="266" cy="612" rx="9" ry="12" fill="#8c6a44"/>
+  <!-- torso: fire-orange blouse, stout & warm -->
+  <path d="M212 372 C198 420 194 480 200 536 C204 560 214 576 230 584 C266 596 306 594 330 580 C342 540 344 470 336 424 C332 396 324 378 312 366 C280 352 240 356 212 372 Z" fill="#d4703a"/>
+  <path d="M304 370 C316 400 322 460 318 516 C316 548 308 570 296 578 C312 574 322 566 328 554 C338 514 338 452 330 412 C326 390 318 376 310 368 Z" fill="#b05828" stroke="none"/>
+  <!-- apron bib -->
+  <path d="M240 400 C238 448 240 500 248 544 C270 552 292 552 308 546 C314 500 314 450 308 408 C286 398 260 396 240 400 Z" fill="#e8dcc8"/>
+  <path d="M240 400 L236 372 M308 408 L314 380" fill="none" stroke-width="5"/>
+  <!-- back arm: pot-lid buckler raised guard (viewer right) -->
+  <path d="M320 400 C344 418 358 448 362 482 C362 500 356 512 344 516 C332 510 326 494 324 474 C320 448 316 420 310 402 Z" fill="#d4703a"/>
+  <ellipse cx="352" cy="530" rx="15" ry="14" fill="#f4d0ac"/>
+  <ellipse cx="368" cy="520" rx="46" ry="52" fill="#b8bec4"/>
+  <ellipse cx="368" cy="520" rx="46" ry="52" fill="none" stroke-width="5"/>
+  <ellipse cx="368" cy="520" rx="30" ry="35" fill="none" stroke="#8c949c" stroke-width="4"/>
+  <circle cx="368" cy="520" r="9" fill="#c8a860"/>
+  <!-- front arm: ladle raised like a mace (viewer left, up) -->
+  <path d="M226 380 C202 366 180 344 166 316 C158 298 160 282 172 276 C186 278 196 292 204 312 C214 336 224 360 232 376 Z" fill="#e07a42"/>
+  <path d="M170 290 C158 280 154 266 162 256 C172 248 184 252 190 264 C194 274 190 286 180 290 C176 292 172 292 170 290 Z" fill="#f4d0ac"/>
+  <path d="M158 268 L186 276 M156 280 L184 286" fill="none" stroke-width="3.5"/>
+  <!-- ladle: handle up-left from fist, big bowl -->
+  <path d="M170 268 L112 138 L128 130 L184 262 Z" fill="#7a5a38"/>
+  <path d="M76 108 C62 130 66 158 88 172 C112 186 142 178 154 154 C158 144 158 134 154 126 L118 134 Z" fill="#8c949c"/>
+  <path d="M76 108 C96 96 130 96 154 126 L148 136 C126 112 98 108 80 116 Z" fill="#b8bec4"/>
+  <!-- steam wisps -->
+  <path d="M84 84 C90 72 86 62 92 50 M108 80 C114 68 110 58 116 46" fill="none" stroke="#e8dcc8" stroke-width="5" opacity=".7"/>
+  <!-- neck + head: round, warm -->
+  <path d="M252 330 L284 330 L280 360 L256 360 Z" fill="#dcae86"/>
+  <path d="M206 222 C202 268 220 306 256 320 C288 330 318 316 328 284 C336 254 330 214 310 188 C288 162 244 162 222 186 C210 198 208 208 206 222 Z" fill="#f4d0ac"/>
+  <path d="M304 190 C320 214 324 258 314 286 C308 302 296 314 282 318 C304 318 320 304 326 282 C334 254 328 212 310 190 Z" fill="#dcae86" stroke="none"/>
+  <!-- freckles -->
+  <g fill="#d49a6a" stroke="none">
+    <circle cx="222" cy="252" r="2.5"/><circle cx="232" cy="258" r="2.5"/><circle cx="242" cy="252" r="2.5"/>
+    <circle cx="282" cy="250" r="2.5"/><circle cx="292" cy="256" r="2.5"/>
+  </g>
+  <!-- eyes: warm hazel, kind but no-nonsense -->
+  <path d="M220 234 C230 228 244 228 252 234 L250 254 C240 260 228 260 220 252 Z" fill="#fff"/>
+  <ellipse cx="236" cy="244" rx="8" ry="11" fill="#8c6a2a"/>
+  <ellipse cx="236" cy="241" rx="4" ry="5" fill="#3a2a10"/>
+  <circle cx="239" cy="238" r="2.4" fill="#fff" stroke="none"/>
+  <path d="M216 228 C228 220 246 220 256 228" fill="none" stroke-width="6"/>
+  <path d="M272 234 C280 229 290 229 296 234 L294 250 C286 255 278 255 272 248 Z" fill="#fff"/>
+  <ellipse cx="284" cy="242" rx="6.5" ry="10" fill="#8c6a2a"/>
+  <ellipse cx="284" cy="239" rx="3.4" ry="4.6" fill="#3a2a10"/>
+  <path d="M270 227 C278 221 290 221 298 227" fill="none" stroke-width="6"/>
+  <!-- nose + smiling mouth -->
+  <path d="M248 268 L243 280 L251 282" fill="none" stroke-width="3.5"/>
+  <path d="M240 298 C250 306 264 306 274 297" fill="none" stroke-width="4.5"/>
+  <!-- headscarf: cream, knot at front-left; russet hair peeking -->
+  <path d="M210 220 C198 168 226 132 268 128 C312 124 340 152 342 196 C343 214 340 228 334 240 C330 214 320 194 304 184 C282 170 246 172 228 188 C216 198 210 208 210 220 Z" fill="#e8dcc8"/>
+  <path d="M222 148 C244 130 286 126 312 142 C300 134 274 130 252 134 C238 136 228 142 222 148 Z" fill="#cfc0a4" stroke="none"/>
+  <path d="M210 214 C204 222 202 232 206 240 C214 236 218 228 218 220 Z" fill="#e8dcc8"/>
+  <path d="M196 208 C184 200 180 188 188 180 C198 174 208 180 210 192 C210 200 206 206 196 208 Z" fill="#e8dcc8"/>
+  <path d="M186 196 C178 190 176 182 182 176" fill="none" stroke-width="4"/>
+  <!-- russet fringe under scarf + full tail behind -->
+  <path d="M214 216 C216 200 226 188 242 184 C238 196 236 208 238 218 C230 214 220 214 214 216 Z" fill="#a8422a"/>
+  <path d="M244 184 C258 178 276 178 290 184 C284 196 282 208 284 218 C270 210 254 210 246 216 C244 206 242 194 244 184 Z" fill="#a8422a"/>
+  <path d="M292 186 C304 192 312 202 316 214 C308 212 300 214 296 218 C296 206 294 194 292 186 Z" fill="#a8422a"/>
+  <path d="M330 224 C348 244 356 274 350 304 C344 330 330 348 314 354 C324 332 328 308 324 284 C320 262 314 244 306 232 C314 226 324 222 330 224 Z" fill="#a8422a"/>
+  <path d="M334 240 C346 262 350 288 344 312 C342 296 338 278 330 262 Z" fill="#8c3620" stroke="none"/>
+</g>
+<g stroke="#ff6b3d" stroke-width="5" fill="none" opacity=".8" stroke-linecap="round">
+  <path d="M209 216 C206 256 220 296 248 314"/>
+  <path d="M214 380 C200 424 196 484 202 534"/>
+  <path d="M200 570 C176 644 162 722 160 794"/>
+  <path d="M168 316 C160 300 160 284 168 276"/>
+</g>
+</svg>

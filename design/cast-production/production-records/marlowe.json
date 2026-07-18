@@ -1,0 +1,101 @@
+{
+  "unit": "marlowe",
+  "form": "4star",
+  "status": "southwest-animation-library-integrated-structural-qa-passed",
+  "canvas": {
+    "width": 256,
+    "height": 256,
+    "anchor": {
+      "x": 128,
+      "y": 238
+    }
+  },
+  "visibleBody": {
+    "targetHeightPx": 191,
+    "measuredWidthPx": 80,
+    "measuredHeightPx": 191,
+    "measuredBounds": {
+      "minX": 88,
+      "minY": 48,
+      "maxX": 167,
+      "maxY": 238
+    }
+  },
+  "requiredBattleDirection": "south-west",
+  "sourceReference": "assets/character-references/marlowe-front-weaponless-256-pixellab-v1.png",
+  "transparentSource": "assets/character-references/marlowe-front-weaponless-transparent-source-v1.png",
+  "chromaSource": "assets/character-references/marlowe-front-weaponless-chroma-v1.png",
+  "pixellab": {
+    "baseCharacterId": "a39dcde2-a42b-4c7e-8de2-a2888918c90b",
+    "equippedStateId": "beeb5940-6ca4-40dd-9d24-38410398cdaf",
+    "rejected": {
+      "f691e2d7-be37-47d6-919d-1feb07c8a8ab": "Southwest body was readable, but the teal tricorne feather expanded into a 36 px plume and pushed the silhouette to 223 px.",
+      "9fd74f0f-264b-4506-b0f5-6fe4cd6f54ea": "First feather-cleanup edit was blocked by PixelLab's automated content filter before generation.",
+      "c5c02759-6149-4d43-b0c0-6115e4b15522": "First rapier state turned Southwest into a rear three-quarter pose and hid the face, mustache, cravat and coat front."
+    },
+    "approvedSouthwest": {
+      "path": "assets/character-references/marlowe-pixellab-base-southwest-compact-feather-v1.png",
+      "measuredWidthPx": 68,
+      "measuredHeightPx": 196,
+      "feetY": 241,
+      "note": "Measurement includes the permitted compact tricorne feather extension."
+    },
+    "approvedEquippedSouthwest": {
+      "path": "assets/character-references/marlowe-pixellab-equipped-southwest-v2.png",
+      "measuredWidthPx": 185,
+      "measuredHeightPx": 195,
+      "feetY": 240,
+      "weapon": "single needle-thin basket-hilt rapier with narrow hip scabbard"
+    },
+    "animationJobs": {
+      "idleApproved": "af7588ea-2821-4e7a-a3dd-e7d7b9ab1c80",
+      "moveApproved": "6d032250-ef5e-4e14-a120-a8184cf93daa",
+      "riposteInvitation": "2718c397-d706-4a3f-969c-3b87d773945f",
+      "riposteCounter": "a7505e5d-a1f6-4140-b460-83a6fd5b29f0",
+      "riposteRefund": "4eb3afc7-f33e-472d-afe5-962475b2ff9b",
+      "coupDeGraceLunge": "9b90e114-c892-4095-a49b-17bd455ceaed",
+      "curtainCallEntry": "b07a9a5c-973d-4531-82bb-970a95cd6ca0",
+      "curtainCallReversal": "8ead1f5b-2bbd-407f-bb2f-ceddcae90131",
+      "curtainCallFinale": "1072c06b-e955-4222-a40a-db98fc86e6ea",
+      "hit": "397a0d72-5d20-4d41-8b5b-69eeb706bea5",
+      "stagger": "7e37db15-71c2-4506-9fb4-733b867e27eb",
+      "victory": "a2d191d2-638a-4351-b90f-672a4bc31a99",
+      "defeat": "0247bd5a-733e-4c88-b0b8-7d92bd42a716",
+      "failedMeasure": "PixelLab generation failed; replaced by deterministic authored setup."
+    },
+    "approvedRuntimeFolders": {
+      "idle": "assets/animations/marlowe/idle-fencing-guard-approved-v1",
+      "move": "assets/animations/marlowe/move-fencing-advance-approved-v1",
+      "skillInvitation": "assets/animations/marlowe/skill-riposte-invitation-approved-v1",
+      "skillCounter": "assets/animations/marlowe/skill-riposte-counter-approved-v1",
+      "skillRefund": "assets/animations/marlowe/skill-riposte-refund-approved-v1",
+      "artsMeasure": "assets/animations/marlowe/arts-coup-de-grace-measure-authored-v1",
+      "artsLunge": "assets/animations/marlowe/arts-coup-de-grace-lunge-approved-v1",
+      "burst": "assets/animations/marlowe/burst-curtain-call-five-strike-authored-v1",
+      "hit": "assets/animations/marlowe/hit-tight-recoil-approved-v1",
+      "stagger": "assets/animations/marlowe/stagger-heavy-balance-loss-approved-v1",
+      "victory": "assets/animations/marlowe/victory-curtain-bow-approved-v1",
+      "defeat": "assets/animations/marlowe/defeat-kneeling-exhaustion-approved-v1"
+    }
+  },
+  "repairScript": "tools/build_marlowe_repairs.py",
+  "integration": {
+    "spriteBuilder": "tools/build_embedded_pixellab_sprites.py",
+    "contractTests": "dev/pixellab-sprites.test.js",
+    "standaloneValidator": "tools/validate_standalone_update.js",
+    "structuralQa": "passed",
+    "engineSelfTests": "158/158",
+    "finalVisualQaBoard": "assets/animations/initial-cast-final-qa-board.png",
+    "edgeContacts": 0,
+    "runtimePresentation": "reaction timing, terminal animation hold, and post-defeat fade fixes integrated",
+    "inAppQa": "pending"
+  },
+  "identityLocks": [
+    "mature slim compact-anime fencer anatomy",
+    "feathered tricorne, styled hair and pencil mustache remain stable",
+    "navy and deep-teal coat, cream lace and warm rose accent remain stable",
+    "flamboyance reads as a controlled performance over real competence",
+    "base identity reference remains weaponless",
+    "south-west is mandatory for combat production"
+  ]
+}

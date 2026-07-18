@@ -1,0 +1,83 @@
+{
+  "unit": "nix",
+  "form": "3star",
+  "status": "southwest-animation-library-integrated-structural-qa-passed",
+  "canvas": {
+    "width": 256,
+    "height": 256,
+    "anchor": {"x": 128, "y": 238}
+  },
+  "visibleRig": {
+    "targetHeightPx": 182,
+    "measuredWidthPx": 111,
+    "measuredHeightPx": 182,
+    "measuredBounds": {"minX": 73, "minY": 57, "maxX": 183, "maxY": 238}
+  },
+  "requiredBattleDirection": "south-west",
+  "sourceReference": "assets/character-references/nix-front-weaponless-256-pixellab-v1.png",
+  "transparentSource": "assets/character-references/nix-front-weaponless-transparent-source-v1.png",
+  "chromaSource": "assets/character-references/nix-front-weaponless-chroma-v1.png",
+  "pixellab": {
+    "baseCharacterId": "4431a7ef-be7f-416e-856a-b837ee1edeeb",
+    "cleanBaseStateId": "8fc20160-bf70-4ad2-a2d9-a7da19b79266",
+    "equippedStateId": "15f2da2e-5434-4a99-80ba-30f90cc8ff47",
+    "rejected": {
+      "4431a7ef-be7f-416e-856a-b837ee1edeeb": "Original Southwest rotation carried a detached bright-teal loop above the head; identity was repaired before equipment or animation work."
+    },
+    "approvedSouthwest": {
+      "path": "assets/character-references/nix-pixellab-base-southwest-clean-v2.png"
+    },
+    "approvedEquippedSouthwest": {
+      "path": "assets/character-references/nix-pixellab-equipped-southwest-v1.png",
+      "measuredWidthPx": 116,
+      "measuredHeightPx": 184,
+      "feetY": 242,
+      "equipment": "orderly rear bottle rack and one compact articulated brass dosing arm"
+    },
+    "animationJobs": "design/cast-production/production-records/nix-animation-jobs.json",
+    "rawAnimationExport": "assets/animations/nix/pixellab-export-complete",
+    "repairScript": "tools/build_nix_repairs.py"
+  },
+  "approvedAnimations": {
+    "idle": "assets/animations/nix/idle-impatient-triage-approved-v1",
+    "move": "assets/animations/nix/move-powered-medical-response-approved-v1",
+    "skill": [
+      "assets/animations/nix/skill-bitter-draught-select-approved-v1",
+      "assets/animations/nix/skill-bitter-draught-dose-approved-v1"
+    ],
+    "burst": [
+      "assets/animations/nix/burst-panacea-diagnose-approved-v1",
+      "assets/animations/nix/burst-panacea-compound-approved-v1",
+      "assets/animations/nix/burst-panacea-administer-approved-v1"
+    ],
+    "hit": "assets/animations/nix/hit-chair-jolt-approved-v1",
+    "stagger": "assets/animations/nix/stagger-brake-skid-approved-v1",
+    "victory": "assets/animations/nix/victory-clinical-check-approved-v1",
+    "defeat": "assets/animations/nix/defeat-emergency-powerdown-approved-v1"
+  },
+  "qa": {
+    "structural": "passed",
+    "spriteContract": "passed",
+    "standaloneValidator": "passed",
+    "engineSelfTests": "158/158",
+    "finalVisualQaBoard": "assets/animations/initial-cast-final-qa-board.png",
+    "edgeContacts": 0,
+    "runtimePresentation": "reaction timing, terminal animation hold, and post-defeat fade fixes integrated",
+    "unitLibraryAndLiveCombat": "pending",
+    "notes": [
+      "oversized pale generated spell arcs were replaced with clinical water tools and compact dose paths",
+      "hit and stagger keep the medicine rack secured; stagger was rebuilt exclusively from Southwest frames",
+      "movement adds controlled wheel thrust and tank wake without changing the essential chair rig",
+      "defeat removes generated text and explosion artifacts, powers down the chair, and holds the emergency-control pose",
+      "approved authored frames received a narrowly-scoped transparent edge-feather pass where required; final cast QA reports no hard canvas-edge contacts",
+      "Nix intentionally has no Arts animation in the current kit"
+    ]
+  },
+  "identityLocks": [
+    "adult mermaid anatomy with exactly one continuous tail and no human legs",
+    "essential brass water-tank mobility chair remains part of the base rig",
+    "sharp scowling face, dark-teal pinned hair and pince-nez remain stable",
+    "base rig remains free of loose bottles, syringe and dosing arm",
+    "south-west is mandatory for combat production"
+  ]
+}

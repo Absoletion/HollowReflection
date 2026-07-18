@@ -1,0 +1,41 @@
+{
+  "unit": "tobin",
+  "form": "4star",
+  "status": "integrated-pending-final-visual-qa",
+  "canvas": { "width": 256, "height": 256, "anchor": { "x": 128, "y": 238 } },
+  "visibleBody": { "targetHeightPx": 145, "equippedMeasuredHeightPx": 143 },
+  "battleDirection": "south",
+  "directionStatus": "legacy exception; all future regeneration must use south-west",
+  "sourceReference": "assets/character-references/tobin-front-weaponless-256-pixellab-v1.png",
+  "pixellab": {
+    "baseCharacterId": "a72c9a7d-f434-4e43-826f-c40da35300bf",
+    "equippedStateId": "58cc91cd-4dbf-4c1e-9034-db92623c721a",
+    "animations": {
+      "skill": "0cc91334-0e05-41fb-ac1f-35e7a9b73a0a",
+      "idle": "bbbab25d-cb57-4d9b-a61b-09dac6659b46",
+      "move": "ae9b249f-c4c0-462e-b151-7674c68044b5",
+      "hit": "6d07b8c1-d02a-4c7c-a664-8bbce31624fd",
+      "stagger": "5dfa2c87-5e86-44cb-b65d-d5b235cdead4",
+      "victory": "70897d84-b4cc-4ca5-adb9-e561ee0dc237",
+      "defeat": "05dc01c8-86a9-44ec-8aec-eb32b9ffdfde",
+      "artsRead": "0efdb635-b9bb-487a-8b58-40cdfb4ef249",
+      "artsWard": "50f5b3e3-ba7a-4352-a601-7941476bb1d3",
+      "burstSilence": "93c98894-2020-42e1-a07b-346b02e46160",
+      "burstConfession": "180185e4-9d12-4e6a-8fe6-9da914d5d014",
+      "burstPressure": "70c8fdcb-9e5a-476a-a7ab-b4de5ca06c6b"
+    }
+  },
+  "frames": "assets/animations/tobin/",
+  "builder": "tools/build_embedded_pixellab_sprites.py",
+  "verification": {
+    "spriteContractTests": "passed",
+    "engineTests": "158 passed, 0 failed",
+    "currentRemainingCastFrames": 709,
+    "currentRuntimeFramesIncludingReferenceCast": 1218,
+    "finalVisualQaBoard": "assets/animations/initial-cast-final-qa-board.png",
+    "edgeContacts": 0,
+    "runtimePresentation": "reaction timing, terminal animation hold, and post-defeat fade fixes integrated",
+    "unitLibraryVisual": "pending",
+    "liveCombatVisual": "pending"
+  }
+}

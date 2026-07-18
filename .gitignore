@@ -1,0 +1,30 @@
+node_modules/
+tmp/
+debug.log
+.env
+.env.*
+!.env.example
+
+# Rebuilt outputs and historical snapshots
+hollowing-demo.html
+archive-*.html
+tools/combat-milestone-inline.js
+
+# Local art-generation workbench; approved runtime bundles remain tracked.
+generated-art-round-*/
+generated/*/
+dev/pixellab-pilot/
+dev/sprites2/
+assets/animations/
+assets/splash-art/
+*.zip
+hale-*-bundle/
+hale-nightmares-end-*/
+hale-4star-complete-*/
+Hale_*_frames/
+
+# Editor and OS files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

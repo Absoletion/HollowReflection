@@ -1,0 +1,126 @@
+{
+  "unit": "brigga",
+  "form": "3star",
+  "status": "animation-library-integrated-staging",
+  "canvas": {
+    "width": 256,
+    "height": 256,
+    "anchor": {
+      "x": 128,
+      "y": 238
+    }
+  },
+  "visibleBody": {
+    "targetHeightPx": 160,
+    "measuredWidthPx": 95,
+    "measuredHeightPx": 160,
+    "measuredBounds": {
+      "minX": 80,
+      "minY": 78,
+      "maxX": 174,
+      "maxY": 237
+    }
+  },
+  "requiredBattleDirection": "south-west",
+  "sourceReference": "assets/character-references/brigga-front-weaponless-256-pixellab-v1.png",
+  "transparentSource": "assets/character-references/brigga-front-weaponless-transparent-source-v1.png",
+  "chromaSource": "assets/character-references/brigga-front-weaponless-chroma-v1.png",
+  "pixellab": {
+    "baseCharacterId": "e53852b1-cfb4-432b-bb66-beac87766846",
+    "equippedStateId": "793ab0cf-6f86-4570-86f0-70fcbaa2ca52",
+    "rejected": {
+      "d314da04-b0c5-457d-ab9b-f3c6df0ae27b": "Southwest rotation invented a large detached white object above the head; measured silhouette expanded to 227 px and failed the 156-164 px body envelope.",
+      "2d783343-1eb0-4ac3-b629-7dda2a0a6853": "Clean reroll preserved the body but invented a detached orange overhead fracture shape in Southwest; retained only as the parent for the approved clean state."
+    },
+    "approvedSouthwest": {
+      "path": "assets/character-references/brigga-pixellab-base-southwest-clean-state-v1.png",
+      "measuredWidthPx": 86,
+      "measuredHeightPx": 164,
+      "feetY": 241
+    },
+    "approvedEquippedSouthwest": {
+      "path": "assets/character-references/brigga-pixellab-equipped-southwest-v1.png",
+      "measuredWidthPx": 148,
+      "measuredHeightPx": 161,
+      "feetY": 242,
+      "weapon": "single two-handed powder-keg demolition maul"
+    },
+    "approvedSourceAnimations": {
+      "idle": "f19d6cfb-6f98-45d1-9bcc-f8100d3aff5e",
+      "move": "857618d6-509a-4ee8-8aea-d350a674cd1b",
+      "skillSight": "bafaed50-8e3c-444e-a29d-cf6a48a90325",
+      "artsMark": "1030fb98-f106-49a8-97df-ebe3737f59d9",
+      "artsFire": "f6ad12fd-8e36-415d-a1b9-6b166214997c",
+      "burstSurvey": "e8c18410-56bb-4a48-bd4d-40203dc33c94",
+      "burstCommit": "8e89cc73-a104-477c-8375-fcf0b6dfcaa4",
+      "hit": "139aa2cf-a956-487f-a6f1-19145c1cdb89",
+      "stagger": "810ea9c1-ea05-44a1-9dbc-c3f4acbb3543",
+      "victory": "a0b61e7a-f128-444b-a834-c86dbaa9f523",
+      "defeat": "7f9d1b09-5088-4857-907d-91e4d857095b"
+    },
+    "rejectedSourceAnimations": {
+      "e5663206-6317-4b6e-8625-f73bcfe152ff": "Dedicated Kegcracker strike stalled overhead without a readable impact; approved Skill reuses the stronger Grand Opening commitment body poses.",
+      "3b7b5cc5-e0ce-4de1-a5d9-9544b4d3e12e": "Generated Grand Opening impact contained only detached white sparks and no impact body motion; replaced with an authored fault-line eruption over the approved planted strike pose."
+    }
+  },
+  "approvedRuntimeFolders": {
+    "idle": [
+      "assets/animations/brigga/idle-reading-fault-southwest-v1"
+    ],
+    "move": [
+      "assets/animations/brigga/move-heavy-scuttle-southwest-v1"
+    ],
+    "skill": [
+      "assets/animations/brigga/skill-kegcracker-approved-v1"
+    ],
+    "arts": [
+      "assets/animations/brigga/arts-blast-mining-mark-approved-v1",
+      "assets/animations/brigga/arts-blast-mining-fire-approved-v1"
+    ],
+    "burst": [
+      "assets/animations/brigga/burst-grand-opening-survey-approved-v1",
+      "assets/animations/brigga/burst-grand-opening-commit-approved-v1",
+      "assets/animations/brigga/burst-grand-opening-impact-authored-v1"
+    ],
+    "hit": [
+      "assets/animations/brigga/hit-irritated-recoil-approved-v1"
+    ],
+    "stagger": [
+      "assets/animations/brigga/stagger-maul-brace-approved-v1"
+    ],
+    "victory": [
+      "assets/animations/brigga/victory-record-results-approved-v1"
+    ],
+    "defeat": [
+      "assets/animations/brigga/defeat-kneeling-by-maul-approved-v1"
+    ]
+  },
+  "repairs": {
+    "script": "tools/build_brigga_repairs.py",
+    "summary": [
+      "removed detached overhead and duplicate-keg components",
+      "removed unstable Stagger in-betweens",
+      "excluded the artifact-bearing final Idle frame",
+      "stitched the strongest measurement and commitment poses into Kegcracker",
+      "authored Fire fault-line, mining-charge, chain-detonation and pressure-ring effects"
+    ]
+  },
+  "qa": {
+    "structural": "passed",
+    "spriteContract": "passed",
+    "standaloneValidator": "passed",
+    "engineSelfTests": "158/158",
+    "finalVisualQaBoard": "assets/animations/initial-cast-final-qa-board.png",
+    "edgeContacts": 0,
+    "runtimePresentation": "reaction timing, terminal animation hold, and post-defeat fade fixes integrated",
+    "unitLibraryAndLiveCombat": "pending"
+  },
+  "identityLocks": [
+    "adult dwarf anatomy, never child or chibi",
+    "scorched-orange twin buns remain compact and asymmetrically frayed",
+    "soot-marked cheeks and broad low-center-of-gravity silhouette",
+    "demolition apron and secured measuring tools remain stable",
+    "base identity reference remains weaponless",
+    "south-west is mandatory for combat production"
+  ]
+}

@@ -1,0 +1,88 @@
+{
+  "unit": "hearthgar",
+  "direction": "south-west",
+  "personalityThesis": "scared, standing, protecting",
+  "sharedLocks": "Fixed 256 camera and body scale; preserve bonded armor, nervous human visor eyes, furnace geometry, brass repairs, both gauntlets and feet; no yellow cylinder, weapon, external shield, extra limbs, zoom, baseline drift, clipping or armor morph.",
+  "animations": {
+    "idle": {
+      "frames": 8,
+      "fps": 8,
+      "loop": true,
+      "prompt": "Heavy combat idle. Feet and armor mass stay immovable. Furnace glow rises and falls like slow breathing; eyes flick once toward allies, then enemy. One gauntlet tightens and one restrained ember escapes a shoulder vent. Alert and anxious, never bored or roaring."
+    },
+    "move": {
+      "frames": 8,
+      "fps": 10,
+      "loop": true,
+      "prompt": "Protective rearguard advance toward screen-left. Heavy heel-to-toe alternating steps with no repeated-leg stutter. Torso remains between danger and allies; forward open gauntlet shepherds the party. Vents puff only on footfalls. Urgent commitment, not slow-motion comedy."
+    },
+    "skillStepIn": {
+      "frames": 8,
+      "fps": 15,
+      "loop": false,
+      "prompt": "Brace the Hearth phase one. Eyes flash with alarm at an ally threatened offscreen. Hearthgar commits instantly and drives one heavy step across the ally's line, lead gauntlet opening protectively while the rear fist draws toward the furnace. End low and ready to lock."
+    },
+    "skillBrace": {
+      "frames": 8,
+      "fps": 15,
+      "loop": false,
+      "prompt": "Continue from step-in keyframe. Plant both feet, lower center, cross one gauntlet before the furnace and spread the other arm as a wall. Armor locks click from boots upward. Compact red-orange barrier plane forms behind his arm and in front of allies. End in a stable guarding hold."
+    },
+    "artsGather": {
+      "frames": 8,
+      "fps": 12,
+      "loop": false,
+      "prompt": "Bank the Coals phase one. Up to five lit Cinder indicators detach in exact authored positions and spiral into the furnace. Hearthgar presses both palms to the door and visibly strains; vents seal and orange glow compresses toward near-black. End at maximum compression."
+    },
+    "artsShield": {
+      "frames": 8,
+      "fps": 12,
+      "loop": false,
+      "prompt": "Continue from compressed furnace. Release one broad orange heat-ring that divides into four ember-edged protective shields traveling across the party plane. Core returns to low idle and Cinder sockets extinguish. Protection only, no healing or enemy damage explosion."
+    },
+    "burstFear": {
+      "frames": 8,
+      "fps": 11,
+      "loop": false,
+      "prompt": "Open the Furnace phase one. Eyes widen; Hearthgar checks allies behind him. Fear holds for one beat, then he plants harder and chooses to stay. Chest locks release in sequence. End with hands moving toward the furnace door."
+    },
+    "burstOpen": {
+      "frames": 8,
+      "fps": 11,
+      "loop": false,
+      "prompt": "Continue from unlocked chest. Furnace door opens into a white-hot orange core bounded by unchanged black iron. A towering heat silhouette rises behind him like a protective giant, never a demon. Both arms spread as a concussive furnace roar draws all enemies."
+    },
+    "burstAnswer": {
+      "frames": 8,
+      "fps": 11,
+      "loop": false,
+      "prompt": "Continue from open furnace. Two short retaliatory ember arcs answer anticipated impacts toward screen-left while Hearthgar remains planted. End in a sustained open-furnace defensive pose suitable for runtime retaliation effects and a held taunt state."
+    },
+    "hit": {
+      "frames": 6,
+      "fps": 14,
+      "loop": false,
+      "prompt": "Suit takes a blow squarely. Armor compresses only one or two pixels, one boot digs in, eyes flinch then refocus, and exactly one new Cinder socket ignites. The two-ton suit never flies backward."
+    },
+    "stagger": {
+      "frames": 8,
+      "fps": 12,
+      "loop": false,
+      "prompt": "Severe impact drives Hearthgar to one knee. One gauntlet catches the ground while the other remains between danger and allies. Furnace sputters without changing size; he begins pushing upright in the final frames."
+    },
+    "victory": {
+      "frames": 8,
+      "fps": 8,
+      "loop": false,
+      "holdLast": true,
+      "prompt": "Remain braced one beat, realize danger is over, vent one relieved puff, check allies, then give an awkward tiny thumbs-up with the enormous gauntlet. Humor comes only from scale contrast. Hold the final pose."
+    },
+    "defeat": {
+      "frames": 8,
+      "fps": 8,
+      "loop": false,
+      "holdLast": true,
+      "prompt": "Use remaining strength to kneel facing the enemy with one arm still covering allies. Furnace dims orange to deep red; human eyes remain visible and conscious. Never explode, eject the teenager, or collapse backward. Hold final pose."
+    }
+  }
+}

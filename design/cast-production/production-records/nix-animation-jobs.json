@@ -1,0 +1,90 @@
+[
+    {
+        "name":  "Nix Impatient Triage Idle Southwest",
+        "frames":  8,
+        "direction":  "south-west",
+        "submittedAt":  "2026-07-16T06:12:06.3763289-05:00",
+        "jobId":  null,
+        "response":  "character: 15f2da2e-5434-4a99-80ba-30f90cc8ff47\nanimation: v3 custom (Restrained combat idle, Southwest only. Nix and the entire tank-chair remain fixed. Tank water circulates by one pixel, she checks one rack bottle against the light, taps her pince-nez into place and looks back toward the party. Wheels and brakes never move. Bottle count, chair, tail and tank remain exact. No drift, camera motion, loose prop or cheerful acting.)\ndirections: south-west (1 jobs)\nframes: 9 (1 reference + 8 animated)\ncost: 8 generations (8/dir x 1)\neta: ~30-60s/direction\n\nhint: get_character(character_id=\"15f2da2e-5434-4a99-80ba-30f90cc8ff47\")"
+    },
+    {
+        "name":  "Nix Powered Medical Response Southwest",
+        "frames":  8,
+        "direction":  "south-west",
+        "submittedAt":  "2026-07-16T06:12:09.2291237-05:00",
+        "jobId":  null,
+        "response":  "character: 15f2da2e-5434-4a99-80ba-30f90cc8ff47\nanimation: v3 custom (Controlled fast chair movement toward screen-left, Southwest only. Wheels rotate cleanly, suspension compresses slightly and Nix leans forward while the tank water forms a small delayed wake. The six bottles stay locked, one tail remains inside the same tank and the dosing arm stays attached. No hopping chassis, wheel-size change, human legs, camera drift or runaway comedy.)\ndirections: south-west (1 jobs)\nframes: 9 (1 reference + 8 animated)\ncost: 8 generations (8/dir x 1)\neta: ~30-60s/direction\n\nhint: get_character(character_id=\"15f2da2e-5434-4a99-80ba-30f90cc8ff47\")"
+    },
+    {
+        "name":  "Nix Bitter Draught Select Southwest",
+        "frames":  8,
+        "direction":  "south-west",
+        "submittedAt":  "2026-07-16T06:12:12.1073696-05:00",
+        "jobId":  null,
+        "response":  "character: 15f2da2e-5434-4a99-80ba-30f90cc8ff47\nanimation: v3 custom (Skill phase one, Southwest only. Nix identifies an injured ally, plucks one dark-aqua bottle from the fixed six-bottle rack without looking, snaps its seal and loads it into the same articulated dosing arm. Precise irritated clinical acting. No dose release yet, weapon, poison attack, extra bottle, human legs, chair morph or camera motion.)\ndirections: south-west (1 jobs)\nframes: 9 (1 reference + 8 animated)\ncost: 8 generations (8/dir x 1)\neta: ~30-60s/direction\n\nhint: get_character(character_id=\"15f2da2e-5434-4a99-80ba-30f90cc8ff47\")"
+    },
+    {
+        "name":  "Nix Bitter Draught Dose Southwest",
+        "frames":  8,
+        "direction":  "south-west",
+        "submittedAt":  "2026-07-16T06:12:14.9897641-05:00",
+        "jobId":  null,
+        "response":  "character: 15f2da2e-5434-4a99-80ba-30f90cc8ff47\nanimation: v3 custom (Skill phase two, Southwest only. Nix sends the single loaded medicine toward an ally through the articulated dosing arm or a compact water-guided arc, pulls dark debuff motes back into the emptied bottle and points the ally firmly into formation. Strong heal and cleanse, not an attack. No enemy target, duplicate bottle, chair change, human legs, camera motion or explosion.)\ndirections: south-west (1 jobs)\nframes: 9 (1 reference + 8 animated)\ncost: 8 generations (8/dir x 1)\neta: ~30-60s/direction\n\nhint: get_character(character_id=\"15f2da2e-5434-4a99-80ba-30f90cc8ff47\")"
+    },
+    {
+        "name":  "Nix Panacea Diagnose Southwest",
+        "frames":  8,
+        "direction":  "south-west",
+        "submittedAt":  "2026-07-16T06:12:17.8593325-05:00",
+        "jobId":  null,
+        "response":  "character: 15f2da2e-5434-4a99-80ba-30f90cc8ff47\nanimation: v3 custom (Burst phase one, Southwest only. Nix brakes the same tank-chair hard beside one ally, the six-bottle rack unfolds in a precise semicircle and she scans the patient through a circular water lens. Clinical urgency with one continuous mermaid tail and stable chair. No party-wide effect, enemy attack, human legs, camera zoom or bottle duplication.)\ndirections: south-west (1 jobs)\nframes: 9 (1 reference + 8 animated)\ncost: 8 generations (8/dir x 1)\neta: ~30-60s/direction\n\nhint: get_character(character_id=\"15f2da2e-5434-4a99-80ba-30f90cc8ff47\")"
+    },
+    {
+        "name":  "Nix Panacea Compound Southwest",
+        "frames":  8,
+        "direction":  "south-west",
+        "submittedAt":  "2026-07-16T06:43:06.3583920-05:00",
+        "jobId":  null,
+        "response":  "character: 15f2da2e-5434-4a99-80ba-30f90cc8ff47\nanimation: v3 custom (Burst phase two, Southwest only. Nix selects exactly three bright reagents from the same rack and combines them in midair using measured water pressure, compressing them into one white-aqua medical dose. Her apparatus, tail and chair remain stable. No explosion, poison, enemy target, extra limbs, human legs, camera motion or bottle-rack morph.)\ndirections: south-west (1 jobs)\nframes: 9 (1 reference + 8 animated)\ncost: 8 generations (8/dir x 1)\neta: ~30-60s/direction\n\nhint: get_character(character_id=\"15f2da2e-5434-4a99-80ba-30f90cc8ff47\")"
+    },
+    {
+        "name":  "Nix Panacea Administer Southwest",
+        "frames":  8,
+        "direction":  "south-west",
+        "submittedAt":  "2026-07-16T06:43:24.1263627-05:00",
+        "jobId":  null,
+        "response":  "character: 15f2da2e-5434-4a99-80ba-30f90cc8ff47\nanimation: v3 custom (Burst phase three, Southwest only. Nix administers the single white-aqua dose to one ally, verifies recovery, exhales in hidden relief and immediately adjusts her pince-nez with an irritated expression. End returning to clinical guard. No party-wide heal, enemy attack, cheer, human legs, chair resize, camera movement or duplicate dose.)\ndirections: south-west (1 jobs)\nframes: 9 (1 reference + 8 animated)\ncost: 8 generations (8/dir x 1)\neta: ~30-60s/direction\n\nhint: get_character(character_id=\"15f2da2e-5434-4a99-80ba-30f90cc8ff47\")"
+    },
+    {
+        "name":  "Nix Hit Southwest",
+        "frames":  6,
+        "direction":  "south-west",
+        "submittedAt":  "2026-07-16T06:43:27.1159860-05:00",
+        "jobId":  null,
+        "response":  "character: 15f2da2e-5434-4a99-80ba-30f90cc8ff47\nanimation: v3 custom (Compact ordinary hit reaction, Southwest only. Chair suspension jolts, tank water sloshes, Nix grips the rail and one brake catches; the bottle rack stays intact and she glares toward the attacker before settling. No attack, ejection, human legs, camera motion, chair resize or loose bottle.)\ndirections: south-west (1 jobs)\nframes: 7 (1 reference + 6 animated)\ncost: 6 generations (6/dir x 1)\neta: ~30-60s/direction\n\nhint: get_character(character_id=\"15f2da2e-5434-4a99-80ba-30f90cc8ff47\")"
+    },
+    {
+        "name":  "Nix Stagger Southwest",
+        "frames":  8,
+        "direction":  "south-west",
+        "submittedAt":  "2026-07-16T06:43:29.9873694-05:00",
+        "jobId":  null,
+        "response":  "character: 15f2da2e-5434-4a99-80ba-30f90cc8ff47\nanimation: v3 custom (Heavy stagger without defeat, Southwest only. Both brakes skid, the chair rotates only a few degrees, six bottles rattle in sequence, and Nix folds protectively over the tank controls before forcing the chair square again. No overturn, ejection, spill, human legs, attack, camera shake or chair morph.)\ndirections: south-west (1 jobs)\nframes: 9 (1 reference + 8 animated)\ncost: 8 generations (8/dir x 1)\neta: ~30-60s/direction\n\nhint: get_character(character_id=\"15f2da2e-5434-4a99-80ba-30f90cc8ff47\")"
+    },
+    {
+        "name":  "Nix Victory Clinical Check Southwest",
+        "frames":  8,
+        "direction":  "south-west",
+        "submittedAt":  "2026-07-16T06:43:32.8315719-05:00",
+        "jobId":  null,
+        "response":  "character: 15f2da2e-5434-4a99-80ba-30f90cc8ff47\nanimation: v3 custom (Non-looping victory, Southwest only. Nix checks the nearest ally first, confirms they are breathing, cleans one small instrument and adjusts her pince-nez with a grumpy satisfied huff. End in a held professional guard pose. No cheer, reset, human legs, camera movement, bottle duplication or chair change.)\ndirections: south-west (1 jobs)\nframes: 9 (1 reference + 8 animated)\ncost: 8 generations (8/dir x 1)\neta: ~30-60s/direction\n\nhint: get_character(character_id=\"15f2da2e-5434-4a99-80ba-30f90cc8ff47\")"
+    },
+    {
+        "name":  "Nix Defeat Emergency Control Southwest",
+        "frames":  8,
+        "direction":  "south-west",
+        "submittedAt":  "2026-07-16T06:43:35.7459437-05:00",
+        "jobId":  null,
+        "response":  "character: 15f2da2e-5434-4a99-80ba-30f90cc8ff47\nanimation: v3 custom (Non-looping defeat, Southwest only. The same tank-chair loses power gradually, rack lights shut down one by one, and Nix lowers herself against the tank rim while keeping one hand on the emergency control. Tank remains intact and full. End in a stable held pose. No broken glass, drained water, human legs, rise, loop, disappearance, camera motion or chair resize.)\ndirections: south-west (1 jobs)\nframes: 9 (1 reference + 8 animated)\ncost: 8 generations (8/dir x 1)\neta: ~30-60s/direction\n\nhint: get_character(character_id=\"15f2da2e-5434-4a99-80ba-30f90cc8ff47\")"
+    }
+]

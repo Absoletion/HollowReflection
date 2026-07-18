@@ -1,0 +1,98 @@
+[
+    {
+        "name":  "Brant Planted Anchor Idle Southwest",
+        "frames":  8,
+        "direction":  "south-west",
+        "submittedAt":  "2026-07-16T05:47:17.5003972-05:00",
+        "jobId":  null,
+        "response":  "character: 6cfe639a-b1a8-43e8-9541-241ff2b2f9dc\nanimation: v3 custom (Restrained combat idle, Southwest only. Brant remains in his low protective anchor stance facing screen-left. Both boots stay planted and the body translates no more than one pixel. Chest breathes once, both hands tighten on the same chain, one link settles under real weight, and his eyes briefly check the party before returning to the enemy. The one anchor never bobs, morphs, floats, duplicates or changes size. No camera motion, zoom, water effect or detached links.)\ndirections: south-west (1 jobs)\nframes: 9 (1 reference + 8 animated)\ncost: 8 generations (8/dir x 1)\neta: ~30-60s/direction\n\nhint: get_character(character_id=\"6cfe639a-b1a8-43e8-9541-241ff2b2f9dc\")"
+    },
+    {
+        "name":  "Brant Heavy Haul Advance Southwest",
+        "frames":  8,
+        "direction":  "south-west",
+        "submittedAt":  "2026-07-16T05:47:20.3356642-05:00",
+        "jobId":  null,
+        "response":  "character: 6cfe639a-b1a8-43e8-9541-241ff2b2f9dc\nanimation: v3 custom (Purposeful heavy combat advance toward screen-left, Southwest only. Brant takes two clean weighted steps while hauling the same anchor chain close to his center. The anchor glides then hops with delayed secondary motion and each boot lands with an absolute stop. Keep one anchor, one continuous chain, stable face, body scale and baseline. No limp, treadmill slide, repeated leg pose, camera bounce, floating anchor or chain morph.)\ndirections: south-west (1 jobs)\nframes: 9 (1 reference + 8 animated)\ncost: 8 generations (8/dir x 1)\neta: ~30-60s/direction\n\nhint: get_character(character_id=\"6cfe639a-b1a8-43e8-9541-241ff2b2f9dc\")"
+    },
+    {
+        "name":  "Brant Anchor Drop Load Southwest",
+        "frames":  8,
+        "direction":  "south-west",
+        "submittedAt":  "2026-07-16T05:47:23.1451552-05:00",
+        "jobId":  null,
+        "response":  "character: 6cfe639a-b1a8-43e8-9541-241ff2b2f9dc\nanimation: v3 custom (Skill phase one, Southwest only. Brant sinks low and draws the same heavy chain hand-over-hand, loading the single anchor behind and above him for one overhead strike. Hips, shoulders and chain tension build together. Face stays calm and focused. The anchor and chain remain physical and consistent. No jump, spin, attack release, impact effect, camera change, duplicated anchor or detached links.)\ndirections: south-west (1 jobs)\nframes: 9 (1 reference + 8 animated)\ncost: 8 generations (8/dir x 1)\neta: ~30-60s/direction\n\nhint: get_character(character_id=\"6cfe639a-b1a8-43e8-9541-241ff2b2f9dc\")"
+    },
+    {
+        "name":  "Brant Anchor Drop Impact Southwest",
+        "frames":  8,
+        "direction":  "south-west",
+        "submittedAt":  "2026-07-16T05:47:25.9329034-05:00",
+        "jobId":  null,
+        "response":  "character: 6cfe639a-b1a8-43e8-9541-241ff2b2f9dc\nanimation: v3 custom (Skill phase two, Southwest only. From a loaded stance Brant drives one explosive overhead anchor arc and plants the flukes forward-left with a brutal full-body stop, then begins wrenching it free. One incomparable downward hit with clear anticipation, impact and recovery. Keep one exact anchor and one continuous chain attached to both hands. No repeated spin, leap, magical ribbon, second weapon, camera shake, zoom or disappearing frame.)\ndirections: south-west (1 jobs)\nframes: 9 (1 reference + 8 animated)\ncost: 8 generations (8/dir x 1)\neta: ~30-60s/direction\n\nhint: get_character(character_id=\"6cfe639a-b1a8-43e8-9541-241ff2b2f9dc\")"
+    },
+    {
+        "name":  "Brant Keelhaul Cast Southwest",
+        "frames":  8,
+        "direction":  "south-west",
+        "submittedAt":  "2026-07-16T05:47:29.3973004-05:00",
+        "jobId":  null,
+        "response":  "character: 6cfe639a-b1a8-43e8-9541-241ff2b2f9dc\nanimation: v3 custom (Burst phase one, Southwest only. Brant pivots from a wide planted stance, pays out the same heavy chain in measured links, and hurls the one anchor low past the enemy toward screen-left. Show physical release, chain feeding through his grip and the anchor leaving under real mass. He never leaves the ground. No drag yet, no teleport, no chain reversal, no second anchor, no water effect or camera motion.)\ndirections: south-west (1 jobs)\nframes: 9 (1 reference + 8 animated)\ncost: 8 generations (8/dir x 1)\neta: ~30-60s/direction\n\nhint: get_character(character_id=\"6cfe639a-b1a8-43e8-9541-241ff2b2f9dc\")"
+    },
+    {
+        "name":  "Brant Keelhaul Drag Southwest",
+        "frames":  8,
+        "direction":  "south-west",
+        "submittedAt":  "2026-07-16T05:47:39.8025221-05:00",
+        "jobId":  null,
+        "response":  "character: 6cfe639a-b1a8-43e8-9541-241ff2b2f9dc\nanimation: v3 custom (Burst phase two, Southwest only. The chain snaps fully taut toward screen-left; Brant\u0027s boots dig in, back and hips engage, and he performs one overwhelming haul that drags the same anchor through the target lane from behind. This is the single damage and break event. Make tension and absolute stopping force unmistakable. No anchor teleport, elastic glowing chain, spin, jump, camera zoom, duplicate weapon or detached link.)\ndirections: south-west (1 jobs)\nframes: 9 (1 reference + 8 animated)\ncost: 8 generations (8/dir x 1)\neta: ~30-60s/direction\n\nhint: get_character(character_id=\"6cfe639a-b1a8-43e8-9541-241ff2b2f9dc\")"
+    },
+    {
+        "name":  "Brant Keelhaul Recover Southwest",
+        "frames":  8,
+        "direction":  "south-west",
+        "submittedAt":  "2026-07-16T05:47:43.0237669-05:00",
+        "jobId":  null,
+        "response":  "character: 6cfe639a-b1a8-43e8-9541-241ff2b2f9dc\nanimation: v3 custom (Burst phase three, Southwest only. Brant arrests the returning anchor without being pulled off balance, catches chain tension through bent knees, settles the same anchor forward-left and returns to his protective guard. Heavy recovery with one final iron stop. No celebration, fall, camera motion, second anchor, chain morph, detached link or magical effect.)\ndirections: south-west (1 jobs)\nframes: 9 (1 reference + 8 animated)\ncost: 8 generations (8/dir x 1)\neta: ~30-60s/direction\n\nhint: get_character(character_id=\"6cfe639a-b1a8-43e8-9541-241ff2b2f9dc\")"
+    },
+    {
+        "name":  "Brant Hit Southwest",
+        "frames":  6,
+        "direction":  "south-west",
+        "submittedAt":  "2026-07-16T05:47:45.8934708-05:00",
+        "jobId":  null,
+        "response":  "character: 6cfe639a-b1a8-43e8-9541-241ff2b2f9dc\nanimation: v3 custom (Compact ordinary hit reaction, Southwest only. One shoulder takes the blow, torso compresses and one boot grinds backward no more than two pixels while both hands keep the chain. Immediately recover to the same guard. No attack, kneel, dropped chain, anchor change, camera movement, zoom or extra effect.)\ndirections: south-west (1 jobs)\nframes: 7 (1 reference + 6 animated)\ncost: 6 generations (6/dir x 1)\neta: ~30-60s/direction\n\nhint: get_character(character_id=\"6cfe639a-b1a8-43e8-9541-241ff2b2f9dc\")"
+    },
+    {
+        "name":  "Brant Stagger Anchor Brace Southwest",
+        "frames":  8,
+        "direction":  "south-west",
+        "submittedAt":  "2026-07-16T05:47:49.0518698-05:00",
+        "jobId":  null,
+        "response":  "character: 6cfe639a-b1a8-43e8-9541-241ff2b2f9dc\nanimation: v3 custom (Heavy stagger without defeat, Southwest only. Brant is disrupted, drives the same anchor into the ground as an emergency brace, knees fold, chain jerks taut, and he looks once toward the party before forcing himself back to a wall-like stance. No full fall, attack, spin, camera change, duplicated anchor or detached chain.)\ndirections: south-west (1 jobs)\nframes: 9 (1 reference + 8 animated)\ncost: 8 generations (8/dir x 1)\neta: ~30-60s/direction\n\nhint: get_character(character_id=\"6cfe639a-b1a8-43e8-9541-241ff2b2f9dc\")"
+    },
+    {
+        "name":  "Brant Victory Check Southwest",
+        "frames":  8,
+        "direction":  "south-west",
+        "submittedAt":  "2026-07-16T05:47:52.4355399-05:00",
+        "jobId":  null,
+        "response":  "character: 6cfe639a-b1a8-43e8-9541-241ff2b2f9dc\nanimation: v3 custom (Non-looping victory, Southwest only. Brant sets the same anchor down with one final iron thud, rests both hands on the chain or shaft, checks that the party is standing, and gives one small approving nod. Quiet professional relief, no boast or flex. End in a planted hold pose. No reset, camera movement, anchor morph or duplicate chain.)\ndirections: south-west (1 jobs)\nframes: 9 (1 reference + 8 animated)\ncost: 8 generations (8/dir x 1)\neta: ~30-60s/direction\n\nhint: get_character(character_id=\"6cfe639a-b1a8-43e8-9541-241ff2b2f9dc\")"
+    },
+    {
+        "name":  "Brant Defeat Barrier Southwest",
+        "frames":  10,
+        "direction":  "south-west",
+        "submittedAt":  "2026-07-16T06:00:18.0448669-05:00",
+        "jobId":  null,
+        "response":  "error: 422: frame_count 10 too high for 256x256 image. max frame_count: 8"
+    },
+    {
+        "name":  "Brant Defeat Barrier Southwest",
+        "frames":  8,
+        "direction":  "south-west",
+        "submittedAt":  "2026-07-16T06:08:54.1584715-05:00",
+        "jobId":  null,
+        "response":  "character: 6cfe639a-b1a8-43e8-9541-241ff2b2f9dc\nanimation: v3 custom (Non-looping defeat, Southwest only. Brant uses the same anchor to resist falling, sinks to one knee, then sits his weight back against it while still forming a barrier toward the party and keeping the chain in hand. End in a stable held pose. No rise, loop, bounce, shrink, disappearance, camera change, broken anchor or detached chain.)\ndirections: south-west (1 jobs)\nframes: 9 (1 reference + 8 animated)\ncost: 8 generations (8/dir x 1)\neta: ~30-60s/direction\n\nhint: get_character(character_id=\"6cfe639a-b1a8-43e8-9541-241ff2b2f9dc\")"
+    }
+]

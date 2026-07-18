@@ -1,0 +1,86 @@
+{
+  "unit": "milla",
+  "form": "4star",
+  "status": "southwest-animation-library-integrated-structural-qa-passed",
+  "canvas": {
+    "width": 256,
+    "height": 256,
+    "anchor": {"x": 128, "y": 238}
+  },
+  "visibleBody": {
+    "targetHeightPx": 183,
+    "measuredWidthPx": 79,
+    "measuredHeightPx": 183,
+    "measuredBounds": {"minX": 89, "minY": 56, "maxX": 167, "maxY": 238}
+  },
+  "requiredBattleDirection": "south-west",
+  "sourceReference": "assets/character-references/milla-front-weaponless-256-pixellab-v1.png",
+  "transparentSource": "assets/character-references/milla-front-weaponless-transparent-source-v1.png",
+  "chromaSource": "assets/character-references/milla-front-weaponless-chroma-v1.png",
+  "pixellab": {
+    "baseCharacterId": "0f841f80-a6c0-4219-80fe-ec38bf227f25",
+    "equippedStateId": "39851fa2-f8ee-47b8-99ed-3422b6a18fed",
+    "rejected": {
+      "38ce047d-47ca-4b4e-b73f-51a69ce50b88-initial": "The first equipment render permanently placed a letter in Milla's hand; the final state removed that action prop while preserving the satchel and stance."
+    },
+    "approvedSouthwest": {
+      "path": "assets/character-references/milla-pixellab-base-southwest-v1.png"
+    },
+    "approvedEquippedSouthwest": {
+      "path": "assets/character-references/milla-pixellab-equipped-southwest-clean-v2.png",
+      "measuredWidthPx": 104,
+      "measuredHeightPx": 181,
+      "feetY": 239,
+      "equipment": "one fixed cross-body courier satchel and exact winged boots"
+    },
+    "animationJobs": "design/cast-production/production-records/milla-animation-jobs.json",
+    "rawAnimationExport": "assets/animations/milla/pixellab-export-complete",
+    "repairScript": "tools/build_milla_repairs.py"
+  },
+  "approvedAnimations": {
+    "idle": "assets/animations/milla/idle-ready-route-approved-v1",
+    "move": "assets/animations/milla/move-courier-sprint-approved-v1",
+    "skill": [
+      "assets/animations/milla/skill-hand-off-launch-approved-v1",
+      "assets/animations/milla/skill-hand-off-deliver-approved-v1"
+    ],
+    "arts": [
+      "assets/animations/milla/arts-express-route-first-approved-v1",
+      "assets/animations/milla/arts-express-route-second-approved-v1",
+      "assets/animations/milla/arts-express-route-stop-approved-v1"
+    ],
+    "burst": [
+      "assets/animations/milla/burst-special-delivery-compound-approved-v1",
+      "assets/animations/milla/burst-special-delivery-route-approved-v1",
+      "assets/animations/milla/burst-special-delivery-finish-authored-v1"
+    ],
+    "hit": "assets/animations/milla/hit-satchel-protect-approved-v1",
+    "stagger": "assets/animations/milla/stagger-broken-momentum-approved-v1",
+    "victory": "assets/animations/milla/victory-route-ledger-approved-v1",
+    "defeat": "assets/animations/milla/defeat-satchel-guard-approved-v1"
+  },
+  "qa": {
+    "structural": "passed",
+    "spriteContract": "passed",
+    "standaloneValidator": "passed",
+    "engineSelfTests": "158/158",
+    "finalVisualQaBoard": "assets/animations/initial-cast-final-qa-board.png",
+    "edgeContacts": 0,
+    "runtimePresentation": "reaction timing, terminal animation hold, and post-defeat fade fixes integrated",
+    "unitLibraryAndLiveCombat": "pending",
+    "notes": [
+      "generated idle walked in place; approved idle locks the feet and uses controlled scarf and boot accents",
+      "floating symbols and changing parcel shapes were replaced by deterministic courier parcels and route trails",
+      "raw hit lifted the satchel over Milla's head; approved hit ends before the prop mutation",
+      "raw defeat stood upright; approved defeat now holds a translated deep protective satchel crouch",
+      "approved authored frames received a narrowly-scoped transparent edge-feather pass where required; final cast QA reports no hard canvas-edge contacts"
+    ]
+  },
+  "identityLocks": [
+    "short young-adult compact-anime courier anatomy",
+    "alert competent expression and windswept chestnut hair remain stable",
+    "vermilion scarf, brown courier layers and winged boots remain stable",
+    "base identity remains free of satchel and parcels",
+    "south-west is mandatory for combat production"
+  ]
+}

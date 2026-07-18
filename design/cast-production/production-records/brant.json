@@ -1,0 +1,79 @@
+{
+  "unit": "brant",
+  "form": "4star",
+  "status": "southwest-animation-library-integrated-structural-qa-passed",
+  "canvas": {
+    "width": 256,
+    "height": 256,
+    "anchor": {"x": 128, "y": 238}
+  },
+  "visibleBody": {
+    "targetHeightPx": 199,
+    "measuredWidthPx": 102,
+    "measuredHeightPx": 199,
+    "measuredBounds": {"minX": 77, "minY": 40, "maxX": 178, "maxY": 238}
+  },
+  "requiredBattleDirection": "south-west",
+  "sourceReference": "assets/character-references/brant-front-weaponless-256-pixellab-v1.png",
+  "transparentSource": "assets/character-references/brant-front-weaponless-transparent-source-v1.png",
+  "chromaSource": "assets/character-references/brant-front-weaponless-chroma-v1.png",
+  "pixellab": {
+    "baseCharacterId": "66ff1cbf-91b5-4987-88e2-947951628c08",
+    "cleanBaseStateId": "d6c0416e-9e45-461d-b01b-d18d702bc2f8",
+    "equippedStateId": "6cfe639a-b1a8-43e8-9541-241ff2b2f9dc",
+    "rejected": {
+      "66ff1cbf-91b5-4987-88e2-947951628c08": "Original Southwest rotation carried a detached yellow mark above the head; identity was repaired before equipment or animation work."
+    },
+    "approvedSouthwest": {
+      "path": "assets/character-references/brant-pixellab-base-southwest-clean-v2.png"
+    },
+    "approvedEquippedSouthwest": {
+      "path": "assets/character-references/brant-pixellab-equipped-southwest-v1.png",
+      "measuredWidthPx": 195,
+      "measuredHeightPx": 201,
+      "feetY": 243,
+      "weapon": "one full-size dark iron ship anchor and one continuous heavy chain"
+    },
+    "animationJobs": "design/cast-production/production-records/brant-animation-jobs.json",
+    "rawAnimationExport": "assets/animations/brant/pixellab-export-complete",
+    "repairScript": "tools/build_brant_repairs.py"
+  },
+  "approvedAnimations": {
+    "idle": "assets/animations/brant/idle-planted-anchor-approved-v1",
+    "move": "assets/animations/brant/move-heavy-haul-approved-v1",
+    "skill": "assets/animations/brant/skill-anchor-drop-approved-v1",
+    "burst": [
+      "assets/animations/brant/burst-keelhaul-cast-approved-v1",
+      "assets/animations/brant/burst-keelhaul-drag-approved-v1",
+      "assets/animations/brant/burst-keelhaul-recover-approved-v1"
+    ],
+    "hit": "assets/animations/brant/hit-compact-recoil-approved-v1",
+    "stagger": "assets/animations/brant/stagger-anchor-brace-approved-v1",
+    "victory": "assets/animations/brant/victory-quiet-check-approved-v1",
+    "defeat": "assets/animations/brant/defeat-anchor-barrier-approved-v1"
+  },
+  "qa": {
+    "structural": "passed",
+    "spriteContract": "passed",
+    "standaloneValidator": "passed",
+    "engineSelfTests": "158/158",
+    "finalVisualQaBoard": "assets/animations/initial-cast-final-qa-board.png",
+    "edgeContacts": 0,
+    "runtimePresentation": "reaction timing, terminal animation hold, and post-defeat fade fixes integrated",
+    "unitLibraryAndLiveCombat": "pending",
+    "notes": [
+      "raw hit reaction became a running pose; compact recoil was reconstructed from stable early beats",
+      "raw defeat stood back up; approved defeat holds the lowest stable anchor brace",
+      "Anchor Drop and Keelhaul use deterministic impact and water-lane effects",
+      "approved authored frames received a narrowly-scoped transparent edge-feather pass where required; final cast QA reports no hard canvas-edge contacts",
+      "Brant intentionally has no Arts animation in the current kit"
+    ]
+  },
+  "identityLocks": [
+    "mature broad compact-anime sailor anatomy",
+    "gray mutton chops and unsmiling observant face remain stable",
+    "deep-navy first-mate coat and muted sea-green vest remain stable",
+    "base identity remains free of anchor and chain",
+    "south-west is mandatory for combat production"
+  ]
+}

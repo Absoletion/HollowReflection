@@ -1,0 +1,122 @@
+[
+    {
+        "name":  "Milla Ready Route Idle Southwest",
+        "frames":  8,
+        "direction":  "south-west",
+        "submittedAt":  "2026-07-16T05:54:27.6123165-05:00",
+        "jobId":  null,
+        "response":  "character: 39851fa2-f8ee-47b8-99ed-3422b6a18fed\nanimation: v3 custom (Contained ready-to-go combat idle, Southwest only. Milla makes one heel bounce, checks the fixed satchel flap, scans from enemy to allies and settles into the same sprint-ready stance. Winged boots and scarf twitch subtly while both feet return to the exact anchor. No translation, marching, parcel, lightning effect, camera movement, bag morph or strap relocation.)\ndirections: south-west (1 jobs)\nframes: 9 (1 reference + 8 animated)\ncost: 8 generations (8/dir x 1)\neta: ~30-60s/direction\n\nhint: get_character(character_id=\"39851fa2-f8ee-47b8-99ed-3422b6a18fed\")"
+    },
+    {
+        "name":  "Milla Courier Sprint Southwest",
+        "frames":  8,
+        "direction":  "south-west",
+        "submittedAt":  "2026-07-16T05:54:30.4118125-05:00",
+        "jobId":  null,
+        "response":  "character: 39851fa2-f8ee-47b8-99ed-3422b6a18fed\nanimation: v3 custom (Very fast purposeful combat sprint toward screen-left, Southwest only. Compact clean stride progression, strong arm drive, winged boots pushing hard, scarf and the same satchel following one beat late. The local loop stays centered while runtime supplies travel. No duplicated contact pose, stutter, skating, size pumping, camera bounce, floating bag or strap change.)\ndirections: south-west (1 jobs)\nframes: 9 (1 reference + 8 animated)\ncost: 8 generations (8/dir x 1)\neta: ~30-60s/direction\n\nhint: get_character(character_id=\"39851fa2-f8ee-47b8-99ed-3422b6a18fed\")"
+    },
+    {
+        "name":  "Milla Never Late Southwest",
+        "frames":  6,
+        "direction":  "south-west",
+        "submittedAt":  "2026-07-16T05:54:33.2297952-05:00",
+        "jobId":  null,
+        "response":  "character: 39851fa2-f8ee-47b8-99ed-3422b6a18fed\nanimation: v3 custom (Short passive reaction, Southwest only. Milla notices an ally\u0027s nearly full gauge, pulls one tiny charged route token without looking and flicks it forward-left with expert precision, then instantly returns to ready posture. Keep the same satchel and body scale. No enemy attack, large spell, teleport, camera motion or extra parcel.)\ndirections: south-west (1 jobs)\nframes: 7 (1 reference + 6 animated)\ncost: 6 generations (6/dir x 1)\neta: ~30-60s/direction\n\nhint: get_character(character_id=\"39851fa2-f8ee-47b8-99ed-3422b6a18fed\")"
+    },
+    {
+        "name":  "Milla Hand-Off Launch Southwest",
+        "frames":  8,
+        "direction":  "south-west",
+        "submittedAt":  "2026-07-16T05:54:36.0108695-05:00",
+        "jobId":  null,
+        "response":  "character: 39851fa2-f8ee-47b8-99ed-3422b6a18fed\nanimation: v3 custom (Skill phase one, Southwest only. Milla snaps open the same satchel, grabs one compact charge parcel, drops into a sprinter start and launches urgently toward screen-left. Strong acceleration and clear body mechanics. One parcel only. No hand-off yet, enemy strike, weapon, full disappearance, camera zoom, duplicate bag or floating papers.)\ndirections: south-west (1 jobs)\nframes: 9 (1 reference + 8 animated)\ncost: 8 generations (8/dir x 1)\neta: ~30-60s/direction\n\nhint: get_character(character_id=\"39851fa2-f8ee-47b8-99ed-3422b6a18fed\")"
+    },
+    {
+        "name":  "Milla Hand-Off Deliver Southwest",
+        "frames":  8,
+        "direction":  "south-west",
+        "submittedAt":  "2026-07-16T05:54:39.0544488-05:00",
+        "jobId":  null,
+        "response":  "character: 39851fa2-f8ee-47b8-99ed-3422b6a18fed\nanimation: v3 custom (Skill phase two, Southwest only. Milla arrives at an ally, plants cleanly, physically slaps one charge parcel into their hand or gauge, points them forward and rebounds to her anchor. The contact and recipient direction are unmistakable. No enemy attack, teleport, missing body, duplicate parcel, bag morph, camera movement or explosion.)\ndirections: south-west (1 jobs)\nframes: 9 (1 reference + 8 animated)\ncost: 8 generations (8/dir x 1)\neta: ~30-60s/direction\n\nhint: get_character(character_id=\"39851fa2-f8ee-47b8-99ed-3422b6a18fed\")"
+    },
+    {
+        "name":  "Milla Express Route First Delivery Southwest",
+        "frames":  8,
+        "direction":  "south-west",
+        "submittedAt":  "2026-07-16T05:54:42.7762593-05:00",
+        "jobId":  null,
+        "response":  "character: 39851fa2-f8ee-47b8-99ed-3422b6a18fed\nanimation: v3 custom (Arts phase one, Southwest only. Milla marks two ally destinations, accelerates along a crisp angled route and performs the first low fast physical hand-off to one ally. Keep one solid Milla silhouette visible and the same satchel attached. No enemy attack, random lightning, disappearing body, duplicate bag, camera zoom or second delivery yet.)\ndirections: south-west (1 jobs)\nframes: 9 (1 reference + 8 animated)\ncost: 8 generations (8/dir x 1)\neta: ~30-60s/direction\n\nhint: get_character(character_id=\"39851fa2-f8ee-47b8-99ed-3422b6a18fed\")"
+    },
+    {
+        "name":  "Milla Express Route Second Delivery Southwest",
+        "frames":  8,
+        "direction":  "south-west",
+        "submittedAt":  "2026-07-16T05:54:48.3713485-05:00",
+        "jobId":  null,
+        "response":  "character: 39851fa2-f8ee-47b8-99ed-3422b6a18fed\nanimation: v3 custom (Arts phase two, Southwest only. Milla redirects from the first recipient using one sharp lightning foothold and delivers the second charge overhead or cross-body to a different ally, then enters a controlled slide. Exactly one second hand-off. No enemy strike, teleport, bag morph, camera motion or duplicated recipient parcel.)\ndirections: south-west (1 jobs)\nframes: 9 (1 reference + 8 animated)\ncost: 8 generations (8/dir x 1)\neta: ~30-60s/direction\n\nhint: get_character(character_id=\"39851fa2-f8ee-47b8-99ed-3422b6a18fed\")"
+    },
+    {
+        "name":  "Milla Express Route Stop Southwest",
+        "frames":  8,
+        "direction":  "south-west",
+        "submittedAt":  "2026-07-16T06:00:21.4023719-05:00",
+        "jobId":  null,
+        "response":  "character: 39851fa2-f8ee-47b8-99ed-3422b6a18fed\nanimation: v3 custom (Arts phase three, Southwest only. Milla completes a sliding three-point stop, scarf and satchel catch up one beat later, then she springs immediately into the exact ready posture. Strong controlled braking, no fall or comedy. No attack, camera shake, root drift, bag change or extra parcel.)\ndirections: south-west (1 jobs)\nframes: 9 (1 reference + 8 animated)\ncost: 8 generations (8/dir x 1)\neta: ~30-60s/direction\n\nhint: get_character(character_id=\"39851fa2-f8ee-47b8-99ed-3422b6a18fed\")"
+    },
+    {
+        "name":  "Milla Special Delivery Compound Southwest",
+        "frames":  8,
+        "direction":  "south-west",
+        "submittedAt":  "2026-07-16T06:00:24.3108847-05:00",
+        "jobId":  null,
+        "response":  "character: 39851fa2-f8ee-47b8-99ed-3422b6a18fed\nanimation: v3 custom (Burst phase one, Southwest only. Milla opens the same satchel and compresses several small route charges into one brilliant sealed delivery parcel between both hands. Focused urgency and precise logistics. Exactly one final parcel. No enemy target, explosion, camera movement, duplicated bag, loose papers or body rescale.)\ndirections: south-west (1 jobs)\nframes: 9 (1 reference + 8 animated)\ncost: 8 generations (8/dir x 1)\neta: ~30-60s/direction\n\nhint: get_character(character_id=\"39851fa2-f8ee-47b8-99ed-3422b6a18fed\")"
+    },
+    {
+        "name":  "Milla Special Delivery Route Southwest",
+        "frames":  8,
+        "direction":  "south-west",
+        "submittedAt":  "2026-07-16T06:00:27.2217360-05:00",
+        "jobId":  null,
+        "response":  "character: 39851fa2-f8ee-47b8-99ed-3422b6a18fed\nanimation: v3 custom (Burst phase two, Southwest only. Winged boots flare and Milla chooses one route, launching at maximum speed toward screen-left while her scarf and static afterimage lag behind. Keep one solid readable body and the same satchel. No enemy attack, teleport, complete disappearance, camera pan, bag morph or parcel duplication.)\ndirections: south-west (1 jobs)\nframes: 9 (1 reference + 8 animated)\ncost: 8 generations (8/dir x 1)\neta: ~30-60s/direction\n\nhint: get_character(character_id=\"39851fa2-f8ee-47b8-99ed-3422b6a18fed\")"
+    },
+    {
+        "name":  "Milla Special Delivery Finish Southwest",
+        "frames":  8,
+        "direction":  "south-west",
+        "submittedAt":  "2026-07-16T06:11:51.8616331-05:00",
+        "jobId":  null,
+        "response":  "character: 39851fa2-f8ee-47b8-99ed-3422b6a18fed\nanimation: v3 custom (Burst phase three, Southwest only. Milla drives the single sealed parcel into the chosen ally\u0027s gauge, passes through, brakes in controlled sparks, looks back to confirm receipt and gives one crisp go gesture. Recipient is the climax, not an enemy. No damage impact, explosion, camera movement, duplicated parcel or bag change.)\ndirections: south-west (1 jobs)\nframes: 9 (1 reference + 8 animated)\ncost: 8 generations (8/dir x 1)\neta: ~30-60s/direction\n\nhint: get_character(character_id=\"39851fa2-f8ee-47b8-99ed-3422b6a18fed\")"
+    },
+    {
+        "name":  "Milla Hit Southwest",
+        "frames":  6,
+        "direction":  "south-west",
+        "submittedAt":  "2026-07-16T06:11:54.6907926-05:00",
+        "jobId":  null,
+        "response":  "character: 39851fa2-f8ee-47b8-99ed-3422b6a18fed\nanimation: v3 custom (Quick ordinary hit reaction, Southwest only. Milla twists one shoulder, protects the fixed satchel instinctively, catches balance with one winged boot and checks the contents before herself. Return cleanly to ready posture. No attack, fall, camera motion, bag morph or loose parcel.)\ndirections: south-west (1 jobs)\nframes: 7 (1 reference + 6 animated)\ncost: 6 generations (6/dir x 1)\neta: ~30-60s/direction\n\nhint: get_character(character_id=\"39851fa2-f8ee-47b8-99ed-3422b6a18fed\")"
+    },
+    {
+        "name":  "Milla Stagger Southwest",
+        "frames":  8,
+        "direction":  "south-west",
+        "submittedAt":  "2026-07-16T06:11:57.5089214-05:00",
+        "jobId":  null,
+        "response":  "character: 39851fa2-f8ee-47b8-99ed-3422b6a18fed\nanimation: v3 custom (Heavy stagger without defeat, Southwest only. Momentum breaks, scarf whips past, the same satchel swings, one knee nearly touches down and winged boots spark as she arrests the fall and recovers. No spinout, attack, camera shake, disappearance, bag detachment or strap relocation.)\ndirections: south-west (1 jobs)\nframes: 9 (1 reference + 8 animated)\ncost: 8 generations (8/dir x 1)\neta: ~30-60s/direction\n\nhint: get_character(character_id=\"39851fa2-f8ee-47b8-99ed-3422b6a18fed\")"
+    },
+    {
+        "name":  "Milla Victory Ledger Southwest",
+        "frames":  8,
+        "direction":  "south-west",
+        "submittedAt":  "2026-07-16T06:12:00.4499004-05:00",
+        "jobId":  null,
+        "response":  "character: 39851fa2-f8ee-47b8-99ed-3422b6a18fed\nanimation: v3 custom (Non-looping victory, Southwest only. Milla checks that allies are standing, opens a tiny route ledger, stamps the final delivery, snaps it shut and leans forward ready for the next job with a brief satisfied smile. End in a held next-route stance. No long cheer, reset, camera movement, bag morph or floating papers.)\ndirections: south-west (1 jobs)\nframes: 9 (1 reference + 8 animated)\ncost: 8 generations (8/dir x 1)\neta: ~30-60s/direction\n\nhint: get_character(character_id=\"39851fa2-f8ee-47b8-99ed-3422b6a18fed\")"
+    },
+    {
+        "name":  "Milla Defeat Satchel Guard Southwest",
+        "frames":  8,
+        "direction":  "south-west",
+        "submittedAt":  "2026-07-16T06:12:03.2965381-05:00",
+        "jobId":  null,
+        "response":  "character: 39851fa2-f8ee-47b8-99ed-3422b6a18fed\nanimation: v3 custom (Non-looping defeat, Southwest only. Winged-boot sparks fail, Milla stumbles to one knee while catching the same satchel before it hits the ground, then braces protectively over it. End in a stable held pose with one route slip settling nearby. No rise, loop, bounce, disappearance, camera motion or bag change.)\ndirections: south-west (1 jobs)\nframes: 9 (1 reference + 8 animated)\ncost: 8 generations (8/dir x 1)\neta: ~30-60s/direction\n\nhint: get_character(character_id=\"39851fa2-f8ee-47b8-99ed-3422b6a18fed\")"
+    }
+]

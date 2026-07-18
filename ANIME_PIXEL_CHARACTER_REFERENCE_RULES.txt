@@ -1,0 +1,121 @@
+HOLLOW REFLECTION — ANIME PIXEL CHARACTER REFERENCE RULES
+Version 1.0
+
+PURPOSE
+Use these rules to create the authoritative base image for every playable character before using PixelLab or another sprite-animation generator. The target is the compact, polished anime pixel style established by revamped Cinnia and Katie V7.
+
+MANDATORY WORKFLOW
+1. Begin from approved character concept art or a written character design.
+2. Generate one full-body, perfectly front-facing, weaponless anime pixel master.
+3. Inspect and approve its identity, proportions, anatomy, costume, silhouette, scale, and pixel style.
+4. Convert the approved master to a scale-locked 256 x 256 PixelLab input.
+5. Only then create rotations, equipped states, combat poses, or animations.
+6. Weapons, spell implements, shields, and large props must be added as separate equipped states. Never include them in the base master.
+
+STYLE TARGET
+- Polished modern fantasy-anime pixel art.
+- Crisp, intentional pixel clusters; no painterly blur or airbrushed gradients.
+- Clean selective dark outlines, not a uniformly thick black contour.
+- Bright, readable cel-shaded highlights with a controlled color palette.
+- High enough detail to preserve character identity, but simplified enough to remain readable after reduction and animation.
+- Character art should feel like part of the same roster as revamped Cinnia and Katie V7.
+- Do not imitate realistic anatomy, tall concept-art proportions, 3D rendering, or generic chibi sprites.
+
+BODY PROPORTIONS
+- Use revamped Cinnia as the primary proportion benchmark.
+- Large expressive anime head and eyes.
+- Compact torso, shortened arms, and shortened legs.
+- Broad, readable hands, footwear, and major costume shapes.
+- The complete figure should feel dense and substantial rather than tall, thin, or stretched.
+- Characters may vary in body type, but should remain within the same shared proportion system.
+- Tanks should appear heavier through broader shoulders, thicker armor, wider stance, and larger protected shapes—not through a smaller head or significantly taller body.
+- Agile characters may be narrower and lighter, but must retain the same approximate head-to-body relationship and compact limb lengths.
+- Children, unusually large beings, monsters, and transformation forms may deliberately deviate only when the design calls for it.
+
+CAMERA AND POSE
+- Perfectly straight-on orthographic view for the base master.
+- Head, shoulders, collar, chest, belt, hips, knees, and feet square to the camera.
+- No three-quarter rotation, side profile, top-down perspective, or dramatic foreshortening.
+- Neutral production-reference stance with feet evenly planted.
+- Arms relaxed slightly away from the torso so the silhouette and hands remain visible.
+- Both hands must be empty and clearly readable.
+- Full head, hair, costume, hands, and feet must fit inside the image with generous padding.
+- No dynamic combat motion in the base master.
+
+ANATOMY QUALITY GATE
+- Exactly one head.
+- Exactly two arms, two elbows, two forearms, two wrists, and two hands for a standard humanoid.
+- Exactly two legs, two knees, two lower legs, and two feet for a standard humanoid.
+- Limb lengths and joint heights must be internally consistent.
+- Asymmetrical armor may change the silhouette, but the anatomy beneath it must remain normally proportioned.
+- Inspect layered armor carefully: no duplicate sleeves, parallel forearms, doubled hands, fused limbs, or armor shapes that resemble extra limbs.
+- Hands should be readable and should not merge into belts, tabards, capes, or equipment.
+- Both feet must contact the same implied ground line.
+
+IDENTITY AND COSTUME
+- Preserve the approved face, hair shape, hair color, eye color, skin tone, expression, and signature marks.
+- Preserve the character's role and personality through silhouette and expression.
+- Retain signature costume motifs and color relationships.
+- Simplify tiny ornaments into larger readable shapes when necessary for sprite clarity.
+- Repeated decorative patterns should be reduced to a consistent visual shorthand rather than noisy micro-detail.
+- Keep major asymmetry when it is character-defining, but verify that it does not distort the body.
+- Avoid adding unapproved accessories, exposed skin, sexualization, or costume redesigns.
+
+WEAPONLESS BASE RULE
+- No swords, staves, pans, hammers, shields, bows, guns, books, instruments, floating weapons, weapon fragments, or handles.
+- No hands posed as if gripping an invisible weapon.
+- A small permanently worn accessory may remain only if it is part of the character's identity and will not interfere with animation.
+- Large equipment is introduced later as a separate PixelLab state so it remains consistent across animations.
+
+BACKGROUND AND FRAMING
+- Pure solid black background for the master reference unless a specific generator requires a different key color.
+- No scenery, floor plane, cast shadow, glow, aura, particles, magic circles, UI, labels, text, frame, checkerboard, or watermark.
+- Center the full figure both horizontally and vertically.
+- Match the approximate occupied-canvas percentage of revamped Cinnia.
+- Preserve generous space around hair, shoulders, hands, side garments, and feet.
+
+PIXELLAB INPUT PREPARATION
+- Final input canvas: 256 x 256 pixels.
+- Preserve the approved master aspect ratio; never stretch independently on either axis.
+- Use nearest-neighbor scaling for pixel art.
+- Keep consistent padding across the roster.
+- Use a controlled palette reduction only after the full master is approved.
+- Inspect the reduced input for lost glasses, eyes, fingers, trim, hair accessories, and silhouette breaks.
+- Do not send an unapproved or anatomically flawed reference to PixelLab.
+
+COMBAT-SOURCE VARIANT
+- Create only after the front-facing weaponless master is approved.
+- Use a shallow three-quarter pose facing toward screen-left, approximately 25 to 30 degrees from straight-on.
+- Keep both eyes or most of the far eye visible.
+- Keep most of the chest, front costume, both shoulders, both arms, and both legs readable.
+- Avoid a full side profile.
+- Maintain the approved master proportions and on-canvas scale exactly.
+- Keep the combat-source variant weaponless until the equipped state is created.
+- If PixelLab's automatic Southwest rotation becomes a full profile, use the dedicated combat-source image as PixelLab's South frame and map South to left-facing combat in the game.
+
+EQUIPPED STATE RULES
+- Add the weapon or implement only after the weaponless character exists in PixelLab.
+- Preserve the character's body, face, armor, palette, proportions, and root position.
+- Establish the weapon's exact length, head size, grip locations, orientation, and silhouette before animation generation.
+- Leave enough canvas space for the complete weapon and trailing garments.
+- Reject any state with weapon morphing, shrinking, duplicated handles, missing ends, or impossible hand placement.
+
+REJECTION CRITERIA
+Reject and regenerate or repair the reference if any of the following are present:
+- Tall, realistic, or noticeably different proportions from revamped Cinnia.
+- Head too small for the shared roster style.
+- Character rotated away from the camera in the base master.
+- Cropped hair, armor, garments, hands, feet, or accessories.
+- Duplicate, fused, missing, or disproportionate limbs.
+- Armor that creates a false extra limb.
+- Weapon or large prop included in the base master.
+- Unapproved redesign or loss of signature identity.
+- Blurry, painterly, anti-aliased, 3D, or inconsistent pixel rendering.
+- Excessive micro-detail that becomes noise when reduced.
+- Background effects, shadows, text, watermark, or checkerboard.
+
+COPY-PASTE GENERATION PROMPT
+Create a full-body, perfectly front-facing, weaponless anime pixel character master for a fantasy gacha RPG. Match the compact proportions, head-to-body ratio, pixel density, selective outline style, cel-shaded rendering, on-canvas scale, and overall visual family of the supplied revamped Cinnia reference. Preserve the supplied character's identity, face, hair, palette, personality, costume, class silhouette, and signature motifs. Use a large expressive anime head, compact torso, shortened arms and legs, broad readable hands and footwear, and a dense battle-sprite silhouette. Keep heavier characters visually powerful through armor mass and shoulder width rather than taller realistic anatomy. Exactly two arms, two forearms, two empty hands, two legs, and two feet for a standard humanoid. Perfect orthographic front view with shoulders, chest, belt, hips, knees, and feet square to the camera. Neutral stance, arms slightly separated from the torso, full body centered with generous padding. Completely weaponless; all weapons and large props will be separate equipped states. Pure solid black background. No effects, aura, shadow, scenery, text, frame, watermark, checkerboard, rotation, three-quarter view, cropped parts, duplicated limbs, sexualization, realistic painting, 3D rendering, or generic chibi style.
+
+FINAL REVIEW QUESTION
+Does this character look as though they could stand directly beside revamped Cinnia without appearing to come from a different sprite game? If not, do not send it to PixelLab.

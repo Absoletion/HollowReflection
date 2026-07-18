@@ -33,7 +33,12 @@ async function main() {
   let context = await browser.newContext();
   let page = await context.newPage();
   const pageErrors = [];
-  page.on('pageerror', error => pageErrors.push(error.message));
+  const consoleErrors = [];
+  const observePage = target => {
+    target.on('pageerror', error => pageErrors.push(error.message));
+    target.on('console', message => { if (message.type() === 'error') consoleErrors.push(message.text()); });
+  };
+  observePage(page);
 
   try {
     const port = server.address().port;
@@ -41,6 +46,10 @@ async function main() {
     await context.setOffline(true);
 
     await page.locator('#startbtn').click();
+    for (const tab of ['story', 'party', 'summon', 'town', 'home']) {
+      await page.locator(`[data-tab="${tab}"]`).click();
+      await page.locator(`[data-tab="${tab}"].active`).waitFor();
+    }
     await page.locator('#htown').click();
     await page.locator('[data-spot="quest"]').click();
     await page.locator('#traininggrounds').click();
@@ -73,7 +82,7 @@ async function main() {
     await context.close();
     context = await browser.newContext({ storageState: { cookies: [], origins: [{ origin, localStorage: [{ name: 'projectHollowing.singleSave', value: seededSave }] }] } });
     page = await context.newPage();
-    page.on('pageerror', error => pageErrors.push(error.message));
+    observePage(page);
     await page.goto(`${origin}/hollowing-demo.html`, { waitUntil: 'load' });
     await context.setOffline(true);
     await page.locator('#startbtn').click();
@@ -147,6 +156,7 @@ async function main() {
     assert.doesNotMatch(await page.locator('.summon-history').textContent(), /None yet/);
 
     assert.deepEqual(pageErrors, [], `Page errors: ${pageErrors.join('; ')}`);
+    assert.deepEqual(consoleErrors, [], `Console errors: ${consoleErrors.join('; ')}`);
     console.log(`Browser smoke: combat, Challenge, evolution, Market, and Summon persistence passed (${before} -> ${after} HP).`);
   } finally {
     await context.setOffline(false).catch(() => {});

@@ -1,6 +1,5 @@
 const fs = require('fs');
 const path = require('path');
-const vm = require('vm');
 const { validateContentIds } = require('../tools/validate_content_ids.js');
 const p = f => path.join(__dirname, f);
 
@@ -33,6 +32,7 @@ function spriteSrc() {
   const dir = p('sprites2');
   const generatedPixelLab = p(path.join('..', 'generated', 'pixellab-sprites.js'));
   const generatedProfiles = p(path.join('..', 'generated', 'pixellab-sprite-profiles.js'));
+  const generatedEffects = p(path.join('..', 'generated', 'cinnia-legacy-effects.js'));
   const generatedKeys = new Set(['cinnia.js', 'hale.js', 'hale_awakened.js', 'katie.js', 'tobin.js', 'hearthgar.js', 'brigga.js', 'marlowe.js', 'brant.js', 'milla.js', 'nix.js']);
   const files = fs.existsSync(dir) ? fs.readdirSync(dir).filter(f => {
     if (!f.endsWith('.js') || f === 'verify2.js') return false;
@@ -50,13 +50,7 @@ function spriteSrc() {
   console.log('SPRITES2 embedded:', keys.join(', '), '(' + files.concat(enemyFiles).join(', ') + ')');
   const approvedPixelLab = fs.existsSync(generatedPixelLab) ? fs.readFileSync(generatedPixelLab, 'utf8') : '';
   const approvedProfiles = fs.existsSync(generatedProfiles) ? fs.readFileSync(generatedProfiles, 'utf8') : '';
-  let legacyEffects = '';
-  if (approvedPixelLab) {
-    const sandbox = { SPRITES: {} };
-    vm.runInNewContext(fs.readFileSync(p('sprites2/cinnia.js'), 'utf8'), sandbox);
-    const cinnia = sandbox.SPRITES.cinnia;
-    legacyEffects = `Object.assign(SPRITES.cinnia,{pal:${JSON.stringify(cinnia.pal)},effects:${JSON.stringify(cinnia.effects)}});`;
-  }
+  const legacyEffects = approvedPixelLab && fs.existsSync(generatedEffects) ? fs.readFileSync(generatedEffects, 'utf8') : '';
   if (approvedPixelLab) console.log('SPRITES2 embedded: approved PixelLab libraries for cinnia, hale, hale_awakened, katie, tobin, hearthgar, brigga, marlowe, brant, milla, nix');
   return ['var SPRITES = {};', ...bodies, ...enemyBodies, approvedPixelLab, legacyEffects, approvedProfiles, fs.readFileSync(p('sprites/renderer.js'), 'utf8')].join('\n');
 }

@@ -74,6 +74,15 @@ GameState.commitEnvelope(storage, 'save', envelope);
 assert.strictEqual(storage.getItem('save.backup'), prior);
 assert.strictEqual(JSON.parse(storage.getItem('save')).revision, 1);
 
+const missionEnvelope = { schemaVersion: Engine.SAVE_SCHEMA_VERSION, gameVersion: '0.48.0', saveId: 'mission-test', revision: 1, state: mission.state };
+const missionStorage = new Storage();
+GameState.commitEnvelope(missionStorage, 'mission-save', missionEnvelope);
+const reloadedMission = Engine.migrateSaveEnvelope(JSON.parse(missionStorage.getItem('mission-save'))).state;
+const duplicateAfterReload = GameState.completeMission(reloadedMission, 'act1_3', missionWin, ['hale']);
+assert.strictEqual(duplicateAfterReload.rewards.length, 0);
+assert.strictEqual(duplicateAfterReload.state.gold, mission.state.gold);
+assert.strictEqual(duplicateAfterReload.state.sigils, mission.state.sigils);
+
 const failing = new Storage({ save: prior }, 3);
 assert.throws(() => GameState.commitEnvelope(failing, 'save', envelope), /injected storage failure/);
 assert.strictEqual(failing.getItem('save'), prior);

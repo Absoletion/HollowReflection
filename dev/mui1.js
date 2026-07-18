@@ -414,6 +414,15 @@ const ACT1_MISSIONS = STORY_REGISTRY.chapters[0].missions.map(m => Object.assign
 const STORY_CHAPTERS = STORY_REGISTRY.chapters;
 function chapterClearCount(chapter) { return chapter.missions.reduce((n, m) => n + (META.missionClears[m.id] ? 1 : 0), 0); }
 function chapterUnlocked(index) { return index === 0 || chapterClearCount(STORY_CHAPTERS[index - 1]) >= STORY_CHAPTERS[index - 1].missions.length; }
+function firstCanonicalMission() {
+  for (let chapterIndex = 0; chapterIndex < STORY_CHAPTERS.length; chapterIndex++) {
+    const chapter = STORY_CHAPTERS[chapterIndex];
+    if (!chapterUnlocked(chapterIndex)) break;
+    const missionIndex = chapter.missions.findIndex(mission => !META.missionClears[mission.id]);
+    if (missionIndex >= 0) return { chapterIndex, missionIndex, mission: chapter.missions[missionIndex] };
+  }
+  return null;
+}
 function missionParty(mission) {
   const guests = mission.party || [];
   return [...guests, ...META.activeParty].filter((k, i, a) => k && Engine.UNITS[k] && (META.owned.includes(k) || guests.includes(k)) && a.indexOf(k) === i).slice(0, Engine.PARTY_SIZE);
@@ -518,24 +527,30 @@ function showTitle() {
  * =============================================================== */
 function showHome() {
   META.stage = 'home';
-  const step = STEPS[Math.min(META.storyStep, STEPS.length - 1)];
-  const done = META.storyStep >= STEPS.length;
+  const next = firstCanonicalMission();
+  const done = !next;
+  const chapter = next && STORY_CHAPTERS[next.chapterIndex];
+  const title = done ? 'Act One Complete' : `${next.mission.code} · ${next.mission.title}`;
   app.innerHTML = `
     <div class="home-banner">
-      ${sym(step.scene, 'scene')}
+      ${sym(done ? 'sc-hall' : next.mission.scene, 'scene')}
       <div class="banner-shade"></div>
       ${sigilPill()}
-      <div class="banner-ch"><div class="bk">${done ? 'Act One — Complete' : step.label}</div><div class="bt">${esc(step.title)}</div></div>
+      <div class="banner-ch"><div class="bk">${done ? 'Act One — Complete' : `Chapter ${chapter.code} · ${esc(chapter.title)}`}</div><div class="bt">${esc(title)}</div></div>
     </div>
     <div class="ticker"><span class="tklbl">VESSIA</span><span class="tkwin"><span class="tk">${esc(tickerLine())}</span></span></div>
     <button id="continue" class="bigbtn">${done ? 'Story Complete' : (META.storyStep === 0 ? 'Begin the Story' : 'Continue Story')}
-      <span class="sub">${done ? 'Replay any chapter from the Story tab' : step.label + ' — ' + esc(step.title)}</span></button>
+      <span class="sub">${done ? 'Replay cleared missions from the Story tab' : esc(title)}</span></button>
     <div class="homerow">
       <button id="hsummon">✦ Summon</button>
       <button id="htown">⌂ Castle Town</button>
       <button id="hsave">Save / Account</button>
     </div>`;
-  document.getElementById('continue').onclick = () => { if (done) go('story'); else playStep(META.storyStep); };
+  document.getElementById('continue').onclick = () => {
+    if (done) return go('story');
+    if (next.chapterIndex === 0) playAct1Mission(next.missionIndex);
+    else playStoryMission(next.mission.id, next.chapterIndex);
+  };
   document.getElementById('hsummon').onclick = () => go('summon');
   document.getElementById('htown').onclick = () => go('town');
   document.getElementById('hsave').onclick = () => { writeSave(true); showTitle(); };
@@ -552,34 +567,9 @@ function showStory() {
       const index = offset + 1, count = chapterClearCount(chapter), unlocked = chapterUnlocked(index);
       return `<button class="act-map-open ${unlocked ? '' : 'locked'}" data-chapter-map="${index}" ${unlocked ? '' : 'disabled'}><b>Chapter ${chapter.code} · ${esc(chapter.title)}</b><span>${unlocked ? `${count} / ${chapter.missions.length} cleared` : 'Complete the previous chapter to unlock'}</span></button>`;
     }).join('')}</div>
-    <div class="chlist">
-      ${STEPS.map((s, i) => {
-        const state = i < META.storyStep ? 'done' : (i === META.storyStep ? 'current' : 'locked');
-        const kindTag = s.kind === 'boss' ? 'BOSS' : s.kind === 'interlude' ? 'STORY' : (s.scripted ? 'SURVIVE' : 'MISSION');
-        const tag = state === 'current' ? `<span class="tag go">${s.kind === 'interlude' ? 'PLAY' : 'FIGHT'}</span>`
-          : state === 'done' ? `<span class="tag rp">REPLAY</span>` : `<span class="tag lk">???</span>`;
-        const repeat = Engine.BATTLES[s.id] && Engine.BATTLES[s.id].rewards && Engine.BATTLES[s.id].rewards.repeat;
-        const rew = state === 'done' && s.kind !== 'interlude' && repeat
-          ? `<span class="rew">${repeat.gold} Gold · ${repeat.xp} XP</span>` : '';
-        return `<button class="chrow ${state === 'current' ? 'current' : ''} ${state === 'locked' ? 'locked' : ''}" data-step="${i}">
-          <div class="thumb">${state === 'locked' ? '' : sym(s.scene, 'scene')}</div>
-          <div class="cmeta">
-            <div class="cnum">${state === 'locked' ? 'Locked' : s.label} · ${kindTag}</div>
-            <div class="ctitle">${state === 'locked' ? '??????' : esc(s.title)}</div>
-            <div class="cdesc">${state === 'locked' ? 'Clear the chapter before to reveal.' : esc(s.desc)}</div>
-          </div>
-          <div class="cstate">${tag}${rew}</div>
-        </button>`;
-      }).join('')}
-    </div>`;
+    <p class="small" style="margin:10px 14px 14px;">Canonical mission registry · clear missions in order to reveal the next chapter.</p>`;
   document.getElementById('openact1map').onclick = showAct1MissionMap;
   app.querySelectorAll('[data-chapter-map]:not(:disabled)').forEach(button => button.onclick = () => showChapterMissionMap(Number(button.dataset.chapterMap)));
-  app.querySelectorAll('.chrow').forEach(r => r.onclick = () => {
-    const i = +r.dataset.step;
-    if (i > META.storyStep) { toast('Clear the chapters before this one first.'); return; }
-    if (i < META.storyStep) return replayStep(i);
-    playStep(i);
-  });
 }
 
 function showChapterMissionMap(chapterIndex) {
@@ -624,9 +614,10 @@ function playStoryMission(id, chapterIndex) {
 
 function showAct1MissionMap() {
   META.stage = 'act1map';
+  const firstUncleared = ACT1_MISSIONS.findIndex(mission => !META.missionClears[mission.id]);
   app.innerHTML = `<div class="shead"><h2>Chapter One</h2>${sigilPill()}</div><div class="act-map-head"><button id="actmapback">← Story</button><div><b>The Guild Charter</b><span>Expanded mission framework</span></div></div><div class="mission-path">${ACT1_MISSIONS.map((m, i) => {
-    const cleared = i < META.act1MissionProgress;
-    const available = m.live && i <= META.act1MissionProgress;
+    const cleared = !!META.missionClears[m.id];
+    const available = m.live && (cleared || i === firstUncleared);
     const state = cleared ? 'cleared' : available ? 'available' : m.live ? 'locked' : 'planned';
     return `<button class="mission-node ${state}" data-actmission="${i}" ${available || cleared ? '' : 'disabled'}><span class="mission-code">${m.code}</span><b>${esc(m.title)}</b><small>${esc(m.lesson)}</small><i>${cleared ? 'CLEARED' : available ? 'START' : m.live ? 'LOCKED' : 'PLANNED'}</i></button>`;
   }).join('')}</div>`;
@@ -636,7 +627,8 @@ function showAct1MissionMap() {
 
 function playAct1Mission(index) {
   const mission = ACT1_MISSIONS[index];
-  if (!mission || !mission.live || index > META.act1MissionProgress) return;
+  const firstUncleared = ACT1_MISSIONS.findIndex(item => !META.missionClears[item.id]);
+  if (!mission || !mission.live || (!META.missionClears[mission.id] && index !== firstUncleared)) return;
   const party = missionParty(mission);
   const complete = () => {
     chrome('hub'); renderNav('story'); showAct1MissionMap();

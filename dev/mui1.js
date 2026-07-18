@@ -52,6 +52,7 @@ const META = {
   economyLedger: [],
   unitAI: {},                       // { unitKey: { preset } }
   evolutionUnlocks: {},            // story or Challenge gates that reveal recipes
+  featureUnlocks: {},
   libraryUnlocked: {},              // permanent discoveries; deliberately separate from owned
   devClicks: 0,
   stage: 'title',
@@ -118,7 +119,7 @@ function captureSaveState() {
     sigils: META.sigils, gold: META.gold, glassDust: META.glassDust, ranks: META.ranks, owned: META.owned, activeParty: META.activeParty,
     unitProgress: META.unitProgress, challengeItems: META.challengeItems, challengeProgress: META.challengeProgress, completedTransactions: META.completedTransactions,
     marketState: META.marketState, summonState: META.summonState, summonHistory: META.summonHistory, telemetry: META.telemetry, economyLedger: META.economyLedger, unitAI: META.unitAI,
-    evolutionUnlocks: META.evolutionUnlocks, libraryUnlocked: META.libraryUnlocked,
+    evolutionUnlocks: META.evolutionUnlocks, featureUnlocks: META.featureUnlocks, libraryUnlocked: META.libraryUnlocked,
     storyStep: META.storyStep, act1MissionProgress: META.act1MissionProgress, missionClears: META.missionClears, haleAwakened: META.haleAwakened, lastHub: META.lastHub,
     settings: META.settings,
   });
@@ -157,6 +158,26 @@ function writeSave(force) {
     saveLastStateJSON = stateJSON;
     saveLastAt = now;
     saveError = '';
+    return true;
+  } catch (err) {
+    saveError = 'Local saving is unavailable in this browser.';
+    return false;
+  }
+}
+function commitGameStateResult(result) {
+  if (!result.ok || saveWriteLocked || !saveEnvelope) return false;
+  const state = Engine.normalizeSaveState(result.state), stateJSON = JSON.stringify(state), now = new Date().toISOString();
+  const nextEnvelope = Object.assign({}, saveEnvelope, {
+    schemaVersion: Engine.SAVE_SCHEMA_VERSION, gameVersion: SAVE_GAME_VERSION,
+    updatedAt: now, revision: (saveEnvelope.revision || 0) + 1, state,
+  });
+  try {
+    GameState.commitEnvelope(localStorage, SAVE_STORAGE_KEY, nextEnvelope);
+    saveEnvelope = nextEnvelope;
+    saveLastStateJSON = stateJSON;
+    saveLastAt = now;
+    saveError = '';
+    applySaveState(state);
     return true;
   } catch (err) {
     saveError = 'Local saving is unavailable in this browser.';
@@ -394,8 +415,8 @@ const STORY_CHAPTERS = STORY_REGISTRY.chapters;
 function chapterClearCount(chapter) { return chapter.missions.reduce((n, m) => n + (META.missionClears[m.id] ? 1 : 0), 0); }
 function chapterUnlocked(index) { return index === 0 || chapterClearCount(STORY_CHAPTERS[index - 1]) >= STORY_CHAPTERS[index - 1].missions.length; }
 function missionParty(mission) {
-  const defaults = mission.party || (mission.chapterId === 'chapter2' ? ['hale','cinnia','tobin','brant'] : mission.chapterId === 'chapter3' ? ['hale','cinnia','tobin','milla'] : ['hale','cinnia','brant','brigga']);
-  return [...defaults, ...META.activeParty].filter((k, i, a) => k && Engine.UNITS[k] && a.indexOf(k) === i).slice(0, 4);
+  const guests = mission.party || [];
+  return [...guests, ...META.activeParty].filter((k, i, a) => k && Engine.UNITS[k] && (META.owned.includes(k) || guests.includes(k)) && a.indexOf(k) === i).slice(0, Engine.PARTY_SIZE);
 }
 function missionScenes(mission, phase) {
   if (mission[phase] && mission[phase].length) return mission[phase];
@@ -403,12 +424,22 @@ function missionScenes(mission, phase) {
   return phase === 'post' ? [{sp:'',tx:`${mission.title} is complete. The road ahead is less certain than it was.`}]
     : [{ch:`Chapter ${chapter.code} — ${chapter.title}`},{sp:'',tx:`${mission.code} — ${mission.title}`},{sp:'Cinnia',tx:mission.lesson || 'Stay close. We do this together.'}];
 }
-function applyMissionUnlocks(mission) {
-  for (const key of mission.unlocks && mission.unlocks.units || []) {
-    const result = GameState.recruitStoryUnit(captureSaveState(), key, mission.id);
-    if (result.ok) applySaveState(result.state);
-  }
-  rememberOwnedUnits();
+function settleCanonicalMission(mission, party, outcome, summary, done) {
+  const result = GameState.completeMission(captureSaveState(), mission.id, Object.assign({}, summary, { outcome }), party);
+  if (!result.ok) { toast(result.message); return false; }
+  const commit = () => {
+    if (!commitGameStateResult(result)) {
+      chrome('nonav'); META.stage = 'save-error';
+      app.innerHTML = `<div class="panelbox" style="margin:40px 14px;"><h2>Mission Not Saved</h2><p class="small">Your rewards and progress were not applied. Retry saving or return to Story.</p><div class="formation-actions"><button id="retrysave" class="bigbtn">Retry Save</button><button id="returnsave">Return to Story</button></div></div>`;
+      document.getElementById('retrysave').onclick = commit;
+      document.getElementById('returnsave').onclick = () => go('story');
+      return false;
+    }
+    const reward = result.rewards[0];
+    if (reward && mission.encounter) showQuestRewards(reward, done); else done();
+    return true;
+  };
+  return commit();
 }
 
 /* ticker line changes with story progress */
@@ -571,20 +602,22 @@ function playStoryMission(id, chapterIndex) {
   const firstUncleared = chapter.missions.findIndex(m => !META.missionClears[m.id]);
   const index = chapter.missions.findIndex(m => m.id === id);
   if (!META.missionClears[id] && index !== firstUncleared) return;
-  const firstClear = !META.missionClears[id], party = missionParty(mission);
+  const party = missionParty(mission);
   const complete = () => {
-    META.missionClears[id] = true; applyMissionUnlocks(mission);
-    META.storyStep = Math.max(META.storyStep, Math.min(4, chapterIndex + 1));
-    writeSave(true); chrome('hub'); renderNav('story'); showChapterMissionMap(chapterIndex);
+    chrome('hub'); renderNav('story'); showChapterMissionMap(chapterIndex);
   };
   const showPost = () => showDialogue(missionScenes(mission, 'post'), complete, mission.scene);
-  if (mission.type === 'story') { chrome('nonav'); showDialogue(missionScenes(mission, 'pre'), complete, mission.scene); return; }
+  if (mission.type === 'story') {
+    chrome('nonav');
+    showDialogue(missionScenes(mission, 'pre'), () => settleCanonicalMission(mission, party, 'victory', { battleId: `story:${id}:${saveId()}`, encounterId: null, victory: true }, showPost), mission.scene);
+    return;
+  }
   const fight = () => {
     chrome('battle');
-    startBattle(mission.encounter || mission.id, party, result => finishQuest(mission.encounter || mission.id, party, firstClear, result, finalResult => {
-      if (finalResult === 'victory' || finalResult === 'scripted_loss') showPost();
+    startBattle(mission.encounter || mission.id, party, (outcome, summary) => {
+      if (outcome === 'victory' || outcome === 'scripted_loss') settleCanonicalMission(mission, party, outcome, summary, showPost);
       else { chrome('hub'); renderNav('story'); showChapterMissionMap(chapterIndex); }
-    }));
+    });
   };
   chrome('nonav'); showDialogue(missionScenes(mission, 'pre'), fight, mission.scene);
 }
@@ -604,26 +637,22 @@ function showAct1MissionMap() {
 function playAct1Mission(index) {
   const mission = ACT1_MISSIONS[index];
   if (!mission || !mission.live || index > META.act1MissionProgress) return;
-  const firstClear = index >= META.act1MissionProgress;
-  const party = [...(mission.party || []), ...META.activeParty].filter((k, i, a) => k && Engine.UNITS[k] && a.indexOf(k) === i).slice(0, 4);
+  const party = missionParty(mission);
   const complete = () => {
-    META.missionClears[mission.id] = true;
-    applyMissionUnlocks(mission);
-    if (index === META.act1MissionProgress) META.act1MissionProgress = Math.min(ACT1_MISSIONS.length, META.act1MissionProgress + 1);
-    writeSave(true); chrome('hub'); renderNav('story'); showAct1MissionMap();
+    chrome('hub'); renderNav('story'); showAct1MissionMap();
   };
   const showPost = () => mission.post && mission.post.length ? showDialogue(mission.post, complete, mission.scene) : complete();
   if (mission.type === 'story') {
     chrome('nonav');
-    showDialogue(mission.pre || [{ sp: '', tx: mission.title }], complete, mission.scene);
+    showDialogue(mission.pre || [{ sp: '', tx: mission.title }], () => settleCanonicalMission(mission, party, 'victory', { battleId: `story:${mission.id}:${saveId()}`, encounterId: null, victory: true }, showPost), mission.scene);
     return;
   }
   const fight = () => {
     chrome('battle');
-    startBattle(mission.encounter || mission.id, party, result => finishQuest(mission.encounter || mission.id, party, firstClear, result, finalResult => {
-      if (finalResult === 'victory') showPost();
+    startBattle(mission.encounter || mission.id, party, (outcome, summary) => {
+      if (outcome === 'victory') settleCanonicalMission(mission, party, outcome, summary, showPost);
       else { chrome('hub'); renderNav('story'); showAct1MissionMap(); }
-    }));
+    });
   };
   if (mission.pre && mission.pre.length) { chrome('nonav'); showDialogue(mission.pre, fight, mission.scene); }
   else fight();

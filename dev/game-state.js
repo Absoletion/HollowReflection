@@ -1,6 +1,6 @@
 'use strict';
 
-const GameState = (function (E) {
+const GameState = (function (E, Registry) {
   function clone(value) { return JSON.parse(JSON.stringify(value)); }
   function fail(code, message) { const error = new Error(message); error.code = code; throw error; }
   function appendTelemetry(state, fact) { state.telemetry.push(fact); state.telemetry = state.telemetry.slice(-100); }
@@ -150,6 +150,59 @@ const GameState = (function (E) {
       return { deltas: { sigils: -cost }, rewards, uiEvents: ['summon_complete'] };
     }, { transactionId });
   }
+  function completeMission(state, missionId, result, party, context) {
+    const mission = Registry.missions[missionId];
+    const battleId = result && result.battleId;
+    const transactionId = battleId && `mission:${missionId}:${battleId}`;
+    return execute('completeMission', state, draft => {
+      if (!mission) fail('UNKNOWN_ID', 'Unknown story mission.');
+      if (typeof battleId !== 'string' || !battleId || battleId.length > 80) fail('INVALID_RESULT', 'Mission result requires a battle ID.');
+      if ((result.encounterId || null) !== (mission.encounter || null)) fail('INVALID_RESULT', 'Mission result does not match the encounter.');
+      const outcome = result.outcome;
+      if (mission.scriptedLoss) {
+        if (outcome !== 'scripted_loss' || result.victory !== false) fail('INVALID_RESULT', 'Mission requires its scripted outcome.');
+      } else if (outcome !== 'victory' || result.victory !== true) fail('INVALID_RESULT', 'Mission was not completed.');
+      if (draft.completedTransactions.includes(transactionId)) return { uiEvents: ['settlement_duplicate'] };
+
+      const firstClear = !draft.missionClears[missionId];
+      const chapterIndex = Registry.chapters.findIndex(chapter => chapter.id === mission.chapterId);
+      const chapter = Registry.chapters[chapterIndex], missionIndex = chapter && chapter.missions.findIndex(item => item.id === missionId);
+      if (firstClear && (!chapter || Registry.chapters.slice(0, chapterIndex).some(item => item.missions.some(prior => !draft.missionClears[prior.id])) || chapter.missions.slice(0, missionIndex).some(prior => !draft.missionClears[prior.id]))) fail('LOCKED', 'Clear the preceding story missions first.');
+      if (!Array.isArray(party) || party.length > E.PARTY_SIZE || new Set(party).size !== party.length || party.some(id => !E.UNITS[id])) fail('INVALID_PARTY', `Mission parties require up to ${E.PARTY_SIZE} unique known units.`);
+      if (mission.encounter && !party.length) fail('INVALID_PARTY', 'Battle missions require at least one unit.');
+      const guests = new Set([...(mission.party || []), ...(mission.unlocks && mission.unlocks.units || [])]);
+      if (party.some(id => !draft.owned.includes(id) && !guests.has(id))) fail('INVALID_PARTY', 'The mission party contains an unavailable unit.');
+      const cfg = mission.encounter && E.BATTLES[mission.encounter];
+      if (mission.encounter && !cfg) fail('UNKNOWN_ID', 'Mission encounter has no reward configuration.');
+      const table = cfg ? cfg.rewards[firstClear ? 'first' : 'repeat'] : { gold: 0, xp: 0 };
+      const reward = { type: 'mission', key: mission.encounter || missionId, title: cfg ? cfg.title : mission.title, firstClear, gold: table.gold, xp: table.xp, sigils: firstClear && cfg ? cfg.sigils : 0, units: [] };
+      draft.gold += reward.gold;
+      draft.sigils += reward.sigils;
+      for (const unitId of party) {
+        const progress = draft.unitProgress[unitId] || (draft.unitProgress[unitId] = { level: 1, stars: E.UNIT_PROGRESSION[unitId].baseStars, xp: 0 });
+        reward.units.push(Object.assign({ key: unitId, name: E.UNITS[unitId].name }, E.grantUnitXP(progress, reward.xp)));
+      }
+      draft.missionClears[missionId] = true;
+      if (firstClear) {
+        for (const unitId of mission.unlocks && mission.unlocks.units || []) if (E.UNITS[unitId] && !draft.owned.includes(unitId)) {
+          draft.owned.push(unitId);
+          draft.unitProgress[unitId] ||= { level: 1, stars: E.UNIT_PROGRESSION[unitId].baseStars, xp: 0 };
+          draft.libraryUnlocked[`${unitId}:base`] = true;
+        }
+        for (const [feature, unlocked] of Object.entries(mission.unlocks || {})) if (feature !== 'units' && unlocked === true) draft.featureUnlocks[feature] = true;
+      }
+      if (mission.chapterId === 'chapter1') {
+        const chapter = Registry.chapters[0];
+        let progress = 0;
+        while (progress < chapter.missions.length && draft.missionClears[chapter.missions[progress].id]) progress++;
+        draft.act1MissionProgress = progress;
+      }
+      if (chapter && chapter.missions.every(item => draft.missionClears[item.id])) draft.storyStep = Math.max(draft.storyStep, Math.min(4, chapterIndex + 1));
+      draft.completedTransactions.push(transactionId);
+      draft.completedTransactions = draft.completedTransactions.slice(-100);
+      return { deltas: { gold: reward.gold, sigils: reward.sigils, missionId, firstClear }, rewards: [reward], uiEvents: ['mission_complete'] };
+    }, { transactionId: context && context.transactionId || transactionId });
+  }
   function recruitStoryUnit(state, unitId, missionId, context) {
     const transactionId = `recruit:${missionId}:${unitId}`;
     return execute('recruitStoryUnit', state, draft => {
@@ -203,7 +256,7 @@ const GameState = (function (E) {
       throw error;
     }
   }
-  return Object.freeze({ execute, setActiveParty, setAIPreset, completeChallenge, recordTelemetry, purchaseMarketItem, performSummon, recruitStoryUnit, evolutionEligibility, evolveUnit, commitEnvelope });
-})(typeof Engine !== 'undefined' ? Engine : require('./engine-dev.js'));
+  return Object.freeze({ execute, setActiveParty, setAIPreset, completeChallenge, recordTelemetry, purchaseMarketItem, performSummon, completeMission, recruitStoryUnit, evolutionEligibility, evolveUnit, commitEnvelope });
+})(typeof Engine !== 'undefined' ? Engine : require('./engine-dev.js'), typeof STORY_REGISTRY !== 'undefined' ? STORY_REGISTRY : require('./story-registry.js'));
 
 if (typeof module !== 'undefined') module.exports = GameState;

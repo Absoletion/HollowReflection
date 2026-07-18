@@ -373,20 +373,6 @@ const QUOTES = {
   milla: '“Never late. Not once. Watch me.”',
   katie: '“I can see exactly what is wrong. I was happier before you asked.”',
 };
-const PASSIVES = {
-  hale: ['Adventurer’s Resolve', 'Uses the standard Energy gauge. Cross Slash builds momentum toward Riftguard and Black Horizon.'],
-  cinnia: ['Seconds', 'Overheal from her abilities becomes Well-Fed — regeneration across two effect cycles.'],
-  tobin: ['Still Water', 'Reads the enemy’s next single-target blow and shows who it lands on.'],
-  marlowe: ['Flourish', '+10% damage per ally who attacked earlier in the current effect cycle (max +40%).'],
-  brant: ['Deadweight', 'His break damage can never be reduced below 50% by any resistance.'],
-  nix: ['Bedside Manner (Terrible)', 'Heals land +50% stronger on allies below 30% HP.'],
-  brigga: ['Short Fuse', '+25% break damage while the target’s break bar is above half.'],
-  hearthgar: ['Stoked', '+1 Cinder per hit taken (max 5), each granting +4% DEF. Cinders fuel his shield.'],
-  milla: ['Never Late', 'The first ally to cross 200 Arts without reaching 300 has their gauge delivered straight to full.'],
-  katie: ['Lead Apron', 'Begins battle behind a personal diagnostic barrier. Her shielding magic marks boundaries, reveals threats, and makes them everyone else’s problem.'],
-};
-const HALE_AWK_PASSIVE = ['UnHollowed', 'The story transformation upgrades Hale’s kit while retaining the standard Energy gauge.'];
-
 /* ===============================================================
  *  STORY STEPS — the spine both Home:Continue and Story-list drive
  * =============================================================== */
@@ -863,7 +849,7 @@ function showUnitSheet(key, requestedForm, returnToLibrary) {
     const splash = unitSplashSource(key, awk);
     const specials = awk ? Engine.HALE_AWAKENED.specials : t.specials;
     const passiveDef = awk ? Engine.HALE_AWAKENED.passive : t.passive;
-    const passive = passiveDef ? [passiveDef.name, passiveDef.desc] : (PASSIVES[key] || ['', '']);
+    const passive = passiveDef ? [passiveDef.name, passiveDef.desc] : ['', ''];
     const atk = awk ? Engine.HALE_AWAKENED.basicMain : t.basic.d;
     sheet.className = `sheet e-${awk ? 'hollow' : t.elem}`;
     sheet.innerHTML = `

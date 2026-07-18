@@ -36,6 +36,8 @@ const required = [
   'class="splash-icon"',
   'class="hero ${splash ? \'splash-hero\' : \'\'}"',
   'Object.assign(SPRITES,{',
+  'Object.assign(SPRITES.cinnia,{pal:',
+  'effects:{"fireball":',
   '"cinnia":{"w":256',
   '"katie":{"w":256',
   '"hale":{"w":256',

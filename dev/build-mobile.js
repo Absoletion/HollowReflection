@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+const vm = require('vm');
 const { validateContentIds } = require('../tools/validate_content_ids.js');
 const p = f => path.join(__dirname, f);
 
@@ -49,8 +50,15 @@ function spriteSrc() {
   console.log('SPRITES2 embedded:', keys.join(', '), '(' + files.concat(enemyFiles).join(', ') + ')');
   const approvedPixelLab = fs.existsSync(generatedPixelLab) ? fs.readFileSync(generatedPixelLab, 'utf8') : '';
   const approvedProfiles = fs.existsSync(generatedProfiles) ? fs.readFileSync(generatedProfiles, 'utf8') : '';
+  let legacyEffects = '';
+  if (approvedPixelLab) {
+    const sandbox = { SPRITES: {} };
+    vm.runInNewContext(fs.readFileSync(p('sprites2/cinnia.js'), 'utf8'), sandbox);
+    const cinnia = sandbox.SPRITES.cinnia;
+    legacyEffects = `Object.assign(SPRITES.cinnia,{pal:${JSON.stringify(cinnia.pal)},effects:${JSON.stringify(cinnia.effects)}});`;
+  }
   if (approvedPixelLab) console.log('SPRITES2 embedded: approved PixelLab libraries for cinnia, hale, hale_awakened, katie, tobin, hearthgar, brigga, marlowe, brant, milla, nix');
-  return ['var SPRITES = {};', ...bodies, ...enemyBodies, approvedPixelLab, approvedProfiles, fs.readFileSync(p('sprites/renderer.js'), 'utf8')].join('\n');
+  return ['var SPRITES = {};', ...bodies, ...enemyBodies, approvedPixelLab, legacyEffects, approvedProfiles, fs.readFileSync(p('sprites/renderer.js'), 'utf8')].join('\n');
 }
 const spriteShim = spriteSrc();
 

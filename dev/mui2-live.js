@@ -199,7 +199,7 @@ function startBattle(key, partyKeys, onEnd) {
     const breakMax = en.breakMax * Math.pow(1.25, en.staggers || 0);
     const breakBar = en.breakMax > 0 && en.form !== 'man'
       ? `<div class="bar brkbar"><i style="width:${pct(en.breakCur, breakMax)}%"></i><span>BREAK</span></div>` : '';
-    const intent = en.alive && en.intent ? Engine.intentText(S, en) : '';
+    const intent = en.alive && en.intent && Engine.canReadIntents(S) ? Engine.intentText(S, en) : '';
     return `<section class="ucard enemy ${S.enemies.length === 1 ? 'big' : ''} e-${en.elem} ${en.alive ? '' : 'dead'}">
       ${en.form ? `<div class="formtag">${en.form === 'beast' ? 'THE BEAST' : 'THE MAN'}</div>` : ''}
       ${en.tele > 0 ? `<div class="teletag">STAMPede ${en.tele === 1 ? 'NOW' : 'SOON'}</div>` : ''}

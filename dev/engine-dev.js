@@ -79,7 +79,7 @@ const Engine = (function () {
     hale: {
       name: 'Hale', elem: 'dark', role: 'Attacker', hp: 440, basic: { d: 55, b: 5 },
       epithet: 'Adventurer',
-      passive: { name: 'Relentless Pursuit', desc: 'Deals 20% more damage to enemies below half HP.' },
+      passive: { name: 'Relentless Pursuit', kind: 'conditional', desc: 'Deals 20% more damage to enemies below half HP.' },
       specials: [
         { id: 'cross_slash', name: 'Cross Slash', cost: 1, tier: 'Skill', target: 'enemy', desc: 'Two rapid cuts, +25 Arts; the first lowers Dark resistance by 15% for 10 seconds.' },
         { id: 'black_horizon', name: 'Black Horizon', cost: 2, tier: 'Art', target: 'none', desc: 'A line-cleaving Dark attack; Hale gains 50% ATK and the final hit surges against weakened enemies.' },
@@ -90,6 +90,7 @@ const Engine = (function () {
     cinnia: {
       name: 'Cinnia', elem: 'fire', role: 'Healer', hp: 380, basic: { d: 40, b: 3 },
       epithet: 'the Battle-Cook',
+      passive: { name: 'Seconds', kind: 'conversion', desc: 'Overheal from her abilities becomes Well-Fed regeneration for two effect cycles.' },
       // Passive — Seconds: overheal from her abilities becomes Well-Fed (regen, 2 turns).
       specials: [
         { id: 'flash_fry', name: 'Flash-Fry Fireball', cost: 1, tier: 'Skill', target: 'enemy', desc: 'Flip a compact fireball from the pan-staff at one enemy.' },
@@ -100,6 +101,7 @@ const Engine = (function () {
     tobin: {
       name: 'Tobin', elem: 'water', role: 'Supporter', hp: 330, basic: { d: 40, b: 3 },
       epithet: 'the Tide-Reader',
+      passive: { name: 'Still Water', kind: 'information', desc: 'Reveals each enemy\'s next action and its target.' },
       // Passive — Still Water: reveals who the enemies' next single-target blows
       // will land on. (Codex "reveal the boss's next move" vs scripted enemies:
       // implemented as an intent preview — enemies pre-roll their next action
@@ -113,6 +115,7 @@ const Engine = (function () {
     marlowe: {
       name: 'Marlowe', elem: 'water', role: 'Attacker', hp: 390, basic: { d: 58, b: 4 },
       epithet: 'the Foppish Blade',
+      passive: { name: 'Flourish', kind: 'sequencing', desc: 'Deals 10% more damage per ally who attacked earlier in the current effect cycle, up to 40%.' },
       // Passive — Flourish: +10% dmg per ally who ATTACKED before him this round
       // (max +40%). Guards/heals/buffs don't count.
       specials: [
@@ -124,6 +127,7 @@ const Engine = (function () {
     brant: {
       name: 'Brant', elem: 'water', role: 'Breaker', hp: 430, basic: { d: 46, b: 12 },
       epithet: 'the Anchor',
+      passive: { name: 'Deadweight', kind: 'floor', desc: 'Break damage cannot be reduced below 50% by resistance.' },
       // Passive — Deadweight: his break damage can't drop below 50% from any
       // resistance. (No enemy in this demo resists break, so it's an ambient
       // guarantee — kept as a rule in dealBreak.)
@@ -135,6 +139,7 @@ const Engine = (function () {
     nix: {
       name: 'Nix', elem: 'water', role: 'Healer', hp: 350, basic: { d: 40, b: 3 },
       epithet: 'the Apothecary',
+      passive: { name: 'Bedside Manner (Terrible)', kind: 'conditional', desc: 'Heals are 50% stronger on allies below 30% HP.' },
       // Passive — Bedside Manner (Terrible): heals on allies below 30% HP +50%.
       specials: [
         { id: 'bitter_draught', name: 'Bitter Draught', cost: 1, tier: 'Skill', target: 'ally', desc: 'Strong heal 130 + cleanse debuffs.' },
@@ -144,6 +149,7 @@ const Engine = (function () {
     brigga: {
       name: 'Brigga', elem: 'fire', role: 'Breaker', hp: 410, basic: { d: 45, b: 10 },
       epithet: 'the Demolitionist',
+      passive: { name: 'Short Fuse', kind: 'conditional', desc: 'Deals 25% more Break damage while the target\'s Break bar is above half.' },
       // Passive — Short Fuse: +25% break damage while target's break bar > half.
       specials: [
         { id: 'kegcracker', name: 'Kegcracker', cost: 1, tier: 'Skill', target: 'enemy', desc: 'Strike that ignores a chunk of the guard bar.' },
@@ -154,6 +160,7 @@ const Engine = (function () {
     hearthgar: {
       name: 'Hearthgar', elem: 'fire', role: 'Defender', hp: 540, basic: { d: 42, b: 4 },
       epithet: 'the Ember-Golem',
+      passive: { name: 'Stoked', kind: 'reactive', desc: 'Gains one Cinder per hit taken, up to five. Each grants 4% DEF and fuels his shield.' },
       // Passive — Stoked: +1 Cinder per hit taken (max 5), +4% DEF each.
       specials: [
         { id: 'brace', name: 'Brace the Hearth', cost: 1, tier: 'Skill', target: 'none', desc: 'Guard allies and intercept single-target attacks for 1 cycle.' },
@@ -164,6 +171,7 @@ const Engine = (function () {
     milla: {
       name: 'Milla', elem: 'thunder', role: 'Supporter', hp: 340, basic: { d: 42, b: 3 },
       epithet: 'the Courier',
+      passive: { name: 'Never Late', kind: 'once_per_battle', desc: 'The first ally to reach 200 Arts without reaching 300 has their gauge filled.' },
       // Passive — Never Late: first time each battle an ally ends an action one
       // bar short of their Burst (at exactly 2⚡), Milla grants +1⚡.
       // (Codex "would be one bar short of a special" — closest clean trigger.)
@@ -176,6 +184,7 @@ const Engine = (function () {
     katie: {
       name: 'Katie', elem: 'dark', role: 'Defender', hp: 525, basic: { d: 38, b: 5 },
       epithet: 'the Night Radiographer',
+      passive: { name: 'Lead Apron', kind: 'battle_start', desc: 'Begins each battle with a 70-damage personal barrier.' },
       // Passive — Lead Apron: begins each battle with a personal radiation-barrier shield.
       specials: [
         { id: 'diagnostic_crush', name: 'Diagnostic Crush', cost: 1, tier: 'Skill', target: 'enemy', desc: 'Dark hammer smash; reduces the target\'s damage dealt by 20% for 5 seconds.' },
@@ -458,7 +467,7 @@ const Engine = (function () {
   // Hale's five-star UnHollowed kit uses the standard Energy gauge.
   const HALE_AWAKENED = {
     basicMain: 62,
-    passive: { name: 'Hollow Sovereignty', desc: 'Dark damage +30% and critical damage +20%; both bonuses double below half HP.' },
+    passive: { name: 'Hollow Sovereignty', kind: 'conditional', desc: 'Deals 50% more damage, increasing to 100% while below half HP.' },
     specials: [
       { id: 'fracture_edge', name: 'Fracture Edge', cost: 1, tier: 'Skill', target: 'enemy', desc: 'Pierce defense and fracture Dark resistance by 25%.' },
       { id: 'event_horizon', name: 'Event Horizon', cost: 2, tier: 'Art', target: 'enemy', desc: 'Gain 35% ATK and collapse a defense-ignoring singularity on one enemy.' },
@@ -1315,6 +1324,7 @@ const Engine = (function () {
     }
     return `${en.name} waits.`;
   }
+  function canReadIntents(s) { return livingParty(s).some(u => u.key === 'tobin'); }
 
   /* ------------------------------------------------------------------ *
    *  Enemy phase
@@ -1605,7 +1615,7 @@ const Engine = (function () {
    *  Public API
    * ------------------------------------------------------------------ */
   return {
-    newBattle, availableActions, playerAct, elemMult, intentText,
+    newBattle, availableActions, playerAct, elemMult, intentText, canReadIntents,
     availableLiveActions, chooseLiveAIAction, liveAct, liveEnemyPhase, liveUpkeep, liveSkillGain, LIVE_SKILL_GAIN, AI_PRESETS,
     livingParty, livingEnemies, partyHPfrac, byKey, byUid,
     UNITS, ENEMIES, BATTLES, HALE_AWAKENED, ELEM_ICON, UNIT_PROGRESSION, LEVEL_CAPS, xpToNext, grantUnitXP, applyStoryEvolutions, UNIT_LIBRARY, recordOwnedDiscoveries,

@@ -105,6 +105,13 @@ function runHollowingSelfTests(E, print) {
     ok(ox.hp === 520 - 180, 'fire vs earth = 1.5x (120 -> 180)');
   }
 
+  /* --- Passive inventory and Still Water visibility --- */
+  {
+    ok(Object.values(E.UNITS).every(u => u.passive && u.passive.name && u.passive.kind && u.passive.desc), 'every roster unit has one canonical classified passive');
+    ok(E.HALE_AWAKENED.passive.kind === 'conditional', 'Hale awakened passive is included in the canonical audit');
+    ok(!E.canReadIntents(fresh('ch1', ['hale', 'cinnia'])) && E.canReadIntents(fresh('ch1', ['hale', 'tobin'])), 'Still Water reveals intents only while Tobin is present and alive');
+  }
+
   /* --- 9-12. Hale forms share the standard Energy system --- */
   {
     const s = fresh('ch6', ['hale', 'cinnia', 'brant'], { awakenedHale: true });

@@ -5,10 +5,19 @@
     "validate:ids": "node tools/validate_content_ids.js --self-test",
     "test:engine": "node dev/tests-dev.js",
     "test:state": "node dev/game-state.test.js",
+    "test:stage": "node dev/stage-results.test.js",
+    "test:renderer": "node dev/sprites/renderer.test.js",
+    "test:pixellab": "node dev/pixellab-sprites.test.js",
+    "test:sprites": "node dev/sprites/verify.js",
     "test:summon": "node tools/summon-simulation.js",
     "build": "node dev/build-mobile.js",
     "validate:standalone": "node tools/validate_standalone_update.js hollowing-demo.html",
-    "test:browser": "node tools/browser-smoke.js"
+    "test:browser": "node tools/browser-smoke.js",
+    "verify:art": "node tools/audit_splash_art.js && node tools/audit_initial_cast_sprites.js",
+    "verify:art:masters": "node tools/audit_splash_art.js --masters",
+    "verify:core": "pnpm validate:ids && pnpm test:engine && pnpm test:state && pnpm test:stage && pnpm test:renderer && pnpm test:pixellab && pnpm test:sprites && pnpm test:summon && pnpm build && pnpm validate:standalone && pnpm verify:art",
+    "verify:browser": "pnpm build && pnpm test:browser",
+    "verify": "pnpm verify:core && pnpm test:browser"
   },
   "devDependencies": {
     "playwright": "1.61.1"

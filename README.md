@@ -5,20 +5,19 @@ Standalone anime pixel-art gacha RPG prototype with live combat, persistent prog
 ## Run locally
 
 ```powershell
-node dev/build-mobile.js
+pnpm build
 ```
 
-Open `hollowing-demo.html` after the build completes.
+Open `hollowing-demo.html` after the build completes. It is disposable build output and is not tracked in Git.
 
 ## Verification
 
 ```powershell
-node dev/tests-dev.js
-node dev/game-state.test.js
-node tools/summon-simulation.js
-node dev/build-mobile.js
-node tools/validate_standalone_update.js hollowing-demo.html
-node tools/browser-smoke.js
+pnpm install --frozen-lockfile
+pnpm exec playwright install chromium
+pnpm verify
 ```
 
-The raw PixelLab generation workbench and historical art rounds are intentionally excluded from Git. The approved runtime sprite bundle lives in `generated/pixellab-sprites.js`.
+`pnpm verify` runs the content, engine, state, stage, renderer, PixelLab, legacy sprite, summon, standalone, runtime-art, and browser gates.
+
+The raw PixelLab generation workbench, splash-art masters, and historical art rounds are intentionally excluded from Git. The approved runtime bundles live in `generated/pixellab-sprites.js` and `assets/splash-art-runtime/`, so the default art audit works from a clean clone. Contributors with the private splash-art masters can additionally run `pnpm verify:art:masters` after building.

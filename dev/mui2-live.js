@@ -13,7 +13,7 @@ const BSCENE = { training: 'sc-hall', act1_1: 'sc-hall', act1_2: 'sc-hall', act1
 
 function startBattle(key, partyKeys, onEnd) {
   META.stage = key;
-  const S = Engine.newBattle(key, partyKeys, { awakenedHale: !!META.haleAwakened });
+  const S = Engine.newBattle(key, partyKeys, { awakenedHale: !!META.haleAwakened, profiles: META.unitProgress });
   // Legacy encounters were tuned around one action per round. Live combat
   // needs enough field time for recasts, Arts decisions, and telegraphs.
   const liveHpScale = { training: 1, ch1: 2.0, ch2: 2.4, ch3: 1, ch6: 0.85 }[key] || 2.0;

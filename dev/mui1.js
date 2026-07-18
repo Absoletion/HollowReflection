@@ -872,7 +872,8 @@ function showUnitSheet(key, requestedForm, returnToLibrary) {
     const specials = awk ? Engine.HALE_AWAKENED.specials : t.specials;
     const passiveDef = awk ? Engine.HALE_AWAKENED.passive : t.passive;
     const passive = passiveDef ? [passiveDef.name, passiveDef.desc] : ['', ''];
-    const atk = awk ? Engine.HALE_AWAKENED.basicMain : t.basic.d;
+    const combat = Engine.combatProfile(key, progress);
+    const atk = Math.round((awk ? Engine.HALE_AWAKENED.basicMain : t.basic.d) * combat.powerScale);
     sheet.className = `sheet e-${awk ? 'hollow' : t.elem}`;
     sheet.innerHTML = `
       <button class="closebtn" id="sheetclose" aria-label="Close unit details" title="Close">×</button>
@@ -888,7 +889,7 @@ function showUnitSheet(key, requestedForm, returnToLibrary) {
       </div>
       <div class="sheet-tools"><button id="testunit">Test Animations</button><label>Auto AI<select id="aipreset">${Object.values(Engine.AI_PRESETS).map(preset => `<option value="${preset.id}" ${((META.unitAI[key] || {}).preset || 'balanced') === preset.id ? 'selected' : ''}>${esc(preset.name)}</option>`).join('')}</select></label></div>
       <div class="statline">
-        <div class="st"><b>${t.hp}</b><span>HP</span></div>
+        <div class="st"><b>${combat.maxhp}</b><span>HP</span></div>
         <div class="st"><b>${atk}</b><span>${awk ? 'Blade ATK' : 'ATK'}</span></div>
         <div class="st"><b>${awk ? '7' : (specials.length + 1)}</b><span>${awk ? 'Blade Cap' : 'Actions'}</span></div>
       </div>

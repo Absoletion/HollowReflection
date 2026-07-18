@@ -536,15 +536,33 @@ const Engine = (function () {
    *  Construction
    * ------------------------------------------------------------------ */
   let uidSeq = 0;
-  function mkPlayer(key) {
+  function combatProfile(key, saved) {
+    const cfg = UNIT_PROGRESSION[key];
+    const t = UNITS[key];
+    if (!cfg || !t) return null;
+    const raw = saved && typeof saved === 'object' ? saved : {};
+    const maxStars = Math.max(cfg.maxStars, ...(cfg.plannedForms || []).map(x => x.stars));
+    const stars = intIn(raw.stars, cfg.baseStars, maxStars, cfg.baseStars);
+    const cap = LEVEL_CAPS[stars] || 90;
+    const level = intIn(raw.level, 1, cap, 1);
+    const levelGrowth = cap <= 1 ? 0 : (level - 1) / (cap - 1);
+    const powerScale = 1 + levelGrowth * 0.5 + (stars - cfg.baseStars) * 0.1;
+    return Object.freeze({ key, level, stars, cap, powerScale,
+      maxhp: Math.round(t.hp * powerScale),
+      basicDamage: Math.round(t.basic.d * powerScale),
+      basicBreak: Math.round(t.basic.b * powerScale),
+    });
+  }
+  function mkPlayer(key, savedProfile) {
     const t = UNITS[key];
     const progression = UNIT_PROGRESSION[key];
+    const profile = combatProfile(key, savedProfile);
     return {
       uid: 'p' + (uidSeq++), key, side: 'party',
       name: t.name, elem: t.elem, role: t.role, epithet: t.epithet,
-      maxhp: t.hp, hp: t.hp, energy: 0, alive: true, acted: false,
-      level: 1, stars: progression.baseStars,
-      guarding: false, buffs: [], shieldHits: 0, shieldHP: key === 'katie' ? 70 : 0,
+      maxhp: profile.maxhp, hp: profile.maxhp, energy: 0, alive: true, acted: false,
+      level: profile.level, stars: profile.stars, powerScale: profile.powerScale,
+      guarding: false, buffs: [], shieldHits: 0, shieldHP: key === 'katie' ? Math.round(70 * profile.powerScale) : 0,
       guardedBy: null,
       cinders: 0, riposte: false, retaliate: false,
       awakened: false, blades: 0,
@@ -569,7 +587,7 @@ const Engine = (function () {
     uidSeq = 0; // IDs are battle-local so seeded replays produce the same event stream.
     const s = {
       key, title: cfg.title, round: 1, result: null, scripted: !!cfg.scripted,
-      party: partyKeys.map(mkPlayer),
+      party: partyKeys.map(key2 => mkPlayer(key2, opts.profiles && opts.profiles[key2])),
       enemies: cfg.enemies.map(mkEnemy),
       rng: opts.rng || Math.random,
       lock: null,            // 'bulwark' during the guided finale
@@ -637,7 +655,7 @@ const Engine = (function () {
   function dealToEnemy(s, atkUnit, en, base, brk, ev, o) {
     o = o || {};
     if (!en.alive) return 0;
-    let d = base;
+    let d = base * (atkUnit.powerScale || 1);
     d *= 1 + buffVal(atkUnit, 'atkUp');
     d *= elemMult(atkUnit.elem, en.elem);
     if (atkUnit.elem === 'dark' || atkUnit.elem === 'hollow') d *= 1 + buffVal(en, 'darkResDown');
@@ -665,7 +683,7 @@ const Engine = (function () {
   function dealBreak(s, atkUnit, en, brk, ev) {
     if (!en.alive || en.breakMax <= 0 || en.staggered) return;
     if (en.form === 'man') return;                   // no bar in Man half
-    let b = brk;
+    let b = brk * (atkUnit.powerScale || 1);
     b *= 1 + buffVal(en, 'breakVuln');
     if (atkUnit.key === 'brigga' && en.breakCur > en.breakMax / 2) b = Math.round(b * 1.25); // Short Fuse
     // Brant's Deadweight: break damage can't be reduced below 50% by resistance.
@@ -784,7 +802,7 @@ const Engine = (function () {
   function heal(s, src, u, amt, ev, opts) {
     opts = opts || {};
     if (!u.alive) return 0;
-    let h = amt;
+    let h = amt * (src && src.powerScale || 1);
     if (src && src.key === 'nix' && u.hp < u.maxhp * 0.3) h = Math.round(h * 1.5); // Bedside Manner
     const before = u.hp;
     u.hp = Math.min(u.maxhp, u.hp + h);
@@ -1624,7 +1642,7 @@ const Engine = (function () {
     newBattle, availableActions, playerAct, elemMult, intentText, canReadIntents,
     availableLiveActions, chooseLiveAIAction, liveAct, liveEnemyPhase, liveUpkeep, liveSkillGain, LIVE_SKILL_GAIN, AI_PRESETS,
     livingParty, livingEnemies, partyHPfrac, byKey, byUid,
-    UNITS, ENEMIES, BATTLES, HALE_AWAKENED, ELEM_ICON, UNIT_PROGRESSION, LEVEL_CAPS, xpToNext, grantUnitXP, applyStoryEvolutions, UNIT_LIBRARY, recordOwnedDiscoveries,
+    UNITS, ENEMIES, BATTLES, HALE_AWAKENED, ELEM_ICON, UNIT_PROGRESSION, LEVEL_CAPS, xpToNext, grantUnitXP, combatProfile, applyStoryEvolutions, UNIT_LIBRARY, recordOwnedDiscoveries,
     LIVE_GESTURE_THRESHOLDS, liveGestureTier, PARTY_SIZE,
     SAVE_SCHEMA_VERSION, normalizeSaveState, validateSaveState, migrateSaveEnvelope,
     CHALLENGES, CHALLENGE_ITEMS, challengeUnlocked, evaluateChallengeMastery,

@@ -34,6 +34,22 @@ function runHollowingSelfTests(E, print) {
     ok(s.party.every(u => u.energy === 0), 'units start at 0 energy');
   }
 
+  /* --- 2b. Saved level/star progression feeds deterministic combat stats --- */
+  {
+    const low = E.combatProfile('hale', { level: 1, stars: 4 });
+    const high = E.combatProfile('hale', { level: 70, stars: 4 });
+    ok(high.maxhp > low.maxhp && high.basicDamage > low.basicDamage, 'level progression increases HP and damage');
+    const lowBattle = fresh('training', ['hale'], { profiles: { hale: { level: 1, stars: 4 } } });
+    const highBattle = fresh('training', ['hale'], { profiles: { hale: { level: 70, stars: 4 } } });
+    ok(highBattle.party[0].maxhp > lowBattle.party[0].maxhp && highBattle.party[0].powerScale > 1, 'battle construction applies saved profile');
+    const replay = fresh('training', ['hale'], { profiles: { hale: { level: 70, stars: 4 } } });
+    const a = highBattle.party[0], b = highBattle.enemies[0];
+    const ar = replay.party[0], br = replay.enemies[0];
+    E.liveAct(highBattle, a.uid, 'cross_slash', b.uid);
+    E.liveAct(replay, ar.uid, 'cross_slash', br.uid);
+    ok(E.combatEventHash(highBattle) === E.combatEventHash(replay), 'profiled combat remains deterministic');
+  }
+
   /* --- 3. Basic attack: +1 energy, damage lands --- */
   {
     const s = fresh('ch1', ['hale', 'cinnia', 'tobin']);

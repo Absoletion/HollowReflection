@@ -48,6 +48,9 @@ const META = {
   challengeItems: {},
   challengeProgress: {},
   completedTransactions: [],
+  settledBattles: {},
+  completedOperations: {},
+  storyRecruitments: {},
   marketState: { tier: 0, purchases: {} },
   telemetry: [],
   economyLedger: [],
@@ -86,9 +89,8 @@ function evolutionReady(key) {
   return GameState.evolutionEligibility(captureSaveState(), key).ok;
 }
 function evolveUnit(key) {
-  const result = GameState.evolveUnit(captureSaveState(), key);
-  if (!result.ok) { toast(result.message); return false; }
-  applySaveState(result.state); writeSave(true);
+  const result = GameState.evolveUnit(captureSaveState(), key, { transactionId: newOperationId('evolve') });
+  if (!commitCommandResult(result, 'Evolution was not applied because the save could not be committed.')) return false;
   toast(`${Engine.UNITS[key].name} evolved to ${unitProgress(key).stars}★.`);
   return true;
 }
@@ -108,7 +110,7 @@ function rememberOwnedUnits() {
  *  the envelope but requires a real authentication/cloud provider.
  * --------------------------------------------------------------- */
 const SAVE_STORAGE_KEY = 'projectHollowing.singleSave';
-const SAVE_GAME_VERSION = '0.47.0';
+const SAVE_GAME_VERSION = '0.48.0';
 let saveEnvelope = null;
 let incompatibleRawText = null;
 let saveLastStateJSON = '';
@@ -121,6 +123,7 @@ function captureSaveState() {
   return Engine.normalizeSaveState({
     sigils: META.sigils, gold: META.gold, glassDust: META.glassDust, ranks: META.ranks, owned: META.owned, activeParty: META.activeParty,
     unitProgress: META.unitProgress, challengeItems: META.challengeItems, challengeProgress: META.challengeProgress, completedTransactions: META.completedTransactions,
+    settledBattles: META.settledBattles, completedOperations: META.completedOperations, storyRecruitments: META.storyRecruitments,
     marketState: META.marketState, summonState: META.summonState, summonHistory: META.summonHistory, telemetry: META.telemetry, economyLedger: META.economyLedger, unitAI: META.unitAI,
     evolutionUnlocks: META.evolutionUnlocks, featureUnlocks: META.featureUnlocks, libraryUnlocked: META.libraryUnlocked,
     storyStep: META.storyStep, act1MissionProgress: META.act1MissionProgress, missionClears: META.missionClears, sideMissionProgress: META.sideMissionProgress, haleAwakened: META.haleAwakened, lastHub: META.lastHub,
@@ -135,6 +138,10 @@ function applySaveState(state) {
 function saveId() {
   if (window.crypto && typeof window.crypto.randomUUID === 'function') return window.crypto.randomUUID();
   return 'hollow-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 10);
+}
+function newOperationId(domain) {
+  const profile = saveEnvelope && saveEnvelope.saveId || 'local';
+  return `${domain}:${profile}:${saveId()}`;
 }
 function newSaveEnvelope(state) {
   const now = new Date().toISOString();
@@ -187,6 +194,11 @@ function commitGameStateResult(result) {
     return false;
   }
 }
+function commitCommandResult(result, failureMessage) {
+  if (!result.ok) { toast(result.message || 'The operation could not be completed.'); return false; }
+  if (!commitGameStateResult(result)) { toast(failureMessage || 'The change was not applied because the save could not be committed.', 4200); return false; }
+  return true;
+}
 function initializeSaveSystem() {
   rememberOwnedUnits();
   let rawText = null;
@@ -194,12 +206,16 @@ function initializeSaveSystem() {
   catch (err) { saveError = 'Local saving is unavailable in this browser.'; }
   if (rawText) {
     try {
-      saveEnvelope = Engine.migrateSaveEnvelope(JSON.parse(rawText));
+      const parsedRaw = JSON.parse(rawText);
+      const legacySchema = Number(parsedRaw.schemaVersion == null ? 0 : parsedRaw.schemaVersion);
+      const legacyStoryStep = Number(parsedRaw.state && parsedRaw.state.storyStep || parsedRaw.storyStep || 0);
+      saveEnvelope = Engine.migrateSaveEnvelope(parsedRaw);
       applySaveState(saveEnvelope.state);
       saveLastStateJSON = JSON.stringify(captureSaveState());
       saveLastAt = saveEnvelope.updatedAt || null;
       // Re-save migrated data in the current envelope format.
       writeSave(true);
+      if (legacySchema <= 5 && legacyStoryStep >= 4 && !saveEnvelope.state.missionClears.act4_1) saveNotice = 'Your legacy campaign progress was preserved. A newly authored Chapter 4 is now available from the Story map.';
       return;
     } catch (err) {
       if (/newer version/.test(err.message || '')) {
@@ -431,8 +447,16 @@ function firstCanonicalMission() {
   return null;
 }
 function missionParty(mission) {
-  const guests = mission.party || [];
-  return [...guests, ...META.activeParty].filter((k, i, a) => k && Engine.UNITS[k] && (META.owned.includes(k) || guests.includes(k)) && a.indexOf(k) === i).slice(0, Engine.PARTY_SIZE);
+  const mode = mission.partyMode || (mission.party && mission.party.length ? 'fixed' : 'player');
+  if (mode === 'fixed') return (mission.party || []).filter(id => Engine.UNITS[id]).slice(0, Engine.PARTY_SIZE);
+  if (mode === 'player_plus_guests') {
+    const guests = mission.guests || [];
+    return [...guests, ...META.activeParty].filter((id, index, all) => id && Engine.UNITS[id] && (META.owned.includes(id) || guests.includes(id)) && all.indexOf(id) === index).slice(0, Engine.PARTY_SIZE);
+  }
+  return META.activeParty.filter(id => META.owned.includes(id) && Engine.UNITS[id]).slice(0, Engine.PARTY_SIZE);
+}
+function syntheticStoryResult(mission, party) {
+  return { battleId: `story:${mission.id}:${saveId()}`, encounterId: null, victory: true, elapsedMs: 0, unitsDefeated: 0, breakCount: 0, burstUsed: false, eventHash: `story:${mission.id}`, party: party.slice(), outcome: 'victory' };
 }
 function missionScenes(mission, phase) {
   if (mission[phase] && mission[phase].length) return mission[phase];
@@ -479,6 +503,10 @@ const TABS = [
   { id: 'summon', icon: 'i-summon', label: 'Summon', fn: showSummon },
   { id: 'town', icon: 'i-town', label: 'Town', fn: showTown },
 ];
+function canOpenTab(tabId) {
+  return TABS.some(tab => tab.id === tabId) && (tabId !== 'summon' || META.featureUnlocks.summon);
+}
+function safeHubTab(tabId) { return canOpenTab(tabId) ? tabId : 'home'; }
 function renderNav(active) {
   nav.innerHTML = TABS.map(t =>
     `<button type="button" class="navbtn ${t.id === active ? 'active' : ''}" data-tab="${t.id}"${t.id === active ? ' aria-current="page"' : ''}${t.id === 'summon' && !META.featureUnlocks.summon ? ' disabled aria-disabled="true" title="Unlocks after 1-9 · The Still Basin"' : ''}>
@@ -487,7 +515,7 @@ function renderNav(active) {
   nav.querySelectorAll('.navbtn').forEach(b => b.onclick = () => go(b.dataset.tab));
 }
 function go(tabId) {
-  if (tabId === 'summon' && !META.featureUnlocks.summon) { toast('Summoning unlocks after mission 1-9: The Still Basin.'); return; }
+  if (!canOpenTab(tabId)) { if (tabId === 'summon') toast('Summoning unlocks after mission 1-9: The Still Basin.'); tabId = 'home'; }
   META.lastHub = tabId;
   const tab = TABS.find(t => t.id === tabId) || TABS[0];
   chrome('hub');
@@ -525,7 +553,7 @@ function showTitle() {
       <input id="savefile" type="file" accept="application/json,.json" hidden>
       <div class="small" style="margin-top:14px; color:var(--faint);">Real-time · command-driven · read the field, choose the moment.</div>
     </div>`;
-  document.getElementById('startbtn').onclick = () => { writeSave(true); go(META.lastHub || 'home'); };
+  document.getElementById('startbtn').onclick = () => { writeSave(true); go(safeHubTab(META.lastHub)); };
   document.getElementById('exportsave').onclick = exportSaveBackup;
   const input = document.getElementById('savefile');
   document.getElementById('importsave').onclick = () => input.click();
@@ -612,7 +640,7 @@ function playStoryMission(id, chapterIndex) {
   const showPost = () => showDialogue(missionScenes(mission, 'post'), complete, mission.scene);
   if (mission.type === 'story') {
     chrome('nonav');
-    showDialogue(missionScenes(mission, 'pre'), () => settleCanonicalMission(mission, party, 'victory', { battleId: `story:${id}:${saveId()}`, encounterId: null, victory: true }, showPost), mission.scene);
+    showDialogue(missionScenes(mission, 'pre'), () => settleCanonicalMission(mission, party, 'victory', syntheticStoryResult(mission, party), showPost), mission.scene);
     return;
   }
   const fight = () => {
@@ -649,7 +677,7 @@ function playAct1Mission(index) {
   const showPost = () => mission.post && mission.post.length ? showDialogue(mission.post, complete, mission.scene) : complete();
   if (mission.type === 'story') {
     chrome('nonav');
-    showDialogue(mission.pre || [{ sp: '', tx: mission.title }], () => settleCanonicalMission(mission, party, 'victory', { battleId: `story:${mission.id}:${saveId()}`, encounterId: null, victory: true }, showPost), mission.scene);
+    showDialogue(mission.pre || [{ sp: '', tx: mission.title }], () => settleCanonicalMission(mission, party, 'victory', syntheticStoryResult(mission, party), showPost), mission.scene);
     return;
   }
   const fight = () => {
@@ -753,10 +781,8 @@ function showPartyEditor() {
       draw();
     });
     document.getElementById('saveparty').onclick = () => {
-      const result = GameState.setActiveParty(captureSaveState(), [...selected]);
-      if (!result.ok) return toast(result.message);
-      applySaveState(result.state);
-      if (!writeSave(true)) return toast('The party changed, but could not be saved.');
+      const result = GameState.setActiveParty(captureSaveState(), [...selected], { transactionId: newOperationId('party') });
+      if (!commitCommandResult(result, 'The formation was not changed because it could not be saved.')) return;
       showParty(); toast('Active party saved.');
     };
     document.getElementById('cancelparty').onclick = showParty;
@@ -945,9 +971,9 @@ function showUnitSheet(key, requestedForm, returnToLibrary) {
     sheet.querySelector('#sheetclose').onclick = () => sheet.remove();
     sheet.querySelector('#testunit').onclick = () => { sheet.remove(); showUnitAnimationPreview(key, form, returnToLibrary); };
     sheet.querySelector('#aipreset').onchange = event => {
-      const result = GameState.setAIPreset(captureSaveState(), key, event.target.value);
-      if (!result.ok) { toast(result.message); draw(); return; }
-      applySaveState(result.state); writeSave(true); toast(`${t.name} AI: ${Engine.AI_PRESETS[event.target.value].name}.`);
+      const result = GameState.setAIPreset(captureSaveState(), key, event.target.value, { transactionId: newOperationId('ai') });
+      if (!commitCommandResult(result, 'The AI preset was not changed because it could not be saved.')) { draw(); return; }
+      toast(`${t.name} AI: ${Engine.AI_PRESETS[event.target.value].name}.`);
     };
     const evolve = sheet.querySelector('#evolveunit');
     if (evolve) evolve.onclick = () => { if (evolveUnit(key)) { form = key === 'hale' ? 'awk' : 'base'; draw(); } };
@@ -1012,7 +1038,7 @@ function showSummon() {
       <button id="pull10">Summon ×10<b>90 ◈</b></button>
     </div>
     <div class="summon-stage" id="stage"><span class="small" style="color:var(--faint)">The basin of still water waits.</span></div>
-    <div class="small summon-history">History: ${META.summonHistory.slice(-10).reverse().map(x => esc(Engine.UNITS[x.unitId].name)).join(' · ') || 'None yet'}</div>`;
+    <div class="small summon-history">History: ${META.summonHistory.slice(-10).reverse().map(entry => { const unit = Engine.UNITS[entry.unitId]; const result = entry.newUnit ? 'NEW' : entry.dust ? `+${entry.dust} Dust` : `Glass Rank ${entry.rank}`; return `${esc(unit.name)} ${entry.rarity}★ · ${result}`; }).join(' · ') || 'None yet'}</div>`;
   const stage = document.getElementById('stage');
   const b1 = document.getElementById('pull1'), b10 = document.getElementById('pull10');
   let pulling = false;
@@ -1021,9 +1047,9 @@ function showSummon() {
   function doPulls(n) {
     if (pulling) return;
     pulling = true; afford();
-    const result = GameState.performSummon(captureSaveState(), 'standard', n, Math.random, { transactionId: `summon:standard:${Date.now()}` });
-    if (!result.ok) { pulling = false; afford(); toast(result.message); return; }
-    applySaveState(result.state); refreshSigils(); afford(); writeSave(true);
+    const result = GameState.performSummon(captureSaveState(), 'standard', n, Math.random, { transactionId: newOperationId('summon') });
+    if (!commitCommandResult(result, 'The summon was cancelled because the save could not be committed.')) { pulling = false; afford(); return; }
+    refreshSigils(); afford();
     stage.innerHTML = '';
     stage.classList.toggle('multi', n > 1);
     stage.classList.add('revealing');
@@ -1098,20 +1124,21 @@ function launchChallenge(challengeId) {
   const cfg = Engine.CHALLENGES[challengeId];
   if (!Engine.challengeUnlocked(captureSaveState(), challengeId)) { toast('This Challenge is still locked.'); return; }
   const attempt = GameState.recordTelemetry(captureSaveState(), { event: 'challenge_attempt', challengeId });
-  if (attempt.ok) { applySaveState(attempt.state); writeSave(true); }
+  if (attempt.ok) commitGameStateResult(attempt);
   startBattle(cfg.encounterId, META.activeParty, (outcome, summary) => {
     if (outcome !== 'victory') {
       const result = GameState.recordTelemetry(captureSaveState(), Object.assign({ event: 'challenge_result', challengeId, outcome }, summary || {}));
-      if (result.ok) { applySaveState(result.state); writeSave(true); }
+      if (result.ok) commitGameStateResult(result);
       showChallengeMap(); return;
     }
     const settlement = GameState.completeChallenge(captureSaveState(), challengeId, summary);
     if (!settlement.ok) {
       const failure = GameState.recordTelemetry(captureSaveState(), { event: 'challenge_settlement_failed', challengeId, outcome: settlement.errorCode });
-      if (failure.ok) { applySaveState(failure.state); writeSave(true); }
+      if (failure.ok) commitGameStateResult(failure);
       toast(settlement.message); showChallengeMap(); return;
     }
-    applySaveState(settlement.state); writeSave(true); showChallengeResults(challengeId, settlement);
+    if (!commitGameStateResult(settlement)) { toast('Challenge rewards were not applied because the save could not be committed.', 4200); showChallengeMap(); return; }
+    showChallengeResults(challengeId, settlement);
   });
 }
 function showChallengeMap() {
@@ -1130,16 +1157,18 @@ function showChallengeMap() {
 function launchSideMission(id) {
   const cfg = Engine.SIDE_MISSIONS[id];
   if (!cfg) return;
+  if (!Engine.sideMissionUnlocked(captureSaveState(), id)) { toast('This contract unlocks after mission 1-5: The Quest Board.'); return; }
+  const tier = Engine.marketRestockTier(captureSaveState());
+  const progress = META.sideMissionProgress[id] || { clearCount: 0, firstClear: false, rewardTier: tier, rewardedClears: 0 };
+  if ((progress.rewardTier === tier ? progress.rewardedClears : 0) >= cfg.rewardLimit) { toast('This contract refreshes when story progression advances.'); return; }
   const party = META.activeParty.filter(key => META.owned.includes(key));
   if (!party.length) { toast('Choose an owned party before taking a contract.'); return; }
-  const progress = META.sideMissionProgress[id] || { clearCount: 0, firstClear: false };
   chrome('battle');
-  startBattle(cfg.battle, party, outcome => {
+  startBattle(cfg.battle, party, (outcome, summary) => {
     if (outcome === 'defeat' || outcome === 'exit') return showTown();
-    const firstClear = !progress.firstClear;
-    META.sideMissionProgress[id] = { clearCount: progress.clearCount + 1, firstClear: true };
-    const reward = grantQuestRewards(cfg.battle, party, firstClear);
-    showQuestRewards(reward, showTown);
+    const settlement = GameState.completeSideMission(captureSaveState(), id, summary, party);
+    if (!commitCommandResult(settlement, 'The contract rewards were not applied because the save could not be committed.')) { showTown(); return; }
+    showQuestRewards(settlement.rewards[0], showTown);
   });
 }
 
@@ -1208,6 +1237,25 @@ function showTown() {
     const roster = META.owned.map(k => { const p = unitProgress(k); return `<div><b>${esc(Engine.UNITS[k].name)}</b><span>Lv. ${p.level} · ${xpText(p)}</span></div>`; }).join('');
     panel.innerHTML = panelHead('Lower Ward', 'Training Yard', 'Review the experience and level progress earned by your active guild members.') + `<div class="training-list">${roster}</div><button id="townparty2">View Full Party</button>`;
     document.getElementById('townparty2').onclick = () => go('party');
+  }
+  function openBoard() {
+    const state = captureSaveState(), tier = Engine.marketRestockTier(state);
+    const sideCards = Object.values(Engine.SIDE_MISSIONS).map(cfg => {
+      const unlocked = Engine.sideMissionUnlocked(state, cfg.id), progress = META.sideMissionProgress[cfg.id] || { clearCount: 0, rewardTier: tier, rewardedClears: 0 };
+      const used = progress.rewardTier === tier ? progress.rewardedClears : 0, remaining = Math.max(0, cfg.rewardLimit - used), available = unlocked && remaining > 0;
+      return `<button class="quest-preview" data-side-mission="${cfg.id}" ${available ? '' : 'disabled'}><div><b>${esc(cfg.title)}</b><span>Side Mission - ${esc(cfg.description)}</span><span>${unlocked ? `Clears: ${progress.clearCount} - ${remaining}/${cfg.rewardLimit} rewards remain this story tier` : 'Unlocks after 1-5 - The Quest Board'}</span></div><i>${available ? 'ENTER' : unlocked ? 'REFRESH LATER' : 'LOCKED'}</i></button>`;
+    }).join('');
+    panel.innerHTML = panelHead('Outside the Inn', 'Quest Board', 'Local contracts, character missions, and the guild training grounds are posted here.') + `<button class="quest-preview training-contract" id="traininggrounds"><div><b>Training Grounds</b><span>Practice Map - No rewards - Infinite-HP dummy</span></div><i>OPEN</i></button>${sideCards}`;
+    document.getElementById('traininggrounds').onclick = () => launchTraining(META.owned[0] || 'hale', false);
+    panel.querySelectorAll('[data-side-mission]:not(:disabled)').forEach(button => button.onclick = () => launchSideMission(button.dataset.sideMission));
+  }
+  function openMarket() {
+    const tier = Engine.marketRestockTier(captureSaveState()), purchases = META.marketState.tier === tier ? META.marketState.purchases : {};
+    const targetOptions = META.owned.map(key => `<option value="${key}">${esc(Engine.UNITS[key].name)} - Lv. ${unitProgress(key).level}</option>`).join('');
+    const items = Object.values(Engine.MARKET_ITEMS).map(item => { const unlocked = Engine.marketItemUnlocked(captureSaveState(), item.id), bought = purchases[item.id] || 0, remaining = item.limit - bought, affordable = META.gold >= item.price && (!item.effect.dust || META.glassDust >= item.effect.dust); return `<div class="quest-preview"><div><b>${esc(item.name)}</b><span>${esc(item.description)}</span><span>${item.price.toLocaleString()} Gold - ${remaining}/${item.limit} remaining</span></div><button data-market-buy="${item.id}" ${!unlocked || !remaining || !affordable ? 'disabled' : ''}>${unlocked ? (remaining ? 'Buy' : 'Sold Out') : 'Locked'}</button></div>`; }).join('');
+    const ledger = META.economyLedger.slice(-5).reverse().map(x => { const parts = []; if (x.gold) parts.push(`${x.gold > 0 ? '+' : ''}${x.gold} Gold`); if (x.dust) parts.push(`${x.dust > 0 ? '+' : ''}${x.dust} Glass Dust`); if (x.sigils) parts.push(`${x.sigils > 0 ? '+' : ''}${x.sigils} Sigils`); if (x.quantity && !x.gold && !x.dust && !x.sigils) parts.push(`${x.quantity > 0 ? '+' : ''}${x.quantity} ${MATERIAL_NAMES[x.itemId] || x.itemId}`); return `<div><b>${esc(x.type.replace(/_/g, ' '))}</b><span>${esc(parts.join(' - ') || 'No currency delta')}</span></div>`; }).join('') || '<div><span>No transactions yet.</span></div>';
+    panel.innerHTML = panelHead('Merchant Row', 'Market', `Stock refreshes when story progression advances. Current restock tier: ${tier}.`) + `<div class="market-balance"><i class="coin"></i><b>${META.gold.toLocaleString()}</b><span>Gold - ${META.glassDust} Glass Dust</span></div><label class="market-target">Training recipient <select id="markettarget">${targetOptions}</select></label>${items}<h4>Recent Economy Ledger</h4><div class="training-list">${ledger}</div>`;
+    panel.querySelectorAll('[data-market-buy]').forEach(button => button.onclick = () => { const result = GameState.purchaseMarketItem(captureSaveState(), button.dataset.marketBuy, document.getElementById('markettarget').value, { transactionId: newOperationId('market') }); if (!commitCommandResult(result, 'The purchase was not applied because it could not be saved.')) return; toast('Purchase complete.'); openMarket(); });
   }
   const openers = { castle: openCastle, inn: openInn, quest: openBoard, market: openMarket, yard: openYard };
   app.querySelectorAll('.hotspot').forEach(h => h.onclick = () => {

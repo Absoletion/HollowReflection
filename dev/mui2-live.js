@@ -7,7 +7,7 @@
  *  and scripted story encounters rather than copying another game's UI.
  * --------------------------------------------------------------- */
 const ESYM = { training_dummy: 'm-construct', construct: 'm-construct', construct2: 'm-construct', storehouse_pest:'m-hound', hollow_fragment:'m-glasswright', hound: 'm-hound', ox: 'm-ox', calf: 'm-calf', lowingman: 'm-lowingman', glasswright: 'm-glasswright', ember_warden: 'm-construct', feastkeeper: 'm-ox' };
-const BSCENE = { training: 'sc-hall', act1_1: 'sc-hall', act1_2: 'sc-hall', act1_3: 'sc-hall', act1_5: 'sc-hall', act1_6: 'sc-fields', act1_7: 'sc-fields', act1_10: 'sc-hall', ch1: 'sc-hall', ch2: 'sc-fields', ch3: 'sc-seam', ch6: 'sc-arena',
+const BSCENE = { training: 'sc-hall', act1_1: 'sc-hall', act1_2: 'sc-hall', act1_3: 'sc-hall', act1_5: 'sc-hall', act1_6: 'sc-fields', act1_7: 'sc-fields', act1_10: 'sc-hall', side_caravan: 'sc-road', side_cook: 'sc-hall', ch1: 'sc-hall', ch2: 'sc-fields', ch3: 'sc-seam', ch6: 'sc-arena',
   act2_2:'sc-road',act2_4:'sc-fields',act2_6:'sc-road',act2_7:'sc-road',act3_1:'sc-road',act3_3:'sc-road',act3_5:'sc-road',act3_6:'sc-road',act3_7:'sc-fields',
   act4_1:'sc-fields',act4_2:'sc-fields',act4_3:'sc-fields',act4_4:'sc-fields',act4_5:'sc-seam',act4_6:'sc-seam',act4_7:'sc-seam', challenge_ember:'sc-arena', challenge_feastkeeper:'sc-arena' };
 
@@ -16,8 +16,8 @@ function startBattle(key, partyKeys, onEnd) {
   const S = Engine.newBattle(key, partyKeys, { awakenedHale: !!META.haleAwakened, profiles: META.unitProgress });
   // Legacy encounters were tuned around one action per round. Live combat
   // needs enough field time for recasts, Arts decisions, and telegraphs.
-  const liveHpScale = { training: 1, ch1: 2.0, ch2: 2.4, ch3: 1, ch6: 0.85 }[key] || 2.0;
-  const liveAtkScale = { training: 0, ch1: 1, ch2: 1.08, ch3: 1, ch6: 1.0 }[key] || 1.1;
+  const liveHpScale = ({ training: 1, ch1: 2.0, ch2: 2.4, ch3: 1, ch6: 0.85 }[key]) ?? 2.0;
+  const liveAtkScale = ({ training: 0, ch1: 1, ch2: 1.08, ch3: 1, ch6: 1.0 }[key]) ?? 1.1;
   for (const en of S.enemies) {
     en.maxhp = Math.round(en.maxhp * liveHpScale);
     en.hp = en.maxhp;
@@ -96,7 +96,7 @@ function startBattle(key, partyKeys, onEnd) {
     return `${m}:${String(s).padStart(2, '0')}`;
   }
   function battleSummary(victory) {
-    return { battleId, encounterId: key, seed: S.seed, victory: !!victory, elapsedMs: Math.round(elapsed * 1000), unitsDefeated: S.party.filter(u => !u.alive).length, breakCount: S.enemies.reduce((n, e) => n + (e.staggers || 0), 0), burstUsed, eventHash: Engine.combatEventHash(S) };
+    return { battleId, encounterId: key, seed: S.seed, victory: !!victory, elapsedMs: Math.round(elapsed * 1000), unitsDefeated: S.party.filter(u => !u.alive).length, breakCount: S.enemies.reduce((n, e) => n + (e.staggers || 0), 0), burstUsed, eventHash: Engine.combatEventHash(S), party: S.party.map(unit => unit.key) };
   }
   function actionCooldown(u, a) {
     if (a.id === 'guard') return 5;
@@ -484,7 +484,7 @@ function startBattle(key, partyKeys, onEnd) {
       const command = b.dataset.training;
       if (command === 'gauge') S.party.forEach(u => { u.energy = 3; });
       if (command === 'cooldowns') Object.values(cooldowns).forEach(map => Object.keys(map).forEach(id => map[id] = 0));
-      if (command === 'party') S.party.forEach(u => { u.hp = u.maxhp; u.alive = true; u.shieldHP = u.key === 'katie' ? 70 : 0; });
+      if (command === 'party') S.party.forEach(u => { u.hp = u.maxhp; u.alive = true; u.shieldHP = u.key === 'katie' ? Math.round(70 * Engine.combatProfile('katie', META.unitProgress.katie).powerScale) : 0; });
       if (command === 'dummy') S.enemies.forEach(en => { en.hp = en.maxhp; en.alive = true; en.breakCur = en.breakMax; en.staggered = false; });
       pushLog(`Training control: ${command}.`, 'sys'); render();
     });

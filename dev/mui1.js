@@ -970,8 +970,8 @@ function showSummon() {
     <div class="sumbanner">
       <div class="glow"></div>
       <h3>The Still Basin</h3>
-      <div class="featrow">${sym('p-nix', '')}${sym('p-marlowe', '')}${sym('p-milla', '')}</div>
-      <p class="small">4★ rate: 25% · guaranteed within <b>${banner.guaranteeAt - family.pullsSinceFourStar}</b> pulls · featured: Cinnia. Max-rank duplicates become <b class="gold">Glass Dust</b> (${META.glassDust}).</p>
+      <div class="featrow">${summonArtHTML(banner.featured)}</div>
+      <p class="small">4★ rate: 25% · guaranteed within <b>${banner.guaranteeAt - family.pullsSinceFourStar}</b> pulls · featured: ${esc(Engine.UNITS[banner.featured].name)}. Max-rank duplicates become <b class="gold">Glass Dust</b> (${META.glassDust}).</p>
     </div>
     <div class="pullrow">
       <button id="pull1">Summon ×1<b>10 ◈</b></button>

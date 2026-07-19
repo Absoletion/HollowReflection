@@ -21,6 +21,7 @@ ACTIVE PARTS (assembled by dev/build-mobile.js, run from dev/):
 - mui3-stage.js: GS-style canvas battle stage — anime standees w/ transform animation, particles, cut-ins (window.__stageFast() for QA)
 - mui2-live.js: active live-combat UI (tap Skills, saved Auto Skill, Art/Burst swipe zones, role-based Arts gain, enemy cadence, pause/2x, QA hooks)
 - mui2.js: archived round-based battle UI retained for reference
+- BUILD MODES: `pnpm build` creates the production standalone (developer cheat and self-test surface omitted). Use `HOLLOW_BUILD=dev pnpm build` for a QA bundle with in-browser self-tests and the hidden test console.
 
 PIXEL FORMAT V1: PIXEL-COMBAT-FORMAT.md and sprites2/unit.schema.json define the canonical 128x128 player-unit canvas,
 left-facing direction, (64,116) feet anchor, 192x128 wide-action class, and independent 256x192 effect canvas.

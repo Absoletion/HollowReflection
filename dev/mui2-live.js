@@ -578,7 +578,7 @@ function startBattle(key, partyKeys, onEnd) {
   rafId = requestAnimationFrame(tick);
 }
 
-window.runSelfTests = function () {
+if (window.__HOLLOW_BUILD__ === 'dev' && typeof runHollowingSelfTests === 'function') window.runSelfTests = function () {
   const r = runHollowingSelfTests(Engine, m => console.log(m));
   console.log(`[Hollow Reflections] self-tests: ${r.pass} passed, ${r.fail} failed`);
   return r;

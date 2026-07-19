@@ -2,6 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const { validateContentIds } = require('../tools/validate_content_ids.js');
 const p = f => path.join(__dirname, f);
+const buildMode = process.env.HOLLOW_BUILD === 'dev' ? 'dev' : 'prod';
 
 console.log('CONTENT IDs validated:', validateContentIds());
 
@@ -65,6 +66,7 @@ const portraitCSS = ['<style>',
 
 const parts = [
   fs.readFileSync(p('part-head-mobile.html'), 'utf8').replace('</head>', portraitCSS + '</head>'),
+  `window.__HOLLOW_BUILD__ = ${JSON.stringify(buildMode)};`,
   portraitSrc,
   splashSrc,
   battleartSrc,
@@ -74,7 +76,7 @@ const parts = [
   fs.readFileSync(p('challenges.js'), 'utf8'),
   fs.readFileSync(p('market.js'), 'utf8'),
   fs.readFileSync(p('engine-dev.js'), 'utf8'),
-  fs.readFileSync(p('tests-dev.js'), 'utf8'),
+  ...(buildMode === 'dev' ? [fs.readFileSync(p('tests-dev.js'), 'utf8')] : []),
   fs.readFileSync(p('story-registry.js'), 'utf8'),
   fs.readFileSync(p('game-state.js'), 'utf8'),
   fs.readFileSync(p('mui1.js'), 'utf8'),

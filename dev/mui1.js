@@ -9,6 +9,7 @@
 const app = document.getElementById('app');
 const body = document.body;
 const nav = document.getElementById('bottomnav');
+const BUILD_IS_DEV = window.__HOLLOW_BUILD__ === 'dev';
 
 /* ---- field diagnostics: surface any runtime error as a toast so bugs name themselves ---- */
 window.__errToast = (msg) => { try { toast('⚠ ' + String(msg).slice(0, 120)); } catch (e) {} };
@@ -309,7 +310,7 @@ function awardSigils(n, why) { META.sigils += n; toast(`+${n} Guild Sigils — $
 /* --------------------------------------------------------------- *
  *  The hidden dev console (canon): the version number, clicked 7x.
  * --------------------------------------------------------------- */
-document.getElementById('version').addEventListener('click', () => {
+if (BUILD_IS_DEV) document.getElementById('version').addEventListener('click', () => {
   if (++META.devClicks === 7) {
     META.devClicks = 0;
     META.sigils += 9999;
@@ -1428,14 +1429,14 @@ function showCredits() {
         <button id="tohubc" class="bigbtn">Return to the Hall</button>
       </div>
       <div class="homerow">
-        <button id="selftest">Run engine self-tests</button>
+        ${BUILD_IS_DEV ? '<button id="selftest">Run engine self-tests</button>' : ''}
         <button id="totitle">Return to Title</button>
       </div>
       <p class="small" id="testout" style="margin-top:10px;"></p>
     </div>`;
   document.getElementById('tohubc').onclick = () => go('home');
   document.getElementById('totitle').onclick = showTitle;
-  document.getElementById('selftest').onclick = () => {
+  if (BUILD_IS_DEV) document.getElementById('selftest').onclick = () => {
     const r = window.runSelfTests();
     document.getElementById('testout').textContent = `Self-tests: ${r.pass} passed, ${r.fail} failed.` + (r.fail ? ' — ' + r.failures.join(' | ') : '');
   };

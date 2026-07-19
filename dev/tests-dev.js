@@ -439,6 +439,8 @@ function runHollowingSelfTests(E, print) {
     ok(filteredMissionClears.act1_5 && filteredMissionClears.act4_7 && Object.keys(filteredMissionClears).length === 2, 'mission clear migration retains only valid true story-mission identifiers');
     const legacyChapters = E.migrateSaveEnvelope({ schemaVersion: 5, state: { storyStep: 3 } }).state.missionClears;
     ok(legacyChapters.act1_10 && legacyChapters.act2_8 && legacyChapters.act3_7 && !legacyChapters.act4_1, 'legacy chapter-spine progress unlocks the equivalent expanded mission chapters without skipping Greywick');
+    const legacyRoster = E.migrateSaveEnvelope({ schemaVersion: 5, state: { storyStep: 2, owned: ['hale', 'cinnia', 'tobin'] } }).state;
+    ok(legacyRoster.owned.includes('hearthgar') && legacyRoster.owned.includes('marlowe') && legacyRoster.owned.includes('brant') && legacyRoster.featureUnlocks.summon, 'legacy migration preserves recruitment and summon side effects with synthesized clears');
     const migrated = E.migrateSaveEnvelope({ schemaVersion: 0, payload: { sigils: 77, owned: ['hale'] } });
     ok(migrated.schemaVersion === E.SAVE_SCHEMA_VERSION && migrated.state.sigils === 77, 'schema-zero saves migrate to the current format');
     const current = E.migrateSaveEnvelope({ schemaVersion: 1, gameVersion: '0.7.0', saveId: 'abc', revision: 4, state: { storyStep: 2, settings: { autoSkill: true } } });

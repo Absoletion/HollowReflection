@@ -430,7 +430,19 @@ const Engine = (function () {
       for (let i = 1; i <= act1MissionProgress; i++) missionClears[`act1_${i}`] = true;
       if (storyStep >= 2) for (let i = 1; i <= 8; i++) missionClears[`act2_${i}`] = true;
       if (storyStep >= 3) for (let i = 1; i <= 7; i++) missionClears[`act3_${i}`] = true;
-      save = Object.assign({}, save, { schemaVersion: 6, state: Object.assign(state, { act1MissionProgress, missionClears }) });
+      // Legacy story handlers granted recruitment as a side effect of the
+      // chapter spine. Preserve those durable unlocks while converting the
+      // old projection to canonical mission flags; normal normalization never
+      // performs this synthesis.
+      const owned = new Set(Array.isArray(state.owned) && state.owned.length ? state.owned : ['hale', 'cinnia', 'tobin']);
+      const libraryUnlocked = Object.assign({}, state.libraryUnlocked || {});
+      for (const [missionId, units] of Object.entries({ act1_3: ['hearthgar'], act2_4: ['marlowe', 'brant'], act2_8: ['milla'] })) {
+        if (!missionClears[missionId]) continue;
+        for (const unitId of units) { owned.add(unitId); libraryUnlocked[`${unitId}:base`] = true; }
+      }
+      const featureUnlocks = Object.assign({}, state.featureUnlocks || {});
+      if (missionClears.act1_9) featureUnlocks.summon = true;
+      save = Object.assign({}, save, { schemaVersion: 6, state: Object.assign(state, { act1MissionProgress, missionClears, owned: [...owned], libraryUnlocked, featureUnlocks }) });
     }
     if (save.schemaVersion !== SAVE_SCHEMA_VERSION) throw new Error('No migration path exists for this save.');
     if (options && options.strict) validateSaveState(save.state, true);

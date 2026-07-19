@@ -1258,7 +1258,8 @@ function afterCh1() {
   go('home');
 }
 function afterCh2() {
-  META.owned = ['hale', 'cinnia', 'tobin', 'marlowe', 'brant'];
+  // Legacy adapter only: canonical mission settlement owns recruitment. Never
+  // replace the roster here, or summons acquired before replay would vanish.
   rememberOwnedUnits();
   META.storyStep = Math.max(META.storyStep, 2);
   go('home');
@@ -1296,7 +1297,8 @@ function showHaleEvolutionReveal(done) {
 function showInterlude() {
   chrome('nonav');
   META.stage = 'interlude';
-  META.owned = ROSTER_ORDER.slice();
+  // The old interlude used to grant the entire roster. Recruitment now comes
+  // only from canonical mission rewards; this screen is presentation-only.
   rememberOwnedUnits();
   META.storyStep = Math.max(META.storyStep, 4);
   app.innerHTML = `

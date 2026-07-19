@@ -967,14 +967,17 @@ function showSummon() {
   if (!META.featureUnlocks.summon) { toast('Summoning unlocks after mission 1-9: The Still Basin.'); return showHome(); }
   META.stage = 'summon';
   const banner = Engine.BANNERS.standard, family = META.summonState.standard;
+  const featuredSplash = unitSplashSource(banner.featured, false), pityPct = Math.min(100, Math.round(family.pullsSinceFourStar / banner.guaranteeAt * 100));
   app.innerHTML = `
     <div class="shead"><h2>Summon</h2>${sigilPill()}</div>
     <div class="sumbanner hr-kit-panel">
       <div class="glow"></div>
       <span class="hr-kit-eyebrow">Featured Reflection</span>
       <h3>The Still Basin</h3>
+      ${featuredSplash ? `<div class="summon-hero"><img alt="Featured ${esc(Engine.UNITS[banner.featured].name)}" src="${featuredSplash}"><div class="summon-hero-copy"><span>REFLECTION RATE UP</span><b>${esc(Engine.UNITS[banner.featured].name)}</b></div></div>` : ''}
       <div class="hr-kit-orbit"><div class="featrow">${summonArtHTML(banner.featured)}</div></div>
       <div class="hr-kit-legend"><span class="hr-kit-chip">${esc(Engine.UNITS[banner.featured].name)}</span><span class="hr-kit-chip">${esc(Engine.UNITS[banner.featured].role)}</span></div>
+      <div class="summon-pity"><span>Pity counter</span><i><em style="width:${pityPct}%"></em></i><b>${family.pullsSinceFourStar}/${banner.guaranteeAt}</b></div>
       <p class="small">4★ rate: 25% · guaranteed within <b>${banner.guaranteeAt - family.pullsSinceFourStar}</b> pulls · featured: ${esc(Engine.UNITS[banner.featured].name)}. Max-rank duplicates become <b class="gold">Glass Dust</b> (${META.glassDust}).</p>
     </div>
     <div class="pullrow">

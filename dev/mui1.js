@@ -541,10 +541,12 @@ function showHome() {
     <div class="home-banner">
       ${sym(done ? 'sc-hall' : next.mission.scene, 'scene')}
       <div class="banner-shade"></div>
+      ${unitSplashSource('hale', META.haleAwakened) ? `<img class="home-featured-art" alt="" src="${unitSplashSource('hale', META.haleAwakened)}">` : ''}
       ${sigilPill()}
       <div class="banner-ch"><div class="bk">${done ? 'Act One — Complete' : `Chapter ${chapter.code} · ${esc(chapter.title)}`}</div><div class="bt">${esc(title)}</div></div>
     </div>
     <div class="ticker hr-kit-panel"><span class="tklbl">VESSIA</span><span class="tkwin"><span class="tk">${esc(tickerLine())}</span></span></div>
+    <div class="home-kit-strip"><div><span>EVENT</span><b>The Lowing Fields</b><small>Garrison contract active</small></div><div><span>DAILY</span><b>Guild duties</b><small>Keep the party moving</small></div></div>
     <button id="continue" class="bigbtn">${done ? 'Story Complete' : (META.storyStep === 0 ? 'Begin the Story' : 'Continue Story')}
       <span class="sub">${done ? 'Replay cleared missions from the Story tab' : esc(title)}</span></button>
     <div class="homerow">

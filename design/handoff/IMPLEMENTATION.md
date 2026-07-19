@@ -17,5 +17,6 @@ Implemented in the production demo:
 - Quest Board now includes repeatable Missing Caravan and A Cook's Errand contracts with persistent clear counts and Gold/XP rewards.
 - Production builds omit developer cheats and self-test controls; `HOLLOW_BUILD=dev pnpm build` retains the QA surface.
 - Market now provides a bounded optional Glass Dust-to-Sigils exchange so duplicate overflow has a non-mandatory sink.
+- Summon and Market settlements now emit bounded local telemetry with redacted before/after currency balances.
 
 Future screens should reuse the `hr-kit-*` classes in `dev/part-head-mobile.html` instead of copying prototype markup.

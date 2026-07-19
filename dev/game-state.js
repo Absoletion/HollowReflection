@@ -100,6 +100,7 @@ const GameState = (function (E, Registry) {
       if (draft.completedTransactions.includes(transactionId)) return { uiEvents: ['settlement_duplicate'] };
       const tier = E.marketRestockTier(draft);
       if (draft.marketState.tier !== tier) draft.marketState = { tier, purchases: {} };
+      const goldBefore = draft.gold, dustBefore = draft.glassDust;
       const bought = draft.marketState.purchases[itemId] || 0;
       if (bought >= item.limit) fail('LIMIT_REACHED', 'Sold out until the next story restock.');
       if (draft.gold < item.price) fail('INSUFFICIENT_FUNDS', 'Not enough Gold.');
@@ -122,6 +123,7 @@ const GameState = (function (E, Registry) {
       draft.marketState.purchases[itemId] = bought + 1;
       draft.completedTransactions.push(transactionId); draft.completedTransactions = draft.completedTransactions.slice(-100);
       appendLedger(draft, { id: transactionId, type: 'market_purchase', gold: -item.price, itemId, quantity: 1 });
+      appendTelemetry(draft, { event: 'market_settlement', itemId, goldBefore, goldAfter: draft.gold, dustBefore, dustAfter: draft.glassDust });
       return { deltas: { gold: -item.price, purchases: draft.marketState.purchases[itemId] }, rewards, uiEvents: ['market_purchase'] };
     }, { transactionId });
   }
@@ -134,6 +136,7 @@ const GameState = (function (E, Registry) {
       if (draft.completedTransactions.includes(transactionId)) return { uiEvents: ['settlement_duplicate'] };
       if (draft.sigils < cost) fail('INSUFFICIENT_FUNDS', 'Not enough Sigils.');
       const family = draft.summonState[banner.family], rewards = [];
+      const sigilsBefore = draft.sigils;
       const pick = pool => { let n = Math.max(0, Math.min(.999999999, Number(rng()) || 0)) * pool.reduce((a, x) => a + x.weight, 0); for (const x of pool) if ((n -= x.weight) < 0) return x; return pool[pool.length - 1]; };
       for (let i = 0; i < count; i++) {
         const four = family.pullsSinceFourStar >= banner.guaranteeAt - 1 || rng() < banner.fourStarRate;
@@ -151,6 +154,7 @@ const GameState = (function (E, Registry) {
         rewards.push(reward); draft.summonHistory.push({ transactionId, bannerId, unitId: chosen.id, rarity, newUnit, rank: reward.rank, dust });
       }
       draft.sigils -= cost; draft.summonHistory = draft.summonHistory.slice(-100); draft.completedTransactions.push(transactionId); draft.completedTransactions = draft.completedTransactions.slice(-100);
+      appendTelemetry(draft, { event: 'summon_settlement', bannerId, pulls: count, sigilsBefore, sigilsAfter: draft.sigils });
       return { deltas: { sigils: -cost }, rewards, uiEvents: ['summon_complete'] };
     }, { transactionId });
   }

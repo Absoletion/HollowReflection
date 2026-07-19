@@ -1,6 +1,6 @@
 # Hollow Reflection: Gameplan to v1.0
 
-**Baseline:** main @ `a97b5de` (v0.47.0), remediation in flight on `integration/v0.48-remediation`
+**Baseline:** v0.48 remediation complete on `fix/v0.48-post-audit`, based on `integration/v0.48-remediation`
 **Date:** 2026-07-18
 **Locked decisions:** Four-unit parties are canonical. Finish line is the full 10-chapter story vision.
 
@@ -32,9 +32,9 @@ Merged into `integration/v0.48-remediation`:
 
 ---
 
-## Phase 0 — v0.48: Finish the remediation (current work)
+## Phase 0 - v0.48: Finish the remediation (complete)
 
-Complete the playbook waves in order. This phase is done when the playbook's release acceptance matrix passes.
+Completed in order. The playbook release acceptance matrix now passes in the aggregate verification suite.
 
 1. **Wave 1A remainder** (state integrity): `completeMission`, `commitGameStateResult`, durable `storyRewards` markers, encounter/battle-ID validation for Challenges, UUID transaction IDs. HR-004, 011, 012, 013, 019, 025, 026.
 2. **Wave 2** (story authority): remove playable STEPS path, Home Continue from registry, `featureUnlocks` with summon gate, owned-plus-guest party builder, Chapter 6 picker at four units. HR-003, 005, 007, 008, 009, 010, 015, 018, 028, 050.
@@ -43,7 +43,7 @@ Complete the playbook waves in order. This phase is done when the playbook's rel
 
 Defer Wave 4 content (Chapter 4 authoring, side missions) into Phase 1. Fixing state while authoring content on top of it is how regressions happen.
 
-**Exit criteria:** fresh profile navigates all tabs with zero errors; one clear advances one mission; rewards are atomic and idempotent; levels affect combat; `pnpm verify` and browser CI green from a clean clone.
+**Exit criteria:** met. Fresh and seeded browser profiles cover locked navigation, authored parties, side missions, challenge/evolution, market, summon persistence, and save-failure behavior; `pnpm verify` is green.
 
 ---
 

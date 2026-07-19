@@ -17,7 +17,7 @@ scripts.forEach((source, index) => {
 });
 
 const required = [
-  'v0.47.0',
+  'v0.48.0',
   'var SPRITES = {};',
   'var SPLASHART = {',
   '"hale_4star_splash_main"',

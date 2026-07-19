@@ -5,7 +5,8 @@
 - Working title: **Hollow Reflections**. Replace visible instances of “Project Hollowing” or “Hollowing” with the new title when appropriate.
 - Keep the internal save key `projectHollowing.singleSave` unchanged so existing saves survive the rename.
 - Live standalone demo: `C:\Users\Clayn\OneDrive\Documents\Gacha Game\hollowing-demo.html`
-- Current visible version: **v0.39.0**.
+- Current visible version: **v0.48.0**.
+- v0.48 remediation is complete on `fix/v0.48-post-audit`: schema 7 permanent settlement authority, canonical progression gates, commit-first reward paths, side-mission commands, browser regression coverage, and release documentation are verified by `pnpm verify`.
 - The standalone file contains embedded assets and one persistent autosave profile.
 - Before editing the live file, preserve a backup under the project’s `archives` folder.
 - After editing, compile every inline script and verify that the sprite library is initialized with `var SPRITES = {};` before any `SPRITES[...]` assignment or `Object.assign(SPRITES, ...)` call.

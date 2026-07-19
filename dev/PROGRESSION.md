@@ -20,7 +20,7 @@ Every participating unit receives the quest's listed XP award. XP is determinist
 
 | Unit | Starting tier | Current ceiling | Evolution status |
 |---|---:|---:|---|
-| Hale | 3★ | 4★ implemented; 5★ planned | Forced 4★ story awakening; 5★ design not yet defined |
+| Hale | 4★ | 5★ UnHollowed | Base 4★ Adventurer; forced 5★ story awakening in Chapter Six |
 | Cinnia | 4★ | 5★ | Planned for a later update |
 | Tobin | 4★ | 4★ | No evolution currently designated |
 | Marlowe | 4★ | 4★ | No evolution currently designated |
@@ -34,9 +34,9 @@ Every participating unit receives the quest's listed XP award. XP is determinist
 
 ## Evolution requirements
 
-Hale is the exception to the standard evolution rule. His Chapter Six transformation automatically and permanently promotes him from 3★ to 4★, regardless of level, and consumes no Challenge materials. The moment immediately unlocks his true Hollowglass kit.
+Hale is the exception to the standard evolution rule. His Chapter Six transformation automatically and permanently promotes him from 4★ Adventurer to 5★ UnHollowed, regardless of level, and consumes no Challenge materials. The moment immediately unlocks his true Hollowglass kit.
 
-Hale will eventually have a separate 5★ form. Its evolution method, name, artwork, and kit are intentionally left undesigned for now.
+The 5★ UnHollowed form is the canonical awakened form. Its controlled teal Hollow influence is layered over Hale's Dark identity; it is not a separate base unit.
 
 Cinnia’s planned awakening is provisionally listed as:
 

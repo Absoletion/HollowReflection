@@ -36,8 +36,6 @@ function chatHeadHTML(key, cls) {
   return '';
 }
 
-const ROSTER_ORDER = ['hale', 'cinnia', 'tobin', 'marlowe', 'brant', 'nix', 'brigga', 'hearthgar', 'milla', 'katie'];
-
 const META = {
   sigils: 0,
   gold: 0,
@@ -60,7 +58,7 @@ const META = {
   libraryUnlocked: {},              // permanent discoveries; deliberately separate from owned
   devClicks: 0,
   stage: 'title',
-  storyStep: 0,                    // index into STEPS: the next chapter to clear
+  storyStep: 0,                    // canonical chapter completion projection
   act1MissionProgress: 0,          // expanded Act 1 mission-map progress
   missionClears: {},               // permanent per-mission completion, across all chapters
   sideMissionProgress: {},         // repeatable Quest Board clear counts
@@ -344,60 +342,6 @@ function chrome(mode) {
   body.className = mode === 'hub' ? '' : mode === 'battle' ? 'nonav inbattle' : 'nonav';
 }
 
-/* ===============================================================
- *  STORY DATA
- * =============================================================== */
-const STORY = {
-  ch1: [
-    { ch: 'Chapter One — The Guild Charter' },
-    { sp: '', tx: 'Vessia’s capital. The guild hall smells of ink and stew.' },
-    { sp: 'Guildmaster', tx: '“Sign here. The crown pays you to read the blight reports nobody else will.”' },
-    { sp: 'Cinnia', tx: '“Eat first. Sign second. Nobody reads contracts hungry.”' },
-    { sp: 'Tobin', tx: '“The water says you’ll stay.”' },
-    { sp: 'Hale', tx: '“I haven’t decided.”' },
-    { sp: 'Tobin', tx: '“It wasn’t asking.”' },
-    { sp: '', tx: 'Training constructs first. Nobody dies on paperwork day.' },
-  ],
-  ch2: [
-    { ch: 'Chapter Two — Greywick' },
-    { sp: '', tx: 'A relief mission to a frontier village. Three days out, the fields go quiet.' },
-    { sp: 'Marlowe', tx: '“A village where the cattle don’t low? I’ve played to colder houses.”' },
-    { sp: 'Brant', tx: '“Anchor’s down.”' },
-    { sp: '', tx: 'Marlowe and Brant join the party.' },
-    { sp: '', tx: 'The livestock stand motionless in the fields. Translucent at the edges.' },
-    { sp: 'Cinnia', tx: '“That ox hasn’t blinked.”' },
-    { sp: 'Tobin', tx: '“The water won’t look at it.”' },
-  ],
-  ch3: [
-    { ch: 'Chapter Three — The Glasswright' },
-    { sp: '', tx: 'Mid-mission, the light changes. A man stands in the square as if he had always been there.' },
-    { sp: 'The Glasswright', tx: '“Leave.”' },
-    { sp: 'Hale', tx: '“The village—”' },
-    { sp: 'The Glasswright', tx: '“Is already gone. You just can’t see it yet.”' },
-    { sp: '', tx: 'He raises a hand, and Greywick begins to shine.' },
-    { sp: '', tx: 'SURVIVE. Some fights are not meant to be won — losing this one moves the story forward.' },
-  ],
-  scar: [
-    { ch: 'Aftermath' },
-    { sp: '', tx: 'The wave takes the square. Hale takes the wave.' },
-    { sp: '', tx: 'He wakes three days later. Where it touched him the skin is smooth and faintly translucent — a scar like frosted glass.' },
-    { sp: 'The Glasswright', tx: '“…You didn’t hollow. Interesting.” — and he was gone.' },
-    { sp: '', tx: 'The guild files it under “survived.” The guild is bad at filing.' },
-  ],
-  ch6: [
-    { ch: 'Chapter Six — The Greywick Alpha' },
-    { sp: 'Scout report', tx: '“Something walks the Greywick fields. Sometimes a bull. Sometimes a man. Always both.”' },
-    { sp: '', tx: 'It lows in a human voice. The guild has stopped using the herdsman’s name.' },
-    { sp: 'Guildmaster', tx: '“Take five. Hale goes. That isn’t a request — whatever marked him reads these things better than we do.”' },
-    { sp: 'Hale', tx: 'The scar has been aching for two days.' },
-  ],
-  victory: [
-    { ch: '' },
-    { sp: '', tx: 'Among the shards: a shepherd’s crook, unbroken.' },
-    { sp: '', tx: 'The party buries it. No music. Nothing lows.' },
-  ],
-};
-
 const VIGNETTES = [
   { who: 'Nix joins', say: '“My reef went hollow before your village did. Drink this. Yes, all of it. Yes, it tastes like that on purpose.”' },
   { who: 'Brigga joins', say: '“Hollowglass has fault lines. I brought a hammer for exactly this.”' },
@@ -418,21 +362,6 @@ const QUOTES = {
   milla: '“Never late. Not once. Watch me.”',
   katie: '“I can see exactly what is wrong. I was happier before you asked.”',
 };
-/* ===============================================================
- *  STORY STEPS — the spine both Home:Continue and Story-list drive
- * =============================================================== */
-const STEPS = [
-  { id: 'ch1', kind: 'battle', label: 'Chapter One', title: 'The Guild Charter', scene: 'sc-hall',
-    desc: 'Sign the charter. Meet the constructs.', dlg: 'ch1', party: ['hale', 'cinnia', 'tobin'], after: 'afterCh1' },
-  { id: 'ch2', kind: 'battle', label: 'Chapter Two', title: 'Greywick', scene: 'sc-fields',
-    desc: 'A relief mission. The fields go quiet.', dlg: 'ch2', party: ['hale', 'cinnia', 'tobin', 'brant'], after: 'afterCh2' },
-  { id: 'ch3', kind: 'battle', label: 'Chapter Three', title: 'The Glasswright', scene: 'sc-seam',
-    desc: 'Survive. You are not meant to win.', dlg: 'ch3', party: ['hale', 'cinnia', 'tobin', 'brant'], after: 'afterCh3', scripted: true },
-  { id: 'spread', kind: 'interlude', label: 'Chapters Four & Five', title: 'The Spreading', scene: 'sc-fields',
-    desc: 'The blight blooms. The guild grows.' },
-  { id: 'ch6', kind: 'boss', label: 'Chapter Six', title: 'The Lowing Man', scene: 'sc-arena',
-    desc: 'The Greywick Alpha. The scar is loud.', dlg: 'ch6', after: 'afterCh6', pickSquad: true },
-];
 const ACT1_MISSIONS = STORY_REGISTRY.chapters[0].missions.map(m => Object.assign({ live: true }, m));
 const STORY_CHAPTERS = STORY_REGISTRY.chapters;
 function chapterClearCount(chapter) { return chapter.missions.reduce((n, m) => n + (META.missionClears[m.id] ? 1 : 0), 0); }
@@ -1297,23 +1226,6 @@ function showDialogue(scenes, done, sceneId) {
   render();
 }
 
-/* ===============================================================
- *  STORY FLOW — play a step, then land back in the hub
- * =============================================================== */
-function grantQuestRewards(key, partyKeys, firstClear) {
-  const cfg = Engine.BATTLES[key];
-  const table = cfg.rewards[firstClear ? 'first' : 'repeat'];
-  const reward = { key, title: cfg.title, firstClear, gold: table.gold, xp: table.xp, sigils: firstClear ? cfg.sigils : 0, units: [] };
-  META.gold += reward.gold;
-  META.sigils += reward.sigils;
-  for (const unitKey of [...new Set(partyKeys)].filter(k => Engine.UNITS[k])) {
-    const p = unitProgress(unitKey);
-    const result = Engine.grantUnitXP(p, reward.xp);
-    reward.units.push(Object.assign({ key: unitKey, name: Engine.UNITS[unitKey].name }, result));
-  }
-  writeSave(true);
-  return reward;
-}
 function showQuestRewards(reward, done) {
   chrome('nonav'); META.stage = 'rewards';
   app.innerHTML = `<div class="reward-screen">
@@ -1328,190 +1240,7 @@ function showQuestRewards(reward, done) {
   </div>`;
   document.getElementById('rewardcontinue').onclick = done;
 }
-function finishQuest(key, partyKeys, firstClear, result, done) {
-  if (result === 'defeat' || result === 'exit') { done(result); return; }
-  const reward = grantQuestRewards(key, partyKeys, firstClear);
-  showQuestRewards(reward, () => done(result, reward));
-}
-
-function playStep(i) {
-  const s = STEPS[i];
-  if (!s) return go('home');
-  if (s.kind === 'interlude') return showDialogue(interludeScenes(), showInterlude, s.scene);
-  const start = () => {
-    if (s.pickSquad) return showSquadPicker();
-    chrome('battle');
-    const AFTERS = { afterCh1, afterCh2, afterCh3, afterCh6 };
-    const handler = AFTERS[s.after];
-    if (!handler) { window.__errToast && window.__errToast('missing after-handler: ' + s.after); return go('home'); }
-    startBattle(s.id, s.party, result => {
-      finishQuest(s.id, s.party, true, result, finalResult => {
-        if (finalResult === 'defeat' || finalResult === 'exit') return go('home');
-        handler(finalResult);
-      });
-    });
-  };
-  if (s.dlg) showDialogue(STORY[s.dlg], start, s.scene); else start();
-}
-function replayStep(i) {
-  const s = STEPS[i];
-  if (s.kind === 'interlude') { showDialogue(interludeScenes(), () => go('story'), s.scene); return; }
-  const back = () => go('story');
-  const start = () => {
-    if (s.pickSquad) return showSquadPicker(back);
-    chrome('battle');
-    startBattle(s.id, s.party, result => finishQuest(s.id, s.party, false, result, back));
-  };
-  if (s.dlg) showDialogue(STORY[s.dlg], start, s.scene); else start();
-}
-function interludeScenes() {
-  return [{ ch: 'Chapters Four & Five — The Spreading' },
-    { sp: '', tx: 'Outbreaks bloom across Vessia — the first leaks nobody caught.' },
-    { sp: '', tx: 'The guild grows to meet them.' }];
-}
-
-/* the Ch.1→2→3 sigil awards + recruitment gates, now returning to the hub */
-function afterCh1() {
-  META.storyStep = Math.max(META.storyStep, 1);
-  go('home');
-}
-function afterCh2() {
-  // Legacy adapter only: canonical mission settlement owns recruitment. Never
-  // replace the roster here, or summons acquired before replay would vanish.
-  rememberOwnedUnits();
-  META.storyStep = Math.max(META.storyStep, 2);
-  go('home');
-}
-function afterCh3() {
-  META.storyStep = Math.max(META.storyStep, 3);
-  showDialogue(STORY.scar, () => go('home'), 'sc-seam');
-}
-function afterCh6() {
-  const evolved = grantHaleStoryEvolution(); // idempotent fallback for migrated or replayed saves
-  META.storyStep = Math.max(META.storyStep, 5);
-  writeSave(true);
-  const victory = () => showDialogue(STORY.victory, showCredits, 'sc-arena');
-  if (evolved) showHaleEvolutionReveal(victory); else victory();
-}
-
-function showHaleEvolutionReveal(done) {
-  chrome('nonav'); META.stage = 'evolution';
-  const art = typeof PORTRAITS !== 'undefined' && PORTRAITS.hale_awakened;
-  app.innerHTML = `<div class="evo-reveal">
-    <div class="evo-ring"></div>
-    <div class="evo-shards"><i></i><i></i><i></i><i></i></div>
-    <div class="evo-kicker">STORY AWAKENING</div>
-    <h2>Hale, the Unhollowed</h2>
-    <div class="evo-art">${art ? `<img alt="Hale's five-star UnHollowed form" src="${art}">` : sym('p-hale-awk', 'port')}</div>
-    <div class="evo-stars"><span>★★★★</span><b>→</b><strong>★★★★★</strong></div>
-    <p>Dark power answers the scar. Hollowglass takes shape inside it.</p>
-    <div class="evo-unlocks"><span>UnHollowed Kit</span><span>True Kit Unlocked</span><span>5★ Library Page</span></div>
-    <button class="bigbtn" id="evocontinue">Continue</button>
-  </div>`;
-  document.getElementById('evocontinue').onclick = done;
-}
-
-/* interlude screen — recruit the back half of the roster, then advance */
-function showInterlude() {
-  chrome('nonav');
-  META.stage = 'interlude';
-  // The old interlude used to grant the entire roster. Recruitment now comes
-  // only from canonical mission rewards; this screen is presentation-only.
-  rememberOwnedUnits();
-  META.storyStep = Math.max(META.storyStep, 4);
-  app.innerHTML = `
-    <div class="panelbox fadein-slow" style="margin:26px 12px;">
-      <div class="dlg-chapter">Chapters Four &amp; Five — The Spreading</div>
-      <p class="small" style="margin-bottom:6px;">Outbreaks bloom across Vessia — the first leaks nobody caught. The guild grows to meet them.</p>
-      ${VIGNETTES.map(v => `<div class="vignette"><div class="who">${esc(v.who)}</div><div class="say">${esc(v.say)}</div></div>`).join('')}
-      <p class="small" style="margin:14px 0 16px;">Story quests award fixed Gold and experience, with Guild Sigils reserved for first clears. The Inn is open for summons and party services.</p>
-      <button id="tohub" class="bigbtn">To Castle Town</button>
-    </div>`;
-  document.getElementById('tohub').onclick = () => go('home');
-}
-
-/* ===============================================================
- *  SQUAD PICKER (Ch.6) — Hale locked + choose 4
- * =============================================================== */
-function showSquadPicker(onBack) {
-  chrome('nonav');
-  const picked = new Set(META.activeParty.filter(k => k !== 'hale' && ROSTER_ORDER.includes(k)).slice(0, 3));
-  app.innerHTML = `
-    <div class="shead"><h2>Choose the Five</h2></div>
-    <p class="small" style="margin:10px 14px 4px;">Hale is mandatory — the story has him by the scar. Pick <b>3</b> more.</p>
-    <div class="pgrid pick" id="pickgrid">
-      ${ROSTER_ORDER.map(k => {
-        const t = Engine.UNITS[k];
-        return `<button class="pcard e-${t.elem} ${k === 'hale' ? 'lockedin' : ''} ${picked.has(k) ? 'picked' : ''}" data-key="${k}">
-          ${k === 'hale' ? '<div class="locknote">LOCKED</div>' : ''}
-          ${sym(pid(k), 'port')}
-          <div class="uname">${esc(t.name)}</div>
-          <div class="urole">${roleShort(t.role)}</div>
-        </button>`;
-      }).join('')}
-    </div>
-    <div class="homerow" style="margin:6px 13px 22px;">
-      <button id="begin" ${picked.size === 3 ? '' : 'disabled'}>March (${picked.size}/3)</button>
-      <button id="backhub">← Castle Town</button>
-    </div>`;
-  const grid = document.getElementById('pickgrid');
-  const begin = document.getElementById('begin');
-  grid.addEventListener('click', (e) => {
-    const card = e.target.closest('.pcard'); if (!card) return;
-    const key = card.dataset.key; if (key === 'hale') return;
-    if (picked.has(key)) { picked.delete(key); card.classList.remove('picked'); }
-    else if (picked.size < 3) { picked.add(key); card.classList.add('picked'); }
-    begin.disabled = picked.size !== 3;
-    begin.textContent = `March (${picked.size}/3)`;
-  });
-  begin.onclick = () => {
-    const party = ['hale', ...picked];
-    META.activeParty = party; writeSave(true);
-    chrome('battle');
-    startBattle('ch6', party, result => {
-      finishQuest('ch6', party, !onBack, result, finalResult => {
-        if (onBack) return onBack(finalResult);
-        if (finalResult === 'defeat' || finalResult === 'exit') return go('home');
-        afterCh6(finalResult);
-      });
-    });
-  };
-  document.getElementById('backhub').onclick = () => go(onBack ? 'story' : 'home');
-}
-
 /* ===============================================================
  *  CREDITS
  * =============================================================== */
-function showCredits() {
-  chrome('nonav');
-  const totalMissions = STORY_CHAPTERS.reduce((n, chapter) => n + chapter.missions.length, 0);
-  app.innerHTML = `
-    <div class="panelbox fadein-slow" style="margin:34px 12px;">
-      <h2>Hollow Reflections — Act One</h2>
-      <p class="small" style="margin:8px 0 14px;">Current standalone build highlights:</p>
-      <ul class="credits small">
-        <li>Real-time, Skill-driven combat with individual Arts and Burst gauges</li>
-        <li>Role-based Energy restoration, break bars, stagger pressure, and readable enemy intent</li>
-        <li>Tap for Skill, swipe for Arts or Burst, plus configurable Auto combat</li>
-        <li>Hale’s pure-damage Dark kits and story-forced 5★ UnHollowed transformation</li>
-        <li>Persistent party composition, Unit Library animation previews, summons, and progression</li>
-        <li>${totalMissions} canonical Act One missions, a combat test quest, evolving encounters, and permanent autosave</li>
-        <li>Original anime character art with authored pixel combat sprites and battlefield-scale effects</li>
-      </ul>
-      <div class="homerow">
-        <button id="tohubc" class="bigbtn">Return to the Hall</button>
-      </div>
-      <div class="homerow">
-        ${BUILD_IS_DEV ? '<button id="selftest">Run engine self-tests</button>' : ''}
-        <button id="totitle">Return to Title</button>
-      </div>
-      <p class="small" id="testout" style="margin-top:10px;"></p>
-    </div>`;
-  document.getElementById('tohubc').onclick = () => go('home');
-  document.getElementById('totitle').onclick = showTitle;
-  if (BUILD_IS_DEV) document.getElementById('selftest').onclick = () => {
-    const r = window.runSelfTests();
-    document.getElementById('testout').textContent = `Self-tests: ${r.pass} passed, ${r.fail} failed.` + (r.fail ? ' — ' + r.failures.join(' | ') : '');
-  };
-}
 /*EOF-UI1*/

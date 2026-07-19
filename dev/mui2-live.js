@@ -570,7 +570,7 @@ function startBattle(key, partyKeys, onEnd) {
     gestureTier: Engine.liveGestureTier,
   };
   window.__start = startBattle;
-  window.__afterCh6 = (typeof afterCh6 !== 'undefined') ? afterCh6 : null;
+  window.__afterCh6 = null;
   pushLog(`— LIVE ENGAGEMENT: ${S.title} —`, 'rounddiv');
   if (key === 'ch3') pushLog('His blades hang in the air like a sentence half-spoken.', 'sys');
   render();
@@ -586,6 +586,6 @@ if (window.__HOLLOW_BUILD__ === 'dev' && typeof runHollowingSelfTests === 'funct
 
 showTitle();
 window.__start = startBattle;
-window.__afterCh6 = afterCh6;
+window.__afterCh6 = null;
 })();
 /*EOF-UI2-LIVE*/

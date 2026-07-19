@@ -15,7 +15,7 @@ ACTIVE PARTS (assembled by dev/build-mobile.js, run from dev/):
   BATTLEART image > glass-token fallback. Pixel path skips the breathe scale (idle frames breathe on their own) and
   the hit white-flash overlay (hit frames carry their own flash pixels), but keeps lean rotation + hit jitter.
 - engine-dev.js: pure combat, progression, reward, and save-normalization engine
-- tests-dev.js: 117 assertions (node + window.runSelfTests())
+- tests-dev.js: 179 assertions (node + window.runSelfTests()); GameState command tests cover permanent settlement, canonical gates, side missions, and migration.
 - mui1.js: hub UI (castle Town, story/reward flow, dialogue, party and unit sheets)
 - portraits/: drop <key>.png anime portraits here; build embeds them (see ../portrait-template.md)
 - mui3-stage.js: GS-style canvas battle stage — anime standees w/ transform animation, particles, cut-ins (window.__stageFast() for QA)

@@ -1,4 +1,4 @@
-# Hollow Reflections - Live Combat v0.47
+# Hollow Reflections - Live Combat v0.48
 
 This replaces the round-based battle screen while retaining the existing unit kits, damage rules, Break system, boss scripts, and story outcomes.
 

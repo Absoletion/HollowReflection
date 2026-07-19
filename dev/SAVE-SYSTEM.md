@@ -1,4 +1,4 @@
-# Hollow Reflections — Save System v0.9
+# Hollow Reflections - Save System v0.48
 
 ## Player-facing behavior
 
@@ -18,9 +18,11 @@ Transient presentation state—open menus, battle timers, temporary combat HP, a
 
 ## Version survival
 
-The stored envelope has a schema version independent of the visible game version. Every load passes through migration and validation before it reaches gameplay. Missing fields receive safe defaults, unknown roster/library identifiers are discarded, numeric values are clamped, and older Hale awakening flags migrate into the current rarity and library records.
+The stored envelope is schema 7. Every load passes through migration and validation before it reaches gameplay. Missing fields receive safe defaults, unknown roster/library identifiers are discarded, numeric values are clamped, and older Hale awakening flags migrate into the current rarity and library records. Schema 0-6 saves migrate forward without changing the legacy storage key.
 
-The v0.9 additions are backward compatible: saves without Gold or unit XP load both values at zero, while max-level units cannot retain unusable overflow XP. Malformed local data is copied to a timestamped recovery key before a clean save is created. A save created by a newer unsupported schema is never overwritten.
+Permanent reward settlement is owned by `settledBattles`, `completedOperations`, and `storyRecruitments`. `completedTransactions` is a bounded diagnostic history only and must never be consulted as authoritative idempotency state. Battle settlement IDs are derived from the validated battle result, not accepted from a caller.
+
+The v0.48 additions are backward compatible: saves without Gold or unit XP load both values at zero, while max-level units cannot retain unusable overflow XP. Canonical mission clears are repaired to a continuous prefix, summon unlocks derive from `act1_9`, and locked `lastHub` values fall back to Home. Malformed local data is copied to a timestamped recovery key before a clean save is created. A save created by a newer unsupported schema is never overwritten.
 
 ## Account linking
 

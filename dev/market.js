@@ -11,6 +11,10 @@ const MarketData = (function () {
       description: 'Emergency evolution smoothing. Requires an Ember Trial clear.',
       unlock: { challenge: 'ember_trial' }, effect: { item: 'challenge_essence', quantity: 2 },
     },
+    glassdust_sigils: {
+      id: 'glassdust_sigils', name: 'Hollowglass Exchange', price: 1, limit: 5,
+      description: 'Trade 10 Glass Dust and 1 Gold for 15 Guild Sigils.', effect: { dust: 10, sigils: 15 },
+    },
   });
   return Object.freeze({ items });
 })();

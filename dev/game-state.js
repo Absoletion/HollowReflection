@@ -103,6 +103,7 @@ const GameState = (function (E, Registry) {
       const bought = draft.marketState.purchases[itemId] || 0;
       if (bought >= item.limit) fail('LIMIT_REACHED', 'Sold out until the next story restock.');
       if (draft.gold < item.price) fail('INSUFFICIENT_FUNDS', 'Not enough Gold.');
+      if (item.effect.dust && draft.glassDust < item.effect.dust) fail('INSUFFICIENT_DUST', 'Not enough Glass Dust.');
       const rewards = [];
       if (item.effect.xp) {
         if (!targetUnit || !draft.owned.includes(targetUnit)) fail('UNKNOWN_ID', 'Choose an owned unit for the manual.');
@@ -115,6 +116,8 @@ const GameState = (function (E, Registry) {
         draft.challengeItems[item.effect.item] = (draft.challengeItems[item.effect.item] || 0) + item.effect.quantity;
         rewards.push({ type: 'item', id: item.effect.item, quantity: item.effect.quantity });
       }
+      if (item.effect.dust) draft.glassDust -= item.effect.dust;
+      if (item.effect.sigils) { draft.sigils += item.effect.sigils; rewards.push({ type: 'sigils', quantity: item.effect.sigils }); }
       draft.gold -= item.price;
       draft.marketState.purchases[itemId] = bought + 1;
       draft.completedTransactions.push(transactionId); draft.completedTransactions = draft.completedTransactions.slice(-100);

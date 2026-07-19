@@ -503,6 +503,9 @@ function showTitle() {
   chrome('nonav');
   const account = saveEnvelope && saveEnvelope.accountLink || { linked: false };
   const hasProgress = META.storyStep > 0 || META.sigils > 0 || Object.keys(META.ranks).length > 0;
+  const totalMissions = STORY_CHAPTERS.reduce((n, chapter) => n + chapter.missions.length, 0);
+  const clearedMissions = STORY_CHAPTERS.reduce((n, chapter) => n + chapter.missions.filter(m => META.missionClears[m.id]).length, 0);
+  const storyLabel = clearedMissions >= totalMissions ? 'Act One Complete' : `${clearedMissions} / ${totalMissions} Missions`;
   app.innerHTML = `
     <div class="title-wrap save-title">
       <div class="title-glyph"></div>
@@ -510,7 +513,7 @@ function showTitle() {
       <div class="title-sub">Act One &middot; The Hollowing of Vessia</div>
       <section class="save-profile">
         <div class="save-profile-head"><div><b>Local Save</b><span>Single profile · autosave enabled</span></div><i class="save-dot ${saveError ? 'bad' : ''}"></i></div>
-        <div class="save-summary"><span>Story</span><b>${META.storyStep >= STEPS.length ? 'Act One Complete' : `Chapter ${META.storyStep + 1}`}</b><span>Library</span><b>${Object.keys(META.libraryUnlocked).length} / ${Engine.UNIT_LIBRARY.length}</b></div>
+        <div class="save-summary"><span>Story</span><b>${storyLabel}</b><span>Library</span><b>${Object.keys(META.libraryUnlocked).length} / ${Engine.UNIT_LIBRARY.length}</b></div>
         <div class="save-id">ID ${esc((saveEnvelope && saveEnvelope.saveId || 'unavailable').slice(0, 18))}</div>
         <div class="save-status ${saveError ? 'bad' : ''}">${esc(saveError || saveNotice || saveTimeLabel())}</div>
         <div class="account-row"><div><b>Account Link</b><span>${account.linked ? esc(account.provider || 'Linked account') : 'Not linked · cloud service not configured'}</span></div><button disabled>Link Account</button></div>
@@ -1407,6 +1410,7 @@ function showSquadPicker(onBack) {
  * =============================================================== */
 function showCredits() {
   chrome('nonav');
+  const totalMissions = STORY_CHAPTERS.reduce((n, chapter) => n + chapter.missions.length, 0);
   app.innerHTML = `
     <div class="panelbox fadein-slow" style="margin:34px 12px;">
       <h2>Hollow Reflections — Act One</h2>
@@ -1417,7 +1421,7 @@ function showCredits() {
         <li>Tap for Skill, swipe for Arts or Burst, plus configurable Auto combat</li>
         <li>Hale’s pure-damage Dark kits and story-forced 5★ UnHollowed transformation</li>
         <li>Persistent party composition, Unit Library animation previews, summons, and progression</li>
-        <li>Ten Act One missions, a combat test quest, evolving encounters, and permanent autosave</li>
+        <li>${totalMissions} canonical Act One missions, a combat test quest, evolving encounters, and permanent autosave</li>
         <li>Original anime character art with authored pixel combat sprites and battlefield-scale effects</li>
       </ul>
       <div class="homerow">

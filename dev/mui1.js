@@ -544,7 +544,7 @@ function showHome() {
       ${sigilPill()}
       <div class="banner-ch"><div class="bk">${done ? 'Act One — Complete' : `Chapter ${chapter.code} · ${esc(chapter.title)}`}</div><div class="bt">${esc(title)}</div></div>
     </div>
-    <div class="ticker"><span class="tklbl">VESSIA</span><span class="tkwin"><span class="tk">${esc(tickerLine())}</span></span></div>
+    <div class="ticker hr-kit-panel"><span class="tklbl">VESSIA</span><span class="tkwin"><span class="tk">${esc(tickerLine())}</span></span></div>
     <button id="continue" class="bigbtn">${done ? 'Story Complete' : (META.storyStep === 0 ? 'Begin the Story' : 'Continue Story')}
       <span class="sub">${done ? 'Replay cleared missions from the Story tab' : esc(title)}</span></button>
     <div class="homerow">
@@ -1110,7 +1110,7 @@ function showTown() {
       <button class="hotspot yard" data-spot="yard" style="left:68%; top:82%;"><span class="dot"></span><span class="hlabel">Training Yard</span></button>
     </div>
     <div class="townhint">Choose a building or gathering place.</div>
-    <div class="townpanel" id="townpanel"></div>`;
+    <div class="townpanel hr-kit-panel" id="townpanel"></div>`;
   const panel = document.getElementById('townpanel');
   const panelHead = (eyebrow, title, copy) => `<div class="town-eyebrow">${esc(eyebrow)}</div><h3>${esc(title)}</h3><p>${esc(copy)}</p>`;
   function openCastle() {

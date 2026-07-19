@@ -222,14 +222,14 @@ function startBattle(key, partyKeys, onEnd) {
 
   function commandTray() {
     const u = Engine.byUid(S, selectedUid) || Engine.livingParty(S)[0];
-    if (!u || ended) return '<div class="actionbar livecommands"><div class="ab-title">Battle resolved.</div></div>';
+    if (!u || ended) return '<div class="actionbar hr-kit-panel livecommands"><div class="ab-title">Battle resolved.</div></div>';
     if (S.lock === 'bulwark') {
       const hale = Engine.byKey(S, 'hale');
-      return `<div class="actionbar livecommands finale-command"><div class="ab-title">Every command has gone dark except one.</div>
+      return `<div class="actionbar hr-kit-panel livecommands finale-command"><div class="ab-title">Every command has gone dark except one.</div>
         <button class="abtn glowing" data-live="${hale.uid}" data-act="glass_bulwark"><span class="nm">◈ GLASS BULWARK</span><span class="ct blade">THE ONLY DOOR</span></button></div>`;
     }
     const actions = actionsFor(u);
-    return `<div class="actionbar livecommands">
+    return `<div class="actionbar hr-kit-panel livecommands">
       <div class="command-head"><div><b>${esc(u.name)}</b><span data-command-gauge>${gaugeValue(u)}/300 Arts</span></div><small>AUTO ${[autoSkill && 'S', autoArts && 'A', autoBurst && 'B'].filter(Boolean).join('/') || 'OFF'}</small></div>
       <div class="live-action-grid">${actions.map(a => {
         const cd = cdLeft(u.uid, a.id);

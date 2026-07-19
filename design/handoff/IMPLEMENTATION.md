@@ -7,5 +7,6 @@ Implemented in the production demo:
 - Still Basin summon banner uses the kit's Featured Reflection treatment, rotating basin rings, chips, and lacquer/glass panel chrome.
 - Summon pulls now begin with a ripple/shatter reveal layer before the card flips.
 - Shared colors, typography, spacing, and ornament remain driven by the existing mobile shell tokens so the Home, Town, Party, and Battle screens stay consistent.
+- Shared chrome is now applied to the Home ticker, Town panel, party/library cards, quest cards, unit cards, battle action tray, and screen headers.
 
 Future screens should reuse the `hr-kit-*` classes in `dev/part-head-mobile.html` instead of copying prototype markup.

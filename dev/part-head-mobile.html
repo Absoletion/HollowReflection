@@ -90,6 +90,7 @@ body.nonav #bottomnav{display:none;}
   background:linear-gradient(180deg,#0c1119f5,#0c1119e0); backdrop-filter:blur(5px);
 }
 .shead h2{font-size:18px; letter-spacing:1px; flex:1;}
+.shead::after{content:"";position:absolute;left:14px;bottom:-1px;width:76px;height:1px;background:linear-gradient(90deg,var(--hollow),transparent);box-shadow:0 0 8px #9adfd477;}
 .sigil-pill{
   display:inline-flex; align-items:center; gap:5px; white-space:nowrap;
   background:#141b2c; border:1px solid #33406044; border-radius:999px;
@@ -285,6 +286,9 @@ body.nonav #bottomnav{display:none;}
 .hr-kit-orbit .featrow{position:relative;z-index:1;width:100%;height:100%;margin:0;align-items:center;}
 .hr-kit-orbit .featrow .uniticon{width:70px;height:70px;filter:drop-shadow(0 4px 12px #4db8ff55);}
 .hr-kit-legend{display:flex;justify-content:center;gap:5px;flex-wrap:wrap;margin:3px 0 5px;}
+.panelbox,.chrow,.act-map-open,.mission-node,.quest-preview,.pcard,.libcard,.ucard,.liveunit,.evolution-panel,.anim-stage{box-shadow:inset 0 0 22px #4db8ff08,0 7px 18px #0003;}
+.pcard,.libcard,.ucard,.liveunit{border-color:color-mix(in srgb,var(--ec) 48%,#30405a);}
+.pcard:hover,.libcard:hover,.ucard.selectable:hover,.liveunit.sel{box-shadow:inset 0 0 18px color-mix(in srgb,var(--ec) 10%,transparent),0 0 15px color-mix(in srgb,var(--ec) 35%,transparent);}
 @keyframes hr-kit-orbit{to{transform:rotate(360deg)}}
 .summon-stage.revealing{position:relative;min-height:210px;}
 .summon-stage.revealing::before{content:"";position:absolute;left:50%;top:50%;width:72px;height:72px;transform:translate(-50%,-50%) scale(.3);border:2px solid #b9f5ef;border-radius:50%;box-shadow:0 0 26px #4db8ff99,inset 0 0 18px #9adfd455;animation:hr-kit-ripple 1.25s cubic-bezier(.1,.7,.25,1) both;pointer-events:none;}
@@ -337,6 +341,9 @@ body.nonav #bottomnav{display:none;}
 .towndlg{margin:13px 14px;}
 .townhint{margin:7px 16px; font-size:12px; color:var(--dim); text-align:center;}
 .townpanel{margin:0 13px 24px;padding:15px;background:linear-gradient(145deg,#151d2c,#0d1320);border:1px solid #2b3850;border-radius:13px;box-shadow:0 12px 30px #0005}.town-eyebrow{font-size:9px;color:var(--gold);letter-spacing:1.8px;text-transform:uppercase}.townpanel h3{font-family:Georgia,serif;font-size:19px;margin:4px 0 6px}.townpanel p{color:var(--dim);font-size:12px;line-height:1.5;margin:0 0 12px}.town-actions{display:grid;grid-template-columns:1fr 1fr;gap:7px}.town-actions button{min-height:40px}.town-talk{margin-top:10px;padding:10px;background:#090e18;border-left:2px solid var(--hollow);font-family:Georgia,serif;font-size:12px;color:#dce8f4}.town-talk b,.town-talk span{display:block}.town-talk b{color:var(--hollow);margin-bottom:4px}.quest-preview{display:flex;align-items:center;justify-content:space-between;padding:10px;margin-top:7px;background:#090e18;border:1px solid #273249;border-radius:8px}.quest-preview b,.quest-preview span{display:block}.quest-preview b{font-size:12px}.quest-preview span{font-size:9px;color:var(--dim);margin-top:2px}.quest-preview i{font-style:normal;font-size:8px;letter-spacing:1px;color:#7f899b}.market-balance{display:grid;grid-template-columns:22px auto 1fr;align-items:center;gap:6px;padding:13px;background:#15120b;border:1px solid #57451d;border-radius:9px}.market-balance .coin,.reward-currency .coin{width:18px;height:18px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff2a5,#e3b23f 48%,#8c5b15);border:1px solid #f3d46a}.market-balance b{font-size:19px;color:#f0d27a}.market-balance span{font-size:10px;color:#ad9760}.training-list{display:grid;gap:5px;margin-bottom:10px}.training-list div{display:flex;justify-content:space-between;padding:7px 9px;background:#090e18;border-radius:6px}.training-list b{font-size:11px}.training-list span{font-size:10px;color:#aa96df}
+.townpanel.hr-kit-panel{border-color:#3b5476;box-shadow:inset 0 0 30px #4db8ff0d,0 12px 30px #0006;}
+.ticker.hr-kit-panel{border-color:#304563;box-shadow:inset 0 0 18px #4db8ff0c,0 5px 16px #0004;}
+.actionbar.hr-kit-panel{border-top-color:#3b5476;box-shadow:inset 0 0 28px #4db8ff0b;}
 .market-target{display:grid;gap:4px;margin:10px 0;color:var(--dim);font-size:10px}.market-target select{min-height:38px;padding:7px;background:#090e18;color:#eef4ff;border:1px solid #35435d;border-radius:7px}
 .quest-preview.training-contract{width:100%;text-align:left;border-color:#4a765f;background:linear-gradient(100deg,#10241d,#0a1118)}.quest-preview.training-contract i{color:#8de0bd}.training-tools{display:grid;grid-template-columns:auto repeat(4,1fr);align-items:center;gap:4px;margin:0 6px;padding:5px;border:1px solid #355347;border-radius:8px;background:#09150f}.training-tools b{padding:0 4px;font-size:8px;letter-spacing:1px;color:#8de0bd}.training-tools button{min-width:0;min-height:30px;padding:3px 4px;font-size:7px;border-color:#355347;color:#b9dfce;background:#0d2118}
 

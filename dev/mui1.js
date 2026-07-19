@@ -967,10 +967,12 @@ function showSummon() {
   const banner = Engine.BANNERS.standard, family = META.summonState.standard;
   app.innerHTML = `
     <div class="shead"><h2>Summon</h2>${sigilPill()}</div>
-    <div class="sumbanner">
+    <div class="sumbanner hr-kit-panel">
       <div class="glow"></div>
+      <span class="hr-kit-eyebrow">Featured Reflection</span>
       <h3>The Still Basin</h3>
-      <div class="featrow">${summonArtHTML(banner.featured)}</div>
+      <div class="hr-kit-orbit"><div class="featrow">${summonArtHTML(banner.featured)}</div></div>
+      <div class="hr-kit-legend"><span class="hr-kit-chip">${esc(Engine.UNITS[banner.featured].name)}</span><span class="hr-kit-chip">${esc(Engine.UNITS[banner.featured].role)}</span></div>
       <p class="small">4★ rate: 25% · guaranteed within <b>${banner.guaranteeAt - family.pullsSinceFourStar}</b> pulls · featured: ${esc(Engine.UNITS[banner.featured].name)}. Max-rank duplicates become <b class="gold">Glass Dust</b> (${META.glassDust}).</p>
     </div>
     <div class="pullrow">
@@ -992,6 +994,7 @@ function showSummon() {
     applySaveState(result.state); refreshSigils(); afford(); writeSave(true);
     stage.innerHTML = '';
     stage.classList.toggle('multi', n > 1);
+    stage.classList.add('revealing');
     result.rewards.forEach((reward, i) => {
       const key = reward.unitId;
       const t = Engine.UNITS[key];
@@ -1007,7 +1010,7 @@ function showSummon() {
       stage.appendChild(card);
       setTimeout(() => card.classList.add('flipped'), 420 + i * 320);
     });
-    setTimeout(() => { pulling = false; afford(); }, 900 + result.rewards.length * 320);
+    setTimeout(() => { stage.classList.remove('revealing'); pulling = false; afford(); }, 900 + result.rewards.length * 320);
   }
   b1.onclick = () => doPulls(1);
   b10.onclick = () => doPulls(10);

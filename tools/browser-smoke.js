@@ -47,7 +47,12 @@ async function main() {
 
     await page.locator('#startbtn').click();
     for (const tab of ['story', 'party', 'summon', 'town', 'home']) {
-      await page.locator(`[data-tab="${tab}"]`).click();
+      const navButton = page.locator(`[data-tab="${tab}"]`);
+      if (tab === 'summon' && await navButton.isDisabled()) {
+        assert.match(await navButton.getAttribute('title'), /1-9/i);
+        continue;
+      }
+      await navButton.click();
       await page.locator(`[data-tab="${tab}"].active`).waitFor();
     }
     await page.locator('#htown').click();
@@ -74,7 +79,7 @@ async function main() {
 
     await context.setOffline(false);
     const seededSave = await page.evaluate(() => {
-      const state = Engine.normalizeSaveState({ owned: ['hale', 'cinnia'], activeParty: ['hale', 'cinnia'], storyStep: 1, sigils: 200, gold: 2500, lastHub: 'town', unitProgress: { cinnia: { level: 70, stars: 4, xp: 0 } } });
+      const state = Engine.normalizeSaveState({ owned: ['hale', 'cinnia'], activeParty: ['hale', 'cinnia'], storyStep: 1, sigils: 200, gold: 2500, featureUnlocks: { summon: true }, lastHub: 'town', unitProgress: { cinnia: { level: 70, stars: 4, xp: 0 } } });
       const now = new Date().toISOString();
       return JSON.stringify({ schemaVersion: Engine.SAVE_SCHEMA_VERSION, gameVersion: '0.47.0', saveId: 'browser-challenge', createdAt: now, updatedAt: now, revision: 1, accountLink: { linked: false, provider: null, accountId: null }, state });
     });

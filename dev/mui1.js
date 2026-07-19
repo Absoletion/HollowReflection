@@ -474,12 +474,13 @@ const TABS = [
 ];
 function renderNav(active) {
   nav.innerHTML = TABS.map(t =>
-    `<button type="button" class="navbtn ${t.id === active ? 'active' : ''}" data-tab="${t.id}"${t.id === active ? ' aria-current="page"' : ''}>
+    `<button type="button" class="navbtn ${t.id === active ? 'active' : ''}" data-tab="${t.id}"${t.id === active ? ' aria-current="page"' : ''}${t.id === 'summon' && !META.featureUnlocks.summon ? ' disabled aria-disabled="true" title="Unlocks after 1-9 · The Still Basin"' : ''}>
        ${sym(t.icon)}<span class="nlbl">${t.label}</span>
      </button>`).join('');
   nav.querySelectorAll('.navbtn').forEach(b => b.onclick = () => go(b.dataset.tab));
 }
 function go(tabId) {
+  if (tabId === 'summon' && !META.featureUnlocks.summon) { toast('Summoning unlocks after mission 1-9: The Still Basin.'); return; }
   META.lastHub = tabId;
   const tab = TABS.find(t => t.id === tabId) || TABS[0];
   chrome('hub');
@@ -542,7 +543,7 @@ function showHome() {
     <button id="continue" class="bigbtn">${done ? 'Story Complete' : (META.storyStep === 0 ? 'Begin the Story' : 'Continue Story')}
       <span class="sub">${done ? 'Replay cleared missions from the Story tab' : esc(title)}</span></button>
     <div class="homerow">
-      <button id="hsummon">✦ Summon</button>
+      <button id="hsummon" ${META.featureUnlocks.summon ? '' : 'disabled title="Unlocks after mission 1-9"'}>✦ Summon</button>
       <button id="htown">⌂ Castle Town</button>
       <button id="hsave">Save / Account</button>
     </div>`;
@@ -956,6 +957,7 @@ function summonArtHTML(key) {
   return unitIconHTML(key, key === 'hale' && META.haleAwakened);
 }
 function showSummon() {
+  if (!META.featureUnlocks.summon) { toast('Summoning unlocks after mission 1-9: The Still Basin.'); return showHome(); }
   META.stage = 'summon';
   const banner = Engine.BANNERS.standard, family = META.summonState.standard;
   app.innerHTML = `

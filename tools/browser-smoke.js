@@ -60,6 +60,10 @@ async function main() {
     await page.locator('[data-lib-filter="fire"]').click();
     assert(await page.locator('.libcard:not([hidden])').count() > 0, 'Library fire filter hid every card.');
     await page.locator('[data-lib-filter="all"]').click();
+    await page.locator('#librarysort').click();
+    assert.match(await page.locator('#librarysort').textContent(), /Sort: Rarity/);
+    await page.locator('#librarysort').click();
+    assert.match(await page.locator('#librarysort').textContent(), /Sort: Name/);
     await page.locator('#libraryback').click();
     await page.locator('[data-tab="home"]').click();
     await page.locator('#htown').click();

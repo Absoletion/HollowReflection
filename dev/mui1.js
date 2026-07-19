@@ -775,10 +775,10 @@ function showUnitLibrary() {
     <div class="shead"><h2>Unit Library</h2>${sigilPill()}</div>
     <div class="library-intro"><button id="libraryback">← Party</button><div><b>${found} / ${Engine.UNIT_LIBRARY.length}</b><span>forms discovered</span></div></div>
     <p class="library-note">A unit remains recorded after discovery, even if it later leaves the active roster. Awakened and evolved forms receive separate pages.</p>
-    <div class="library-filters">${filters.map(elem => `<button type="button" class="${elem === 'all' ? 'on' : ''}" data-lib-filter="${elem}">${elem === 'all' ? 'All' : cap(elem)}</button>`).join('')}</div>
+    <div class="library-controls"><div class="library-filters">${filters.map(elem => `<button type="button" class="${elem === 'all' ? 'on' : ''}" data-lib-filter="${elem}">${elem === 'all' ? 'All' : cap(elem)}</button>`).join('')}</div><button type="button" id="librarysort">Sort: Index</button></div>
     <div class="library-grid">${Engine.UNIT_LIBRARY.map((entry, index) => {
       const unlocked = !!META.libraryUnlocked[entry.id], t = Engine.UNITS[entry.key];
-      return `<button class="libcard e-${t.elem} ${entry.key === 'hale' && entry.form === 'awakened' ? 'hale-awakened' : ''} ${unlocked ? 'unlocked' : 'locked'}" data-library="${entry.id}" ${unlocked ? '' : 'disabled'} aria-label="${unlocked ? esc(t.name + (entry.form === 'awakened' ? ' ' + (entry.title || 'Awakened') : '')) : 'Undiscovered unit'}">
+      return `<button class="libcard e-${t.elem} ${entry.key === 'hale' && entry.form === 'awakened' ? 'hale-awakened' : ''} ${unlocked ? 'unlocked' : 'locked'}" data-library="${entry.id}" data-lib-index="${index}" data-lib-stars="${t.stars}" data-lib-name="${esc(t.name)}" ${unlocked ? '' : 'disabled'} aria-label="${unlocked ? esc(t.name + (entry.form === 'awakened' ? ' ' + (entry.title || 'Awakened') : '')) : 'Undiscovered unit'}">
         <span class="libindex">${String(index + 1).padStart(3, '0')}</span>${libraryPortraitHTML(entry, unlocked)}
         <span class="libname">${unlocked ? esc(t.name) : '????'}</span>
         <span class="libform">${unlocked ? (entry.form === 'awakened' ? esc(entry.title || 'Awakened Form') : `${entry.stars}★ · ${esc(t.role)}`) : 'UNDISCOVERED'}</span>
@@ -786,6 +786,12 @@ function showUnitLibrary() {
     }).join('')}</div>`;
   document.getElementById('libraryback').onclick = showParty;
   const grid = app.querySelector('.library-grid');
+  let sortMode = 'index';
+  const drawSort = () => {
+    const cards = [...grid.querySelectorAll('[data-library]')];
+    cards.sort((a, b) => sortMode === 'rarity' ? Number(b.dataset.libStars) - Number(a.dataset.libStars) || Number(a.dataset.libIndex) - Number(b.dataset.libIndex) : sortMode === 'name' ? a.dataset.libName.localeCompare(b.dataset.libName) : Number(a.dataset.libIndex) - Number(b.dataset.libIndex));
+    cards.forEach(card => grid.appendChild(card));
+  };
   const drawFilter = filter => grid.querySelectorAll('[data-library]').forEach(card => {
     card.hidden = filter !== 'all' && !card.classList.contains(`e-${filter}`);
   });
@@ -793,6 +799,12 @@ function showUnitLibrary() {
     app.querySelectorAll('[data-lib-filter]').forEach(other => other.classList.toggle('on', other === button));
     drawFilter(button.dataset.libFilter);
   });
+  document.getElementById('librarysort').onclick = () => {
+    sortMode = sortMode === 'index' ? 'rarity' : sortMode === 'rarity' ? 'name' : 'index';
+    document.getElementById('librarysort').textContent = `Sort: ${cap(sortMode)}`;
+    drawSort();
+  };
+  drawSort();
   app.querySelectorAll('[data-library]:not(:disabled)').forEach(card => card.onclick = () => {
     const entry = Engine.UNIT_LIBRARY.find(e => e.id === card.dataset.library);
     if (entry) showUnitSheet(entry.key, entry.form === 'awakened' && entry.key === 'hale' ? 'awk' : 'base', true);

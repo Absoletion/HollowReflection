@@ -88,20 +88,21 @@ assert.throws(() => GameState.commitEnvelope(failing, 'save', envelope), /inject
 assert.strictEqual(failing.getItem('save'), prior);
 
 let challengeState = Engine.normalizeSaveState({ owned: ['hale', 'cinnia', 'tobin'], activeParty: ['hale', 'cinnia'], storyStep: 1, unitProgress: { cinnia: { level: 70, stars: 4, xp: 0 } } });
-const ember = GameState.completeChallenge(challengeState, 'ember_trial', { battleId: 'ember-1', victory: true, elapsedMs: 45000, unitsDefeated: 0, burstUsed: false });
+const ember = GameState.completeChallenge(challengeState, 'ember_trial', { battleId: 'ember-1', encounterId: 'challenge_ember', victory: true, elapsedMs: 45000, unitsDefeated: 0, burstUsed: false });
 assert.strictEqual(ember.ok, true);
 assert.strictEqual(ember.state.challengeItems.ember_challenge_crest, 1);
 assert.strictEqual(ember.state.challengeItems.challenge_essence, 6);
 assert.strictEqual(ember.state.challengeProgress.ember_trial.mastery.no_defeats, true);
-const duplicate = GameState.completeChallenge(ember.state, 'ember_trial', { battleId: 'ember-1', victory: true });
+const duplicate = GameState.completeChallenge(ember.state, 'ember_trial', { battleId: 'ember-1', encounterId: 'challenge_ember', victory: true });
 assert.strictEqual(duplicate.rewards.length, 0);
 assert.strictEqual(duplicate.state.challengeItems.challenge_essence, 6);
-const feast = GameState.completeChallenge(ember.state, 'feastkeeper_trial', { battleId: 'feast-1', victory: true, elapsedMs: 60000, unitsDefeated: 1, burstUsed: false });
+const feast = GameState.completeChallenge(ember.state, 'feastkeeper_trial', { battleId: 'feast-1', encounterId: 'challenge_feastkeeper', victory: true, elapsedMs: 60000, unitsDefeated: 1, burstUsed: false });
 assert.strictEqual(feast.state.challengeItems.feastkeeper_seal, 1);
 assert.strictEqual(feast.state.challengeItems.challenge_essence, 13);
-const emberRepeat = GameState.completeChallenge(feast.state, 'ember_trial', { battleId: 'ember-2', victory: true, unitsDefeated: 1, burstUsed: true });
-const feastRepeat = GameState.completeChallenge(emberRepeat.state, 'feastkeeper_trial', { battleId: 'feast-2', victory: true, unitsDefeated: 1, burstUsed: true });
+const emberRepeat = GameState.completeChallenge(feast.state, 'ember_trial', { battleId: 'ember-2', encounterId: 'challenge_ember', victory: true, unitsDefeated: 1, burstUsed: true });
+const feastRepeat = GameState.completeChallenge(emberRepeat.state, 'feastkeeper_trial', { battleId: 'feast-2', encounterId: 'challenge_feastkeeper', victory: true, unitsDefeated: 1, burstUsed: true });
 assert.ok(feastRepeat.state.challengeItems.challenge_essence >= 20, 'evolution pacing exceeds four clears');
+assert.strictEqual(GameState.completeChallenge(challengeState, 'ember_trial', { battleId: 'ember-wrong', encounterId: 'not_ember', victory: true }).errorCode, 'INVALID_RESULT');
 const evolved = GameState.evolveUnit(feastRepeat.state, 'cinnia', { transactionId: 'evolve-cinnia' });
 assert.strictEqual(evolved.ok, true);
 assert.strictEqual(evolved.state.unitProgress.cinnia.stars, 5);

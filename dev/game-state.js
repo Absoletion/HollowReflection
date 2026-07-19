@@ -47,6 +47,7 @@ const GameState = (function (E, Registry) {
       const cfg = E.CHALLENGES[challengeId];
       if (!cfg) fail('UNKNOWN_ID', 'Unknown Challenge.');
       if (!E.challengeUnlocked(draft, challengeId)) fail('LOCKED', 'This Challenge is still locked.');
+      if (!result || result.encounterId !== cfg.encounterId) fail('INVALID_RESULT', 'Challenge result does not match the encounter.');
       if (!result || result.victory !== true) fail('NOT_CLEARED', 'Rewards require a victory.');
       if (!transactionId) fail('MISSING_TRANSACTION', 'The battle result has no settlement ID.');
       if (draft.completedTransactions.includes(transactionId)) return { uiEvents: ['settlement_duplicate'] };

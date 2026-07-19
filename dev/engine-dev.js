@@ -330,6 +330,10 @@ const Engine = (function () {
         if (value !== true || !match || !caps[Number(match[1])] || Number(match[2]) > caps[Number(match[1])]) errors.push(`missionClears.${id} is invalid`);
       }
     }
+    if (present('sideMissionProgress')) {
+      if (!s.sideMissionProgress || typeof s.sideMissionProgress !== 'object' || Array.isArray(s.sideMissionProgress)) errors.push('sideMissionProgress must be an object');
+      else for (const [id, value] of Object.entries(s.sideMissionProgress)) if (!SIDE_MISSIONS[id] || !value || typeof value !== 'object' || !Number.isSafeInteger(value.clearCount) || value.clearCount < 0 || value.clearCount > 999999 || typeof value.firstClear !== 'boolean') errors.push(`sideMissionProgress.${id} is invalid`);
+    }
     if (present('haleAwakened') && typeof s.haleAwakened !== 'boolean') errors.push('haleAwakened must be boolean');
     if (present('lastHub') && !['home', 'story', 'party', 'summon', 'town'].includes(s.lastHub)) errors.push('lastHub is invalid');
     if (present('settings')) {
@@ -386,6 +390,8 @@ const Engine = (function () {
       const match = /^act([1-9])_([1-9][0-9]?)$/.exec(id);
       if (cleared === true && match && missionCaps[Number(match[1])] >= Number(match[2])) missionClears[id] = true;
     }
+    const sideMissionProgress = {};
+    for (const [id, raw] of Object.entries(s.sideMissionProgress || {})) if (SIDE_MISSIONS[id] && raw && typeof raw === 'object') sideMissionProgress[id] = { clearCount: intIn(raw.clearCount, 0, 999999, 0), firstClear: !!raw.firstClear };
     let haleStars = (unitProgress.hale || {}).stars || UNIT_PROGRESSION.hale.baseStars;
     if ((s.haleAwakened === true || storyStep >= 5) && haleStars < 5) {
       unitProgress.hale = { level: (unitProgress.hale || {}).level || 1, stars: 5, xp: (unitProgress.hale || {}).xp || 0 };
@@ -401,6 +407,7 @@ const Engine = (function () {
       storyStep,
       act1MissionProgress,
       missionClears,
+      sideMissionProgress,
       haleAwakened: haleStars >= 5,
       lastHub,
       settings: {
@@ -513,6 +520,8 @@ const Engine = (function () {
 
   const BATTLES = {
     training: { title: 'Training Grounds', enemies: ['training_dummy'], sigils: 0, rewards: { first: { gold: 0, xp: 0 }, repeat: { gold: 0, xp: 0 } }, training: true },
+    side_caravan: { title: 'Missing Caravan', enemies: ['hound', 'storehouse_pest', 'hound'], sigils: 0, rewards: { first: { gold: 240, xp: 150 }, repeat: { gold: 120, xp: 75 } } },
+    side_cook: { title: "A Cook's Errand", enemies: ['storehouse_pest', 'storehouse_pest', 'hollow_fragment'], sigils: 0, rewards: { first: { gold: 180, xp: 120 }, repeat: { gold: 90, xp: 60 } } },
     challenge_ember: { title: 'Ember Trial', enemies: ['ember_warden'], sigils: 0, rewards: { first: { gold: 0, xp: 0 }, repeat: { gold: 0, xp: 0 } }, challenge: true },
     challenge_feastkeeper: { title: 'Feastkeeper Trial', enemies: ['feastkeeper'], sigils: 0, rewards: { first: { gold: 0, xp: 0 }, repeat: { gold: 0, xp: 0 } }, challenge: true },
     act1_1: { title: '1-1 · Guild Entrance Exam', enemies: ['construct'], sigils: 5, rewards: { first: { gold: 60, xp: 35 }, repeat: { gold: 25, xp: 15 } }, tutorial: true },
@@ -543,6 +552,10 @@ const Engine = (function () {
     ch3: { title: 'The Glasswright', enemies: ['glasswright'], sigils: 60, rewards: { first: { gold: 450, xp: 250 }, repeat: { gold: 270, xp: 160 } }, scripted: true },
     ch6: { title: 'The Lowing Man', enemies: ['lowingman'], sigils: 150, rewards: { first: { gold: 1000, xp: 600 }, repeat: { gold: 600, xp: 380 } }, boss: true },
   };
+  const SIDE_MISSIONS = Object.freeze({
+    missing_caravan: Object.freeze({ id: 'missing_caravan', title: 'Missing Caravan', battle: 'side_caravan', description: 'Track a lost supply wagon beyond the east road.' }),
+    cook_errand: Object.freeze({ id: 'cook_errand', title: "A Cook's Errand", battle: 'side_cook', description: 'Clear the pantry route before tonight’s guild supper.' }),
+  });
 
   /* ------------------------------------------------------------------ *
    *  Construction
@@ -1654,7 +1667,7 @@ const Engine = (function () {
     newBattle, availableActions, playerAct, elemMult, intentText, canReadIntents,
     availableLiveActions, chooseLiveAIAction, liveAct, liveEnemyPhase, liveUpkeep, liveSkillGain, LIVE_SKILL_GAIN, AI_PRESETS,
     livingParty, livingEnemies, partyHPfrac, byKey, byUid,
-    UNITS, ENEMIES, BATTLES, HALE_AWAKENED, ELEM_ICON, UNIT_PROGRESSION, LEVEL_CAPS, xpToNext, grantUnitXP, combatProfile, applyStoryEvolutions, UNIT_LIBRARY, recordOwnedDiscoveries,
+    UNITS, ENEMIES, BATTLES, SIDE_MISSIONS, HALE_AWAKENED, ELEM_ICON, UNIT_PROGRESSION, LEVEL_CAPS, xpToNext, grantUnitXP, combatProfile, applyStoryEvolutions, UNIT_LIBRARY, recordOwnedDiscoveries,
     LIVE_GESTURE_THRESHOLDS, liveGestureTier, PARTY_SIZE,
     SAVE_SCHEMA_VERSION, normalizeSaveState, validateSaveState, migrateSaveEnvelope,
     CHALLENGES, CHALLENGE_ITEMS, challengeUnlocked, evaluateChallengeMastery,

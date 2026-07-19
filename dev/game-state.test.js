@@ -13,6 +13,8 @@ class Storage {
 }
 
 const state = Engine.normalizeSaveState({ owned: ['hale', 'cinnia', 'tobin'], activeParty: ['hale'] });
+const sideProgress = Engine.normalizeSaveState({ sideMissionProgress: { missing_caravan: { clearCount: 2, firstClear: true } } });
+assert.deepStrictEqual(sideProgress.sideMissionProgress.missing_caravan, { clearCount: 2, firstClear: true });
 const changed = GameState.setActiveParty(state, ['cinnia', 'hale'], { transactionId: 'tx_test' });
 assert.strictEqual(changed.ok, true);
 assert.deepStrictEqual(changed.state.activeParty, ['cinnia', 'hale']);

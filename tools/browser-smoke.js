@@ -68,6 +68,8 @@ async function main() {
     await page.locator('[data-tab="home"]').click();
     await page.locator('#htown').click();
     await page.locator('[data-spot="quest"]').click();
+    assert.match(await page.locator('[data-side-mission="missing_caravan"]').textContent(), /Side Mission/i);
+    assert.match(await page.locator('[data-side-mission="cook_errand"]').textContent(), /Side Mission/i);
     await page.locator('#traininggrounds').click();
     await page.locator('.livebattle').waitFor();
 

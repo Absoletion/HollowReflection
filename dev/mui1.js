@@ -60,6 +60,7 @@ const META = {
   storyStep: 0,                    // index into STEPS: the next chapter to clear
   act1MissionProgress: 0,          // expanded Act 1 mission-map progress
   missionClears: {},               // permanent per-mission completion, across all chapters
+  sideMissionProgress: {},         // repeatable Quest Board clear counts
   haleAwakened: false,             // permanent roster evolution, separate from the Ch.6 story transformation
   lastHub: 'home',                 // remembered nav tab
   settings: { autoSkill: false, autoArts: false, autoBurst: false, animationSpeed: 1 }, // persistent combat preferences
@@ -122,7 +123,7 @@ function captureSaveState() {
     unitProgress: META.unitProgress, challengeItems: META.challengeItems, challengeProgress: META.challengeProgress, completedTransactions: META.completedTransactions,
     marketState: META.marketState, summonState: META.summonState, summonHistory: META.summonHistory, telemetry: META.telemetry, economyLedger: META.economyLedger, unitAI: META.unitAI,
     evolutionUnlocks: META.evolutionUnlocks, featureUnlocks: META.featureUnlocks, libraryUnlocked: META.libraryUnlocked,
-    storyStep: META.storyStep, act1MissionProgress: META.act1MissionProgress, missionClears: META.missionClears, haleAwakened: META.haleAwakened, lastHub: META.lastHub,
+    storyStep: META.storyStep, act1MissionProgress: META.act1MissionProgress, missionClears: META.missionClears, sideMissionProgress: META.sideMissionProgress, haleAwakened: META.haleAwakened, lastHub: META.lastHub,
     settings: META.settings,
   });
 }
@@ -1126,6 +1127,22 @@ function showChallengeMap() {
   app.querySelectorAll('[data-challenge]').forEach(button => button.onclick = () => launchChallenge(button.dataset.challenge));
 }
 
+function launchSideMission(id) {
+  const cfg = Engine.SIDE_MISSIONS[id];
+  if (!cfg) return;
+  const party = META.activeParty.filter(key => META.owned.includes(key));
+  if (!party.length) { toast('Choose an owned party before taking a contract.'); return; }
+  const progress = META.sideMissionProgress[id] || { clearCount: 0, firstClear: false };
+  chrome('battle');
+  startBattle(cfg.battle, party, outcome => {
+    if (outcome === 'defeat' || outcome === 'exit') return showTown();
+    const firstClear = !progress.firstClear;
+    META.sideMissionProgress[id] = { clearCount: progress.clearCount + 1, firstClear: true };
+    const reward = grantQuestRewards(cfg.battle, party, firstClear);
+    showQuestRewards(reward, showTown);
+  });
+}
+
 function showTown() {
   META.stage = 'town';
   let talkIndex = 0;
@@ -1163,6 +1180,13 @@ function showTown() {
   function openBoard() {
     panel.innerHTML = panelHead('Outside the Inn', 'Quest Board', 'Local contracts, character missions, and the guild training grounds are posted here.') + `<button class="quest-preview training-contract" id="traininggrounds"><div><b>Training Grounds</b><span>Practice Map · No rewards · Infinite-HP dummy</span></div><i>OPEN</i></button><div class="quest-preview"><div><b>Missing Caravan</b><span>Side Mission · Coming Soon</span></div><i>LOCKED</i></div><div class="quest-preview"><div><b>A Cook's Errand</b><span>Character Mission · Coming Soon</span></div><i>LOCKED</i></div>`;
     document.getElementById('traininggrounds').onclick = () => launchTraining(META.owned[0] || 'hale', false);
+    panel.querySelectorAll('.quest-preview:not(#traininggrounds)').forEach(card => card.remove());
+    const sideCards = Object.values(Engine.SIDE_MISSIONS).map(cfg => {
+      const p = META.sideMissionProgress[cfg.id] || { clearCount: 0 };
+      return `<button class="quest-preview" data-side-mission="${cfg.id}"><div><b>${esc(cfg.title)}</b><span>Side Mission · ${esc(cfg.description)}</span><span>Clears: ${p.clearCount} · Gold and XP repeat rewards</span></div><i>ENTER</i></button>`;
+    }).join('');
+    document.getElementById('traininggrounds').insertAdjacentHTML('afterend', sideCards);
+    panel.querySelectorAll('[data-side-mission]').forEach(button => button.onclick = () => launchSideMission(button.dataset.sideMission));
   }
   function openMarket() {
     const tier = Engine.marketRestockTier(captureSaveState()), purchases = META.marketState.tier === tier ? META.marketState.purchases : {};

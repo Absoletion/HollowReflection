@@ -13,5 +13,8 @@ Implemented in the production demo:
 - Unit Library now exposes working element filter chips; undiscovered silhouettes remain locked and filtering never removes their records.
 - Unit Library now supports live Index, Rarity, and Name sorting alongside the element filters.
 - Save/title, reward/evolution, market, dialogue, pause/log, and unit-detail surfaces now share the same lacquer, glass, and silver treatment.
+- Combat status events now surface as typed canvas popups for applied and removed effects.
+- Quest Board now includes repeatable Missing Caravan and A Cook's Errand contracts with persistent clear counts and Gold/XP rewards.
+- Production builds omit developer cheats and self-test controls; `HOLLOW_BUILD=dev pnpm build` retains the QA surface.
 
 Future screens should reuse the `hr-kit-*` classes in `dev/part-head-mobile.html` instead of copying prototype markup.

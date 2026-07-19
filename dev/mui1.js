@@ -108,6 +108,7 @@ function rememberOwnedUnits() {
 const SAVE_STORAGE_KEY = 'projectHollowing.singleSave';
 const SAVE_GAME_VERSION = '0.47.0';
 let saveEnvelope = null;
+let incompatibleRawText = null;
 let saveLastStateJSON = '';
 let saveLastAt = null;
 let saveError = '';
@@ -201,6 +202,7 @@ function initializeSaveSystem() {
     } catch (err) {
       if (/newer version/.test(err.message || '')) {
         saveWriteLocked = true;
+        incompatibleRawText = rawText;
         saveError = err.message;
         saveEnvelope = newSaveEnvelope(captureSaveState());
         return;
@@ -232,11 +234,12 @@ function saveTimeLabel() {
   return Number.isNaN(d.getTime()) ? 'Saved' : `Saved ${d.toLocaleString()}`;
 }
 function exportSaveBackup() {
-  writeSave(true);
-  const blob = new Blob([JSON.stringify(saveEnvelope, null, 2)], { type: 'application/json' });
+  if (incompatibleRawText == null) writeSave(true);
+  const payload = incompatibleRawText == null ? JSON.stringify(saveEnvelope, null, 2) : incompatibleRawText;
+  const blob = new Blob([payload], { type: 'application/json' });
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
-  a.href = url; a.download = `project-hollowing-save-${saveEnvelope.saveId.slice(0, 8)}.json`;
+  a.href = url; a.download = `project-hollowing-save-${saveEnvelope && saveEnvelope.saveId ? saveEnvelope.saveId.slice(0, 8) : 'incompatible'}.json`;
   document.body.appendChild(a); a.click(); a.remove();
   setTimeout(() => URL.revokeObjectURL(url), 1000);
 }
@@ -249,6 +252,7 @@ async function importSaveBackup(file) {
     const nextEnvelope = Object.assign({}, imported, { gameVersion: SAVE_GAME_VERSION, updatedAt: now, revision: (imported.revision || 0) + 1 });
     GameState.commitEnvelope(localStorage, SAVE_STORAGE_KEY, nextEnvelope);
     saveWriteLocked = false;
+    incompatibleRawText = null;
     saveNotice = '';
     saveEnvelope = nextEnvelope;
     applySaveState(nextEnvelope.state);
@@ -264,6 +268,7 @@ function resetSingleSave() {
     const state = Engine.normalizeSaveState({}), nextEnvelope = newSaveEnvelope(state);
     GameState.commitEnvelope(localStorage, SAVE_STORAGE_KEY, nextEnvelope);
     saveWriteLocked = false; saveError = ''; saveNotice = '';
+    incompatibleRawText = null;
     saveEnvelope = nextEnvelope; applySaveState(state);
     saveLastStateJSON = JSON.stringify(captureSaveState()); saveLastAt = nextEnvelope.updatedAt;
     showTitle();

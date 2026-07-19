@@ -2,9 +2,11 @@ name: Verify
 
 on:
   pull_request:
-    branches: [integration/v0.48-remediation]
   push:
-    branches: [integration/v0.48-remediation]
+    branches:
+      - main
+      - integration/v0.48-remediation
+      - fix/v0.48-post-audit
 
 jobs:
   core:

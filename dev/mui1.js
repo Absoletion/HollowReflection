@@ -981,11 +981,14 @@ function showSummon() {
     <div class="small summon-history">History: ${META.summonHistory.slice(-10).reverse().map(x => esc(Engine.UNITS[x.unitId].name)).join(' · ') || 'None yet'}</div>`;
   const stage = document.getElementById('stage');
   const b1 = document.getElementById('pull1'), b10 = document.getElementById('pull10');
-  function afford() { b1.disabled = META.sigils < 10; b10.disabled = META.sigils < 90; }
+  let pulling = false;
+  function afford() { b1.disabled = pulling || META.sigils < 10; b10.disabled = pulling || META.sigils < 90; }
   afford();
   function doPulls(n) {
+    if (pulling) return;
+    pulling = true; afford();
     const result = GameState.performSummon(captureSaveState(), 'standard', n, Math.random, { transactionId: `summon:standard:${Date.now()}` });
-    if (!result.ok) { toast(result.message); return; }
+    if (!result.ok) { pulling = false; afford(); toast(result.message); return; }
     applySaveState(result.state); refreshSigils(); afford(); writeSave(true);
     stage.innerHTML = '';
     stage.classList.toggle('multi', n > 1);
@@ -1004,6 +1007,7 @@ function showSummon() {
       stage.appendChild(card);
       setTimeout(() => card.classList.add('flipped'), 420 + i * 320);
     });
+    setTimeout(() => { pulling = false; afford(); }, 900 + result.rewards.length * 320);
   }
   b1.onclick = () => doPulls(1);
   b10.onclick = () => doPulls(10);

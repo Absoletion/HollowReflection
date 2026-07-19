@@ -10,5 +10,6 @@ Implemented in the production demo:
 - Shared chrome is now applied to the Home ticker, Town panel, party/library cards, quest cards, unit cards, battle action tray, and screen headers.
 - Home now carries a featured Hale reflection layer plus event/daily cards, matching the kit lobby hierarchy without adding non-functional navigation.
 - Summon now uses a full featured splash card and live pity meter before the existing pull/reveal controls.
+- Unit Library now exposes working element filter chips; undiscovered silhouettes remain locked and filtering never removes their records.
 
 Future screens should reuse the `hr-kit-*` classes in `dev/part-head-mobile.html` instead of copying prototype markup.

@@ -55,6 +55,13 @@ async function main() {
       await navButton.click();
       await page.locator(`[data-tab="${tab}"].active`).waitFor();
     }
+    await page.locator('[data-tab="party"]').click();
+    await page.locator('#openlibrary').click();
+    await page.locator('[data-lib-filter="fire"]').click();
+    assert(await page.locator('.libcard:not([hidden])').count() > 0, 'Library fire filter hid every card.');
+    await page.locator('[data-lib-filter="all"]').click();
+    await page.locator('#libraryback').click();
+    await page.locator('[data-tab="home"]').click();
     await page.locator('#htown').click();
     await page.locator('[data-spot="quest"]').click();
     await page.locator('#traininggrounds').click();

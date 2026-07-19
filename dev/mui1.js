@@ -770,10 +770,12 @@ function showUnitLibrary() {
   META.stage = 'library';
   rememberOwnedUnits();
   const found = Engine.UNIT_LIBRARY.filter(e => META.libraryUnlocked[e.id]).length;
+  const filters = ['all', ...new Set(Engine.UNIT_LIBRARY.map(e => Engine.UNITS[e.key].elem))];
   app.innerHTML = `
     <div class="shead"><h2>Unit Library</h2>${sigilPill()}</div>
     <div class="library-intro"><button id="libraryback">← Party</button><div><b>${found} / ${Engine.UNIT_LIBRARY.length}</b><span>forms discovered</span></div></div>
     <p class="library-note">A unit remains recorded after discovery, even if it later leaves the active roster. Awakened and evolved forms receive separate pages.</p>
+    <div class="library-filters">${filters.map(elem => `<button type="button" class="${elem === 'all' ? 'on' : ''}" data-lib-filter="${elem}">${elem === 'all' ? 'All' : cap(elem)}</button>`).join('')}</div>
     <div class="library-grid">${Engine.UNIT_LIBRARY.map((entry, index) => {
       const unlocked = !!META.libraryUnlocked[entry.id], t = Engine.UNITS[entry.key];
       return `<button class="libcard e-${t.elem} ${entry.key === 'hale' && entry.form === 'awakened' ? 'hale-awakened' : ''} ${unlocked ? 'unlocked' : 'locked'}" data-library="${entry.id}" ${unlocked ? '' : 'disabled'} aria-label="${unlocked ? esc(t.name + (entry.form === 'awakened' ? ' ' + (entry.title || 'Awakened') : '')) : 'Undiscovered unit'}">
@@ -783,6 +785,14 @@ function showUnitLibrary() {
       </button>`;
     }).join('')}</div>`;
   document.getElementById('libraryback').onclick = showParty;
+  const grid = app.querySelector('.library-grid');
+  const drawFilter = filter => grid.querySelectorAll('[data-library]').forEach(card => {
+    card.hidden = filter !== 'all' && !card.classList.contains(`e-${filter}`);
+  });
+  app.querySelectorAll('[data-lib-filter]').forEach(button => button.onclick = () => {
+    app.querySelectorAll('[data-lib-filter]').forEach(other => other.classList.toggle('on', other === button));
+    drawFilter(button.dataset.libFilter);
+  });
   app.querySelectorAll('[data-library]:not(:disabled)').forEach(card => card.onclick = () => {
     const entry = Engine.UNIT_LIBRARY.find(e => e.id === card.dataset.library);
     if (entry) showUnitSheet(entry.key, entry.form === 'awakened' && entry.key === 'hale' ? 'awk' : 'base', true);

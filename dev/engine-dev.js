@@ -253,7 +253,7 @@ const Engine = (function () {
     burst: Object.freeze({ id: 'burst', name: 'Burst', desc: 'Builds and holds Arts for staggered or weakened enemies.' }),
     manual: Object.freeze({ id: 'manual', name: 'Manual Reserve', desc: 'Automates Skills only, except for critical defensive recovery.' }),
   });
-  const SAVE_SCHEMA_VERSION = 6;
+  const SAVE_SCHEMA_VERSION = 7;
   function intIn(value, min, max, fallback) {
     const n = Number.isFinite(Number(value)) ? Math.floor(Number(value)) : fallback;
     return Math.max(min, Math.min(max, n));
@@ -263,6 +263,50 @@ const Engine = (function () {
     if (!value || typeof value !== 'object') return out;
     for (const [key, flag] of Object.entries(value)) if (flag === true && (!allowed || allowed.has(key))) out[key] = true;
     return out;
+  }
+  const CANONICAL_STORY_CHAPTERS = Object.freeze([
+    Object.freeze(Array.from({ length: 10 }, (_, i) => `act1_${i + 1}`)),
+    Object.freeze(Array.from({ length: 8 }, (_, i) => `act2_${i + 1}`)),
+    Object.freeze(Array.from({ length: 7 }, (_, i) => `act3_${i + 1}`)),
+    Object.freeze(Array.from({ length: 7 }, (_, i) => `act4_${i + 1}`)),
+  ]);
+  const STORY_RECRUITS = Object.freeze({
+    act1_3: Object.freeze(['hearthgar']),
+    act2_4: Object.freeze(['marlowe', 'brant']),
+    act2_8: Object.freeze(['milla']),
+    act4_4: Object.freeze(['brigga']),
+  });
+  function stringTrueMap(value, maxKeyLength) {
+    const out = {};
+    const limit = maxKeyLength || 192;
+    if (!value || typeof value !== 'object' || Array.isArray(value)) return out;
+    for (const [key, flag] of Object.entries(value)) {
+      if (flag === true && typeof key === 'string' && key.length > 0 && key.length <= limit) out[key] = true;
+    }
+    return out;
+  }
+  function canonicalProgressFacts(input) {
+    const raw = input && typeof input === 'object' ? input : {};
+    const supplied = raw.missionClears && typeof raw.missionClears === 'object' ? raw.missionClears : {};
+    const missionClears = {};
+    let blocked = false;
+    for (const chapter of CANONICAL_STORY_CHAPTERS) {
+      for (const missionId of chapter) {
+        if (!blocked && supplied[missionId] === true) missionClears[missionId] = true;
+        else blocked = true;
+      }
+    }
+    let storyStep = 0;
+    for (const chapter of CANONICAL_STORY_CHAPTERS) {
+      if (chapter.every(id => missionClears[id])) storyStep++;
+      else break;
+    }
+    const haleStars = raw.unitProgress && raw.unitProgress.hale && raw.unitProgress.hale.stars;
+    if (storyStep === 4 && (raw.haleAwakened === true || haleStars >= 5)) storyStep = 5;
+    const act1MissionProgress = CANONICAL_STORY_CHAPTERS[0].reduce((count, id) => count === Number(id.split('_')[1]) - 1 && missionClears[id] ? count + 1 : count, 0);
+    const requiredUnits = new Set();
+    for (const [missionId, units] of Object.entries(STORY_RECRUITS)) if (missionClears[missionId]) units.forEach(unitId => requiredUnits.add(unitId));
+    return { missionClears, act1MissionProgress, storyStep, summonUnlocked: !!missionClears.act1_9, requiredUnits: [...requiredUnits] };
   }
   function saveValidationErrors(input, partial) {
     const s = input && typeof input === 'object' && !Array.isArray(input) ? input : null;
@@ -310,6 +354,15 @@ const Engine = (function () {
       }
     }
     if (present('completedTransactions') && (!Array.isArray(s.completedTransactions) || s.completedTransactions.length > 100 || new Set(s.completedTransactions).size !== s.completedTransactions.length || s.completedTransactions.some(id => typeof id !== 'string' || !id || id.length > 128))) errors.push('completedTransactions is invalid');
+    for (const key of ['settledBattles', 'completedOperations', 'storyRecruitments']) {
+      if (!present(key)) continue;
+      const map = s[key];
+      if (!map || typeof map !== 'object' || Array.isArray(map)) {
+        errors.push(`${key} must be an object`);
+        continue;
+      }
+      for (const [id, value] of Object.entries(map)) if (value !== true || typeof id !== 'string' || !id || id.length > 192) errors.push(`${key}.${id} is invalid`);
+    }
     if (present('marketState')) {
       const m = s.marketState;
       if (!m || typeof m !== 'object' || !Number.isSafeInteger(m.tier) || m.tier < 0 || m.tier > 5 || !m.purchases || typeof m.purchases !== 'object' || Object.entries(m.purchases).some(([id, count]) => !MARKET_ITEMS[id] || !Number.isSafeInteger(count) || count < 0 || count > MARKET_ITEMS[id].limit)) errors.push('marketState is invalid');
@@ -332,13 +385,24 @@ const Engine = (function () {
     }
     if (present('sideMissionProgress')) {
       if (!s.sideMissionProgress || typeof s.sideMissionProgress !== 'object' || Array.isArray(s.sideMissionProgress)) errors.push('sideMissionProgress must be an object');
-      else for (const [id, value] of Object.entries(s.sideMissionProgress)) if (!SIDE_MISSIONS[id] || !value || typeof value !== 'object' || !Number.isSafeInteger(value.clearCount) || value.clearCount < 0 || value.clearCount > 999999 || typeof value.firstClear !== 'boolean') errors.push(`sideMissionProgress.${id} is invalid`);
+      else for (const [id, value] of Object.entries(s.sideMissionProgress)) if (!SIDE_MISSIONS[id] || !value || typeof value !== 'object' || !Number.isSafeInteger(value.clearCount) || value.clearCount < 0 || value.clearCount > 999999 || typeof value.firstClear !== 'boolean' || !Number.isSafeInteger(value.rewardTier) || value.rewardTier < 0 || value.rewardTier > 4 || !Number.isSafeInteger(value.rewardedClears) || value.rewardedClears < 0 || value.rewardedClears > SIDE_MISSIONS[id].rewardLimit) errors.push(`sideMissionProgress.${id} is invalid`);
     }
     if (present('haleAwakened') && typeof s.haleAwakened !== 'boolean') errors.push('haleAwakened must be boolean');
     if (present('lastHub') && !['home', 'story', 'party', 'summon', 'town'].includes(s.lastHub)) errors.push('lastHub is invalid');
     if (present('settings')) {
       const x = s.settings;
       if (!x || typeof x !== 'object' || ['autoSkill', 'autoArts', 'autoBurst'].some(key => (!partial || key in x) && typeof x[key] !== 'boolean') || ((!partial || 'animationSpeed' in x) && ![0.5, 0.75, 1, 1.5].includes(x.animationSpeed))) errors.push('settings is invalid');
+    }
+    if (!partial) {
+      const facts = canonicalProgressFacts(s);
+      const actualClears = Object.keys(s.missionClears || {}).sort();
+      const expectedClears = Object.keys(facts.missionClears).sort();
+      if (JSON.stringify(actualClears) !== JSON.stringify(expectedClears)) errors.push('missionClears must be a continuous canonical story prefix');
+      if (s.act1MissionProgress !== facts.act1MissionProgress) errors.push('act1MissionProgress does not match missionClears');
+      if (s.storyStep !== facts.storyStep) errors.push('storyStep does not match canonical chapter completion');
+      if (!!(s.featureUnlocks && s.featureUnlocks.summon) !== facts.summonUnlocked) errors.push('featureUnlocks.summon does not match act1_9 completion');
+      if (s.lastHub === 'summon' && !facts.summonUnlocked) errors.push('lastHub cannot point to locked Summon');
+      for (const unitId of facts.requiredUnits) if (!Array.isArray(s.owned) || !s.owned.includes(unitId)) errors.push(`owned is missing story recruit ${unitId}`);
     }
     return errors;
   }
@@ -351,9 +415,9 @@ const Engine = (function () {
     const s = input && typeof input === 'object' ? input : {};
     const unitKeys = new Set(Object.keys(UNITS));
     const libraryIds = new Set(UNIT_LIBRARY.map(x => x.id));
-    const owned = Array.isArray(s.owned) ? [...new Set(s.owned.filter(k => unitKeys.has(k)))] : ['hale', 'cinnia', 'tobin'];
+    let owned = Array.isArray(s.owned) ? [...new Set(s.owned.filter(k => unitKeys.has(k)))] : ['hale', 'cinnia', 'tobin'];
     const requestedParty = Array.isArray(s.activeParty) ? [...new Set(s.activeParty.filter(k => owned.includes(k)))].slice(0, PARTY_SIZE) : [];
-    const activeParty = requestedParty.length ? requestedParty : owned.slice(0, PARTY_SIZE);
+    let activeParty = requestedParty.length ? requestedParty : owned.slice(0, PARTY_SIZE);
     const ranks = {};
     for (const [key, value] of Object.entries(s.ranks || {})) if (unitKeys.has(key)) ranks[key] = intIn(value, 0, 5, 0);
     const unitProgress = {};
@@ -373,25 +437,32 @@ const Engine = (function () {
       challengeProgress[id] = { clearCount: intIn(raw.clearCount, 0, 999999, 0), firstClear: !!raw.firstClear, bestTimeMs: intIn(raw.bestTimeMs, 0, 86400000, 0), mastery: boolMap(raw.mastery, masteryIds) };
     }
     const completedTransactions = Array.isArray(s.completedTransactions) ? [...new Set(s.completedTransactions.filter(id => typeof id === 'string' && id && id.length <= 128))].slice(-100) : [];
+    const settledBattles = stringTrueMap(s.settledBattles);
+    const completedOperations = stringTrueMap(s.completedOperations);
+    const storyRecruitments = stringTrueMap(s.storyRecruitments);
     const marketState = { tier: intIn(s.marketState && s.marketState.tier, 0, 5, 0), purchases: {} };
     for (const [id, count] of Object.entries(s.marketState && s.marketState.purchases || {})) if (MARKET_ITEMS[id]) marketState.purchases[id] = intIn(count, 0, MARKET_ITEMS[id].limit, 0);
     const telemetry = Array.isArray(s.telemetry) ? s.telemetry.filter(x => x && typeof x === 'object' && !Array.isArray(x)).slice(-100).map(x => ({ event: String(x.event || '').slice(0, 64), challengeId: String(x.challengeId || '').slice(0, 64), bannerId: String(x.bannerId || '').slice(0, 64), itemId: String(x.itemId || '').slice(0, 64), outcome: String(x.outcome || '').slice(0, 32), elapsedMs: intIn(x.elapsedMs, 0, 86400000, 0), unitsDefeated: intIn(x.unitsDefeated, 0, 5, 0), breakCount: intIn(x.breakCount, 0, 999, 0), pulls: intIn(x.pulls, 0, 10, 0), sigilsBefore: intIn(x.sigilsBefore, 0, 999999999, 0), sigilsAfter: intIn(x.sigilsAfter, 0, 999999999, 0), goldBefore: intIn(x.goldBefore, 0, 999999999, 0), goldAfter: intIn(x.goldAfter, 0, 999999999, 0), dustBefore: intIn(x.dustBefore, 0, 999999999, 0), dustAfter: intIn(x.dustAfter, 0, 999999999, 0) })) : [];
-    const economyLedger = Array.isArray(s.economyLedger) ? s.economyLedger.filter(x => x && typeof x === 'object' && !Array.isArray(x)).slice(-100).map(x => ({ id: String(x.id || '').slice(0, 128), type: String(x.type || '').slice(0, 32), gold: intIn(x.gold, -999999999, 999999999, 0), itemId: String(x.itemId || '').slice(0, 64), quantity: intIn(x.quantity, -999999, 999999, 0) })) : [];
+    const economyLedger = Array.isArray(s.economyLedger) ? s.economyLedger.filter(x => x && typeof x === 'object' && !Array.isArray(x)).slice(-100).map(x => ({ id: String(x.id || '').slice(0, 128), type: String(x.type || '').slice(0, 32), gold: intIn(x.gold, -999999999, 999999999, 0), dust: intIn(x.dust, -999999999, 999999999, 0), sigils: intIn(x.sigils, -999999999, 999999999, 0), itemId: String(x.itemId || '').slice(0, 64), quantity: intIn(x.quantity, -999999, 999999, 0) })) : [];
     const summonState = { standard: { pullsSinceFourStar: intIn(s.summonState && s.summonState.standard && s.summonState.standard.pullsSinceFourStar, 0, 9, 0), featuredMisses: intIn(s.summonState && s.summonState.standard && s.summonState.standard.featuredMisses, 0, 1, 0) } };
     const summonHistory = Array.isArray(s.summonHistory) ? s.summonHistory.filter(x => x && UNITS[x.unitId] && BANNERS[x.bannerId]).slice(-100).map(x => ({ transactionId: String(x.transactionId || '').slice(0, 128), bannerId: x.bannerId, unitId: x.unitId, rarity: intIn(x.rarity, 3, 4, 3), newUnit: !!x.newUnit, rank: intIn(x.rank, 0, 5, 0), dust: intIn(x.dust, 0, 999999, 0) })) : [];
     const unitAI = {};
     for (const [id, value] of Object.entries(s.unitAI || {})) if (unitKeys.has(id) && value && AI_PRESETS[value.preset]) unitAI[id] = { preset: value.preset };
-    const lastHub = ['home', 'story', 'party', 'summon', 'town'].includes(s.lastHub) ? s.lastHub : 'home';
-    const storyStep = intIn(s.storyStep, 0, 5, 0);
-    const act1MissionProgress = intIn(s.act1MissionProgress, 0, 10, 0);
-    const missionClears = {};
-    const missionCaps = { 1: 10, 2: 8, 3: 7, 4: 7 };
-    for (const [id, cleared] of Object.entries(s.missionClears || {})) {
-      const match = /^act([1-9])_([1-9][0-9]?)$/.exec(id);
-      if (cleared === true && match && missionCaps[Number(match[1])] >= Number(match[2])) missionClears[id] = true;
-    }
+    const progressFacts = canonicalProgressFacts(s);
+    const missionClears = progressFacts.missionClears;
+    const act1MissionProgress = progressFacts.act1MissionProgress;
+    const storyStep = progressFacts.storyStep;
+    for (const unitId of progressFacts.requiredUnits) if (!owned.includes(unitId)) owned.push(unitId);
+    for (const unitId of owned) if (!unitProgress[unitId]) unitProgress[unitId] = { level: 1, stars: UNIT_PROGRESSION[unitId].baseStars, xp: 0 };
+    const repairedParty = activeParty.filter(id => owned.includes(id)).slice(0, PARTY_SIZE);
+    activeParty = repairedParty.length ? repairedParty : owned.slice(0, PARTY_SIZE);
+    const featureUnlocks = boolMap(s.featureUnlocks, new Set(['summon']));
+    if (progressFacts.summonUnlocked) featureUnlocks.summon = true;
+    else delete featureUnlocks.summon;
+    let lastHub = ['home', 'story', 'party', 'summon', 'town'].includes(s.lastHub) ? s.lastHub : 'home';
+    if (lastHub === 'summon' && !featureUnlocks.summon) lastHub = 'home';
     const sideMissionProgress = {};
-    for (const [id, raw] of Object.entries(s.sideMissionProgress || {})) if (SIDE_MISSIONS[id] && raw && typeof raw === 'object') sideMissionProgress[id] = { clearCount: intIn(raw.clearCount, 0, 999999, 0), firstClear: !!raw.firstClear };
+    for (const [id, raw] of Object.entries(s.sideMissionProgress || {})) if (SIDE_MISSIONS[id] && raw && typeof raw === 'object') sideMissionProgress[id] = { clearCount: intIn(raw.clearCount, 0, 999999, 0), firstClear: !!raw.firstClear, rewardTier: intIn(raw.rewardTier, 0, 4, marketRestockTier({ missionClears })), rewardedClears: intIn(raw.rewardedClears, 0, SIDE_MISSIONS[id].rewardLimit, 0) };
     let haleStars = (unitProgress.hale || {}).stars || UNIT_PROGRESSION.hale.baseStars;
     if ((s.haleAwakened === true || storyStep >= 5) && haleStars < 5) {
       unitProgress.hale = { level: (unitProgress.hale || {}).level || 1, stars: 5, xp: (unitProgress.hale || {}).xp || 0 };
@@ -400,9 +471,9 @@ const Engine = (function () {
     const libraryUnlocked = boolMap(s.libraryUnlocked, libraryIds);
     if (haleStars >= 5) libraryUnlocked['hale:5'] = true;
     return {
-      sigils: intIn(s.sigils, 0, 999999999, 0), gold: intIn(s.gold, 0, 999999999, 0), glassDust: intIn(s.glassDust, 0, 999999999, 0), ranks, owned, activeParty, unitProgress, challengeItems, challengeProgress, completedTransactions, marketState, summonState, summonHistory, telemetry, economyLedger, unitAI,
+      sigils: intIn(s.sigils, 0, 999999999, 0), gold: intIn(s.gold, 0, 999999999, 0), glassDust: intIn(s.glassDust, 0, 999999999, 0), ranks, owned, activeParty, unitProgress, challengeItems, challengeProgress, completedTransactions, settledBattles, completedOperations, storyRecruitments, marketState, summonState, summonHistory, telemetry, economyLedger, unitAI,
       evolutionUnlocks: boolMap(s.evolutionUnlocks, unitKeys),
-      featureUnlocks: boolMap(s.featureUnlocks, new Set(['summon'])),
+      featureUnlocks,
       libraryUnlocked,
       storyStep,
       act1MissionProgress,
@@ -451,6 +522,27 @@ const Engine = (function () {
       if (missionClears.act1_9) featureUnlocks.summon = true;
       save = Object.assign({}, save, { schemaVersion: 6, state: Object.assign(state, { act1MissionProgress, missionClears, owned: [...owned], libraryUnlocked, featureUnlocks }) });
     }
+    if (save.schemaVersion === 6) {
+      const state = Object.assign({}, save.state || {});
+      if (Number(state.storyStep || 0) >= 5 || state.haleAwakened === true) {
+        state.haleAwakened = true;
+        state.unitProgress = Object.assign({}, state.unitProgress || {});
+        state.unitProgress.hale = Object.assign({}, state.unitProgress.hale || {}, { stars: 5 });
+      }
+      const settledBattles = stringTrueMap(state.settledBattles);
+      const completedOperations = stringTrueMap(state.completedOperations);
+      const storyRecruitments = stringTrueMap(state.storyRecruitments);
+      for (const transactionId of state.completedTransactions || []) {
+        if (transactionId.startsWith('mission:') || transactionId.startsWith('challenge:') || transactionId.startsWith('side:')) settledBattles[transactionId] = true;
+        else if (transactionId.startsWith('market:') || transactionId.startsWith('summon:')) completedOperations[transactionId] = true;
+        else if (transactionId.startsWith('recruit:')) storyRecruitments[transactionId] = true;
+      }
+      for (const [missionId, units] of Object.entries(STORY_RECRUITS)) {
+        if (!state.missionClears || !state.missionClears[missionId]) continue;
+        for (const unitId of units) if (Array.isArray(state.owned) && state.owned.includes(unitId)) storyRecruitments[`recruit:${missionId}:${unitId}`] = true;
+      }
+      save = Object.assign({}, save, { schemaVersion: 7, state: Object.assign(state, { settledBattles, completedOperations, storyRecruitments }) });
+    }
     if (save.schemaVersion !== SAVE_SCHEMA_VERSION) throw new Error('No migration path exists for this save.');
     if (options && options.strict) validateSaveState(save.state, true);
     const migrated = {
@@ -470,7 +562,7 @@ const Engine = (function () {
     const cfg = CHALLENGES[id];
     if (!cfg) return false;
     const unlock = cfg.unlock || {};
-    if (unlock.storyStep != null && (state.storyStep || 0) < unlock.storyStep) return false;
+    if (unlock.mission && !((state.missionClears || {})[unlock.mission])) return false;
     if (unlock.challenge && !((state.challengeProgress || {})[unlock.challenge] || {}).firstClear) return false;
     return true;
   }
@@ -482,7 +574,16 @@ const Engine = (function () {
     }
     return passed;
   }
-  function marketRestockTier(state) { return Math.max(0, Math.min(5, state.storyStep || 0)); }
+  function marketRestockTier(state) {
+    const finals = ['act1_10', 'act2_8', 'act3_7', 'act4_7'];
+    let tier = 0;
+    for (const missionId of finals) { if ((state.missionClears || {})[missionId]) tier++; else break; }
+    return tier;
+  }
+  function sideMissionUnlocked(state, id) {
+    const cfg = SIDE_MISSIONS[id];
+    return !!cfg && (!cfg.unlockMission || !!((state.missionClears || {})[cfg.unlockMission]));
+  }
   function marketItemUnlocked(state, itemId) {
     const item = MARKET_ITEMS[itemId];
     if (!item) return false;
@@ -553,8 +654,8 @@ const Engine = (function () {
     ch6: { title: 'The Lowing Man', enemies: ['lowingman'], sigils: 150, rewards: { first: { gold: 1000, xp: 600 }, repeat: { gold: 600, xp: 380 } }, boss: true },
   };
   const SIDE_MISSIONS = Object.freeze({
-    missing_caravan: Object.freeze({ id: 'missing_caravan', title: 'Missing Caravan', battle: 'side_caravan', description: 'Track a lost supply wagon beyond the east road.' }),
-    cook_errand: Object.freeze({ id: 'cook_errand', title: "A Cook's Errand", battle: 'side_cook', description: 'Clear the pantry route before tonight’s guild supper.' }),
+    missing_caravan: Object.freeze({ id: 'missing_caravan', title: 'Missing Caravan', battle: 'side_caravan', description: 'Track a lost supply wagon beyond the east road.', unlockMission: 'act1_5', rewardLimit: 5, scene: 'sc-road' }),
+    cook_errand: Object.freeze({ id: 'cook_errand', title: "A Cook's Errand", battle: 'side_cook', description: 'Clear the pantry route before tonight’s guild supper.', unlockMission: 'act1_5', rewardLimit: 5, scene: 'sc-hall' }),
   });
 
   /* ------------------------------------------------------------------ *
@@ -1670,7 +1771,7 @@ const Engine = (function () {
     UNITS, ENEMIES, BATTLES, SIDE_MISSIONS, HALE_AWAKENED, ELEM_ICON, UNIT_PROGRESSION, LEVEL_CAPS, xpToNext, grantUnitXP, combatProfile, applyStoryEvolutions, UNIT_LIBRARY, recordOwnedDiscoveries,
     LIVE_GESTURE_THRESHOLDS, liveGestureTier, PARTY_SIZE,
     SAVE_SCHEMA_VERSION, normalizeSaveState, validateSaveState, migrateSaveEnvelope,
-    CHALLENGES, CHALLENGE_ITEMS, challengeUnlocked, evaluateChallengeMastery,
+    CHALLENGES, CHALLENGE_ITEMS, challengeUnlocked, evaluateChallengeMastery, sideMissionUnlocked,
     MARKET_ITEMS, marketRestockTier, marketItemUnlocked, BANNERS, bannerPool,
     COMBAT_EVENT_TYPES, combatEventHash,
     // Internal hooks exposed for the self-test suite only.

@@ -421,22 +421,22 @@ function runHollowingSelfTests(E, print) {
   /* --- 31. Versioned single-save validation and migration --- */
   {
     const clean = E.normalizeSaveState({ sigils: -20, gold: -50, storyStep: 99, owned: ['hale', 'fake', 'hale'], ranks: { hale: 20 }, unitProgress: { hale: { level: 999, stars: 4, xp: 9999 } }, libraryUnlocked: { 'hale:base': true, 'fake:base': true }, lastHub: 'void' });
-    ok(clean.sigils === 0 && clean.gold === 0 && clean.storyStep === 5, 'save validation clamps currencies and story progress');
+    ok(clean.sigils === 0 && clean.gold === 0 && clean.storyStep === 0, 'save validation clamps currencies and derives canonical story progress');
     ok(clean.owned.length === 1 && clean.owned[0] === 'hale' && clean.ranks.hale === 5, 'save validation removes unknown and duplicate units and clamps ranks');
-    ok(clean.unitProgress.hale.level === 70 && clean.unitProgress.hale.stars === 5 && clean.unitProgress.hale.xp === 0, 'save validation repairs completed-story Hale to 5 stars without inflating the saved level');
+    ok(clean.unitProgress.hale.level === 70 && clean.unitProgress.hale.stars === 4 && clean.unitProgress.hale.xp === 0, 'save validation repairs contradictory current-schema Hale progression without inflating the saved level');
     ok(clean.libraryUnlocked['hale:base'] && !clean.libraryUnlocked['fake:base'] && clean.lastHub === 'home', 'save validation filters discoveries and navigation state');
     const formation = E.normalizeSaveState({ owned: ['hale', 'cinnia', 'katie'], activeParty: ['katie', 'fake', 'hale', 'katie'] });
     ok(JSON.stringify(formation.activeParty) === JSON.stringify(['katie', 'hale']), 'active party persists ordered, unique, owned units only');
     const cappedFormation = E.normalizeSaveState({ owned: ['hale', 'cinnia', 'tobin', 'katie', 'marlowe'], activeParty: ['hale', 'cinnia', 'tobin', 'katie', 'marlowe'] });
     ok(cappedFormation.activeParty.length === E.PARTY_SIZE && !cappedFormation.activeParty.includes('marlowe'), 'active party is normalized to the four-unit deployment cap');
     ok(JSON.stringify(E.normalizeSaveState({ owned: ['hale', 'cinnia'] }).activeParty) === JSON.stringify(['hale', 'cinnia']), 'older saves derive a safe active party from owned units');
-    ok(E.normalizeSaveState({ act1MissionProgress: 99 }).act1MissionProgress === 10 && E.normalizeSaveState({}).act1MissionProgress === 0, 'expanded Act 1 mission progress persists with safe bounds');
+    ok(E.normalizeSaveState({ missionClears: Object.fromEntries(Array.from({ length: 10 }, (_, i) => [`act1_${i + 1}`, true])) }).act1MissionProgress === 10 && E.normalizeSaveState({}).act1MissionProgress === 0, 'canonical Act 1 mission progress derives from continuous clears');
     const exactMissionClears = E.normalizeSaveState({ storyStep: 2, act1MissionProgress: 3, missionClears: { act2_1: true } }).missionClears;
-    ok(JSON.stringify(exactMissionClears) === JSON.stringify({ act2_1: true }), 'current-schema normalization preserves the exact mission clear set');
+    ok(JSON.stringify(exactMissionClears) === JSON.stringify({}), 'current-schema normalization repairs non-canonical mission claims');
     const legacyMissionClears = E.migrateSaveEnvelope({ schemaVersion: 5, state: { act1MissionProgress: 3 } }).state.missionClears;
     ok(legacyMissionClears.act1_1 && legacyMissionClears.act1_2 && legacyMissionClears.act1_3 && !legacyMissionClears.act1_4, 'legacy Act 1 progress migrates into durable per-mission clear flags');
     const filteredMissionClears = E.normalizeSaveState({ missionClears: { act1_5: true, act4_7: true, act0_1: true, act1_0: true, act1_99: true, act2_2: false, nonsense: true } }).missionClears;
-    ok(filteredMissionClears.act1_5 && filteredMissionClears.act4_7 && Object.keys(filteredMissionClears).length === 2, 'mission clear migration retains only valid true story-mission identifiers');
+    ok(Object.keys(filteredMissionClears).length === 0, 'mission clear normalization retains only the continuous canonical prefix');
     const legacyChapters = E.migrateSaveEnvelope({ schemaVersion: 5, state: { storyStep: 3 } }).state.missionClears;
     ok(legacyChapters.act1_10 && legacyChapters.act2_8 && legacyChapters.act3_7 && !legacyChapters.act4_1, 'legacy chapter-spine progress unlocks the equivalent expanded mission chapters without skipping Greywick');
     const legacyRoster = E.migrateSaveEnvelope({ schemaVersion: 5, state: { storyStep: 2, owned: ['hale', 'cinnia', 'tobin'] } }).state;
@@ -451,7 +451,7 @@ function runHollowingSelfTests(E, print) {
     ok(E.normalizeSaveState({ settings: { animationSpeed: 0.75 } }).settings.animationSpeed === 0.75 && E.normalizeSaveState({ settings: { animationSpeed: 9 } }).settings.animationSpeed === 1, 'animation speed persists only supported playback rates');
     const legacyHale = E.normalizeSaveState({ haleAwakened: true });
     ok(legacyHale.unitProgress.hale.stars === 5 && legacyHale.libraryUnlocked['hale:5'], 'legacy Hale awakening flags migrate into the 5-star form and library progress');
-    const completedStoryHale = E.normalizeSaveState({ storyStep: 5, owned: ['hale'] });
+    const completedStoryHale = E.normalizeSaveState({ haleAwakened: true, owned: ['hale'] });
     ok(completedStoryHale.haleAwakened && completedStoryHale.unitProgress.hale.stars === 5 && completedStoryHale.libraryUnlocked['hale:5'], 'completed Chapter Six saves repair missing Hale transformation state');
     let rejected = false;
     try { E.migrateSaveEnvelope({ schemaVersion: 999, state: {} }); } catch (err) { rejected = /newer version/.test(err.message); }

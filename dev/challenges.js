@@ -12,7 +12,7 @@ const ChallengeData = (function () {
     ember_trial: {
       id: 'ember_trial', name: 'Ember Trial', encounterId: 'challenge_ember',
       description: 'Break an ember-fed construct before it overwhelms the line.',
-      unlock: { storyStep: 1 },
+      unlock: { mission: 'act1_10' },
       firstClear: { gold: 250, items: { ember_challenge_crest: 1, challenge_essence: 4 } },
       repeatClear: { gold: 250, items: { challenge_essence: 4 } },
       mastery: [{ id: 'no_defeats', name: 'Unscorched', evaluator: 'no_defeats', reward: { challenge_essence: 2 } }],

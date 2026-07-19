@@ -73,6 +73,9 @@ const STORY_MISSION_DETAILS = {
 for (const chapter of STORY_REGISTRY.chapters) {
   for (const mission of chapter.missions) Object.assign(mission, STORY_MISSION_DETAILS[mission.id] || {});
 }
+for (const chapter of STORY_REGISTRY.chapters) {
+  for (const mission of chapter.missions) if (!mission.partyMode) mission.partyMode = mission.party && mission.party.length ? 'fixed' : 'player';
+}
 
 // Mobile-paced adaptation of Claude's Chapter 1 draft. Each scene keeps one
 // tutorial purpose while preserving the warm guild introductions the later

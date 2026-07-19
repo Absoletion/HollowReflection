@@ -246,6 +246,23 @@ const Stage = (() => {
   function dmgNum(x, y, txt, color, big) {
     if (parts.length < 200) parts.push({ x, y, vx: 0, vy: -0.045, life: 800, max: 800, color, txt, big });
   }
+  const STATUS_LABELS = {
+    atkDown: 'ATK DOWN', atkUp: 'ATK UP', defDown: 'DEF DOWN', defUp: 'DEF UP',
+    vuln: 'VULNERABLE', darkResDown: 'DARK RES DOWN', guard: 'GUARDED',
+    barrier: 'BARRIER', radiation: 'RADIATION', break: 'BREAK'
+  };
+  function statusPop(b, type, payload) {
+    if (!b) return;
+    const key = payload && payload.status;
+    const label = STATUS_LABELS[key] || String(key || 'STATUS').replace(/([a-z])([A-Z])/g, '$1 $2').toUpperCase();
+    const applied = type === 'status_apply';
+    const duration = applied && payload && Number(payload.duration) > 0 ? ` · ${Math.ceil(Number(payload.duration) / 1000)}s` : '';
+    if (parts.length < 200) parts.push({
+      x: b.home.x + b.off.x, y: b.home.y - 78, vx: 0, vy: -0.018,
+      life: 920, max: 920, color: applied ? '#9adfd4' : '#aeb8c7',
+      txt: `${applied ? '+' : '×'} ${label}${duration}`, status: true
+    });
+  }
   function tickParts(dt) {
     for (let i = parts.length - 1; i >= 0; i--) {
       const p = parts[i];
@@ -363,6 +380,9 @@ const Stage = (() => {
       }
       else if (e.t === 'log' && /STAMPEDE/i.test(e.msg || '')) stampede = true;
       else if (e.t === 'log' && /staggered|STAGGER/i.test(e.msg || '')) stagger = true;
+      else if (e.t === 'status_apply' || e.t === 'status_remove') {
+        for (const uid of e.targetIds || []) statusPop(bOf(uid), e.t, e.payload || {});
+      }
     }
     S.enemies.forEach(en => { const p = pre[en.uid]; if (p && p.form && en.form !== p.form) formSwap = true; });
     if (stampede) { shakeT = Math.max(shakeT, 650); flash('#c0392b33', 420); }
@@ -638,10 +658,21 @@ const Stage = (() => {
       const k = p.life / p.max;
       if (p.txt) {
         ctx.globalAlpha = Math.min(1, k * 1.6);
-        ctx.fillStyle = p.color;
-        ctx.font = (p.big ? 'bold 15px' : 'bold 11px') + ' monospace';
+        ctx.font = (p.status ? 'bold 8px' : (p.big ? 'bold 15px' : 'bold 11px')) + ' monospace';
         ctx.textAlign = 'center';
-        ctx.fillText(p.txt, p.x, p.y);
+        if (p.status) {
+          const width = Math.max(42, ctx.measureText(p.txt).width + 10);
+          ctx.fillStyle = '#091319dd';
+          ctx.strokeStyle = p.color;
+          ctx.lineWidth = 1;
+          if (ctx.roundRect) { ctx.beginPath(); ctx.roundRect(p.x - width / 2, p.y - 10, width, 14, 4); ctx.fill(); ctx.stroke(); }
+          else { ctx.fillRect(p.x - width / 2, p.y - 10, width, 14); ctx.strokeRect(p.x - width / 2, p.y - 10, width, 14); }
+          ctx.fillStyle = p.color;
+          ctx.fillText(p.txt, p.x, p.y);
+        } else {
+          ctx.fillStyle = p.color;
+          ctx.fillText(p.txt, p.x, p.y);
+        }
         ctx.globalAlpha = 1;
       } else {
         ctx.globalAlpha = k;

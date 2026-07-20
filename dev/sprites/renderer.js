@@ -1,130 +1,127 @@
 'use strict';
-// renderer.js — tiny canvas renderer for the Hollowing sprite library.
-// Expects a global SPRITES map: { key: { w, h, pal, anims, anchor:'feet' } }.
-// drawSprite(ctx, key, anim, frameIdx, x, y, scale, flipX)
-//   (x, y) is the FEET anchor: horizontal center, bottom of the sprite.
-// animFrame(key, anim, tMs, fps=6) -> frame index for a time in ms.
+// Format-neutral sprite runtime. Current production data is frame-image-v1;
+// atlas-v2 uses the same API and can be introduced without touching Stage/UI.
 
-const SPRITE_IMAGE_CACHE = Object.create(null);
+const SPRITE_IMAGE_CACHE = new Map();
+const IMAGE_CACHE_LIMIT = 1024;
+let accessSequence = 0;
 
-function imageFrame(src) {
-  if (!src || typeof src !== 'string' || typeof Image === 'undefined') return null;
-  let im = SPRITE_IMAGE_CACHE[src];
-  if (!im) {
-    im = new Image();
-    im.decoding = 'async';
-    im.src = src;
-    SPRITE_IMAGE_CACHE[src] = im;
-  }
-  return im;
+function spriteFor(key) { return typeof SPRITES !== 'undefined' ? SPRITES[key] : null; }
+function inferLegacyFormat(sprite) {
+  if (!sprite) return null;
+  if (sprite.format) return sprite.format;
+  return sprite.imageFrames ? 'frame-image-v1' : 'legacy-grid-v0';
 }
-
-function drawImageFrame(ctx, s, fr, x, y, scale, flipX, rootX) {
-  const im = imageFrame(fr);
-  if (!im || !im.complete || !im.naturalWidth) return false;
-  const anchor = s.anchor && typeof s.anchor === 'object' ? s.anchor : { x: s.w / 2, y: s.h };
-  const authoredScale = Number.isFinite(s.renderScale) ? s.renderScale : 1;
-  const finalScale = scale * authoredScale;
+function frameList(sprite, animation) {
+  const def = sprite && sprite.anims && (sprite.anims[animation] || sprite.anims.idle);
+  return Array.isArray(def) ? def : def && Array.isArray(def.frames) ? def.frames : [];
+}
+function cacheImage(src) {
+  if (!src || typeof src !== 'string' || typeof Image === 'undefined') return null;
+  let entry = SPRITE_IMAGE_CACHE.get(src);
+  if (!entry) {
+    const image = new Image(); image.decoding = 'async'; image.src = src;
+    entry = { image, lastAccess: ++accessSequence };
+    SPRITE_IMAGE_CACHE.set(src, entry);
+  } else entry.lastAccess = ++accessSequence;
+  if (SPRITE_IMAGE_CACHE.size > IMAGE_CACHE_LIMIT) {
+    const oldest = [...SPRITE_IMAGE_CACHE.entries()].sort((a, b) => a[1].lastAccess - b[1].lastAccess)[0];
+    if (oldest) SPRITE_IMAGE_CACHE.delete(oldest[0]);
+  }
+  return entry.image;
+}
+function imageStatus(image) {
+  if (!image) return 'missing';
+  if (!image.complete) return 'loading';
+  return image.naturalWidth ? 'ready' : 'error';
+}
+function drawImageFrame(ctx, sprite, src, x, y, scale, flipX, rootX) {
+  const image = cacheImage(src), status = imageStatus(image);
+  if (status !== 'ready') return { drawn: false, status };
+  const anchor = sprite.anchor && typeof sprite.anchor === 'object' ? sprite.anchor : { x: sprite.w / 2, y: sprite.h };
+  const finalScale = scale * (Number.isFinite(sprite.renderScale) ? sprite.renderScale : 1);
   const ox = x - anchor.x * finalScale + (flipX ? -rootX : rootX) * finalScale;
   const oy = y - anchor.y * finalScale;
-  ctx.save();
-  ctx.translate(flipX ? ox + s.w * finalScale : ox, oy);
-  ctx.scale(flipX ? -1 : 1, 1);
-  ctx.drawImage(im, 0, 0, s.w * finalScale, s.h * finalScale);
+  ctx.save(); ctx.translate(flipX ? ox + sprite.w * finalScale : ox, oy); ctx.scale(flipX ? -1 : 1, 1);
+  ctx.drawImage(image, 0, 0, sprite.w * finalScale, sprite.h * finalScale); ctx.restore();
+  return { drawn: true, status: 'ready' };
+}
+function drawAtlasFrame(ctx, sprite, frame, x, y, scale, flipX, rootX) {
+  const ref = typeof frame === 'string' ? sprite.frames && sprite.frames[frame] : frame;
+  const page = ref && sprite.pages && sprite.pages[ref.page];
+  if (!ref || !page) return { drawn: false, status: 'missing' };
+  const image = cacheImage(page.src), status = imageStatus(image);
+  if (status !== 'ready') return { drawn: false, status };
+  const s = scale * (Number.isFinite(sprite.renderScale) ? sprite.renderScale : 1), dir = flipX ? -1 : 1;
+  const pivot = ref.pivot || { x: ref.source.w / 2, y: ref.source.h };
+  ctx.save(); ctx.imageSmoothingEnabled = false; ctx.translate(x + dir * (rootX || 0) * s, y); ctx.scale(dir, 1);
+  ctx.drawImage(image, ref.source.x, ref.source.y, ref.source.w, ref.source.h, -pivot.x * s, -pivot.y * s, ref.source.w * s, ref.source.h * s); ctx.restore();
+  return { drawn: true, status: 'ready' };
+}
+function drawLegacyGridFrame(ctx, sprite, frame, x, y, scale, flipX, rootX) {
+  if (!Array.isArray(frame)) return { drawn: false, status: 'missing' };
+  const anchor = sprite.anchor && typeof sprite.anchor === 'object' ? sprite.anchor : { x: sprite.w / 2, y: sprite.h };
+  const ox = x - anchor.x * scale + (flipX ? -rootX : rootX) * scale, oy = y - anchor.y * scale;
+  for (let ry = 0; ry < sprite.h; ry++) {
+    const row = frame[ry] || '';
+    let runStart = -1, runCh = '.';
+    for (let rx = 0; rx <= sprite.w; rx++) {
+      const ch = rx < sprite.w ? row[rx] : '.';
+      if (ch === runCh) continue;
+      if (runCh !== '.') { const width = rx - runStart; const dx = flipX ? sprite.w - rx : runStart; ctx.fillStyle = sprite.pal[runCh]; ctx.fillRect(ox + dx * scale, oy + ry * scale, width * scale, scale); }
+      runCh = ch; runStart = rx;
+    }
+  }
+  return { drawn: true, status: 'ready' };
+}
+function drawSprite(ctx, key, animation, frameIndex, x, y, scale, flipX) {
+  const sprite = spriteFor(key), format = inferLegacyFormat(sprite);
+  if (!sprite) return { drawn: false, status: 'missing' };
+  const frames = frameList(sprite, animation);
+  if (!frames.length) return { drawn: false, status: 'missing' };
+  const index = ((frameIndex % frames.length) + frames.length) % frames.length;
+  const frame = frames[index], offsets = sprite.rootOffsets && sprite.rootOffsets[animation];
+  const rootX = offsets && Number(offsets[index]) || 0;
+  ctx.save(); ctx.imageSmoothingEnabled = false;
+  let result;
+  if (format === 'atlas-v2') result = drawAtlasFrame(ctx, sprite, frame, x, y, scale, flipX, rootX);
+  else if (format === 'frame-image-v1') result = drawImageFrame(ctx, sprite, frame, x, y, scale, flipX, rootX);
+  else if (format === 'legacy-grid-v0') result = drawLegacyGridFrame(ctx, sprite, frame, x, y, scale, flipX, rootX);
+  else result = { drawn: false, status: 'missing' };
   ctx.restore();
-  return true;
+  return result;
 }
-
-function preloadSpriteFrames(key) {
-  const s = (typeof SPRITES !== 'undefined') ? SPRITES[key] : null;
-  if (!s || !s.imageFrames) return [];
-  const images = [];
-  Object.keys(s.anims || {}).forEach(function (anim) {
-    const def = s.anims[anim];
-    const frames = Array.isArray(def) ? def : def && def.frames;
-    (frames || []).forEach(function (fr) { const im = imageFrame(fr); if (im) images.push(im); });
-  });
-  return images;
-}
-
-function drawSprite(ctx, key, anim, frameIdx, x, y, scale, flipX) {
-  const s = (typeof SPRITES !== 'undefined') ? SPRITES[key] : null;
-  if (!s) return;
-  const def = s.anims[anim] || s.anims.idle;
-  const frames = Array.isArray(def) ? def : def.frames;
-  if (!frames || !frames.length) return;
-  const n = frames.length;
-  const fr = frames[((frameIdx % n) + n) % n];
-  ctx.imageSmoothingEnabled = false; // nearest-neighbor, always
-  const anchor = s.anchor && typeof s.anchor === 'object' ? s.anchor : { x: s.w / 2, y: s.h };
-  const offsets = s.rootOffsets && s.rootOffsets[anim];
-  const rootX = offsets && Number(offsets[((frameIdx % n) + n) % n]) || 0;
-  if (s.imageFrames || typeof fr === 'string') {
-    return drawImageFrame(ctx, s, fr, x, y, scale, flipX, rootX);
-  }
-  const ox = x - anchor.x * scale + (flipX ? -rootX : rootX) * scale;
-  const oy = y - anchor.y * scale;
-  for (let ry = 0; ry < s.h; ry++) {
-    const row = fr[ry];
-    let runStart = -1, runCh = '.';
-    for (let rx = 0; rx <= s.w; rx++) {
-      const ch = rx < s.w ? row[rx] : '.';
-      if (ch === runCh) continue;
-      if (runCh !== '.') { // flush run [runStart, rx)
-        ctx.fillStyle = s.pal[runCh];
-        const w = rx - runStart;
-        const dx = flipX ? (s.w - rx) : runStart;
-        ctx.fillRect(ox + dx * scale, oy + ry * scale, w * scale, scale);
-      }
-      runCh = ch; runStart = rx;
-    }
-  }
-}
-
-function drawSpriteEffect(ctx, key, effect, frameIdx, x, y, scale, flipX) {
-  const s = (typeof SPRITES !== 'undefined') ? SPRITES[key] : null;
-  const e = s && s.effects && s.effects[effect];
-  const frames = e && e.frames;
-  if (!frames || !frames.length) return;
-  const fr = frames[((frameIdx % frames.length) + frames.length) % frames.length];
-  const anchor = e.anchor || { x: e.w / 2, y: e.h / 2 };
+function drawSpriteEffect(ctx, key, effect, frameIndex, x, y, scale, flipX) {
+  const sprite = spriteFor(key), registry = typeof SPRITE_EFFECTS !== 'undefined' ? SPRITE_EFFECTS[key] : sprite;
+  const e = registry && registry.effects && registry.effects[effect], frames = e && e.frames;
+  if (!e || !frames || !frames.length) return { drawn: false, status: 'missing' };
+  const frame = frames[((frameIndex % frames.length) + frames.length) % frames.length], anchor = e.anchor || { x: e.w / 2, y: e.h / 2 };
   const ox = x - anchor.x * scale, oy = y - anchor.y * scale;
-  ctx.imageSmoothingEnabled = false;
+  ctx.save(); ctx.imageSmoothingEnabled = false;
   for (let ry = 0; ry < e.h; ry++) {
-    const row = fr[ry];
-    let runStart = -1, runCh = '.';
-    for (let rx = 0; rx <= e.w; rx++) {
-      const ch = rx < e.w ? row[rx] : '.';
-      if (ch === runCh) continue;
-      if (runCh !== '.') {
-        ctx.fillStyle = s.pal[runCh];
-        const width = rx - runStart;
-        const dx = flipX ? (e.w - rx) : runStart;
-        ctx.fillRect(ox + dx * scale, oy + ry * scale, width * scale, scale);
-      }
-      runCh = ch; runStart = rx;
-    }
+    const row = frame[ry] || ''; let start = -1, ch0 = '.';
+    for (let rx = 0; rx <= e.w; rx++) { const ch = rx < e.w ? row[rx] : '.'; if (ch === ch0) continue; if (ch0 !== '.') { const width = rx - start; const dx = flipX ? e.w - rx : start; ctx.fillStyle = registry.pal[ch0]; ctx.fillRect(ox + dx * scale, oy + ry * scale, width * scale, scale); } ch0 = ch; start = rx; }
   }
+  ctx.restore(); return { drawn: true, status: 'ready' };
 }
-
-const SPRITE_FPS_CAPS = { idle:6, move:8, skill:12, attack:12, arts:12, burst:12, cast:10, hit:10, stagger:10, victory:8, defeat:8 };
-function spritePlaybackFps(key, anim, requested) {
-  const s = (typeof SPRITES !== 'undefined') ? SPRITES[key] : null;
-  const meta = s && s.meta && (s.meta[anim] || s.meta.idle);
-  const authored = requested == null ? (s && s.playbackFps && s.playbackFps[anim] || meta && meta.fps || 6) : requested;
-  return Math.max(1, Math.min(authored, SPRITE_FPS_CAPS[anim] || 12));
+const SPRITE_FPS_CAPS = { idle: 6, move: 8, skill: 12, attack: 12, arts: 12, burst: 12, cast: 10, hit: 10, stagger: 10, victory: 8, defeat: 8 };
+function spritePlaybackFps(key, animation, requested) { const s = spriteFor(key), meta = s && s.meta && (s.meta[animation] || s.meta.idle); const authored = requested == null ? (s && s.playbackFps && s.playbackFps[animation] || meta && (meta.playbackFps || meta.fps) || 6) : requested; return Math.max(1, Math.min(authored, SPRITE_FPS_CAPS[animation] || 12)); }
+function animFrame(key, animation, tMs, fps) { const s = spriteFor(key), frames = frameList(s, animation), meta = s && s.meta && (s.meta[animation] || s.meta.idle), n = frames.length || 1; fps = spritePlaybackFps(key, animation, fps); const raw = Math.floor(tMs / (1000 / fps)); return meta && meta.loop === false ? Math.min(n - 1, raw) : raw % n; }
+function animationNames(key) { const s = spriteFor(key); return Object.keys(s && s.anims || {}); }
+function hasAnimation(key, animation) { return frameList(spriteFor(key), animation).length > 0; }
+function animationFrameCount(key, animation) { return frameList(spriteFor(key), animation).length; }
+function animationDurationMs(key, animation) { const n = animationFrameCount(key, animation); return n ? Math.ceil(n / spritePlaybackFps(key, animation) * 1000) : 0; }
+function animationFramesEqual(key, left, right) { const a = frameList(spriteFor(key), left), b = frameList(spriteFor(key), right); return a.length === b.length && a.every((frame, i) => frame === b[i]); }
+function getMetrics(key) { const s = spriteFor(key) || {}; const scale = Number.isFinite(s.renderScale) ? s.renderScale : 1; return { w: (s.w || 1) * scale, h: (s.sourceVisibleHeightPx || s.h || 1) * scale }; }
+function getStatus(key) { return spriteFor(key) ? 'ready' : 'missing'; }
+function preloadSpriteFrames(key, animations) { const s = spriteFor(key), names = animations || animationNames(key), sources = []; for (const name of names) for (const frame of frameList(s, name)) { if (typeof frame === 'string') sources.push(frame); else if (s && s.pages && s.frames && s.frames[frame] && s.pages[s.frames[frame].page]) sources.push(s.pages[s.frames[frame].page].src); } return [...new Set(sources)].map(cacheImage).filter(Boolean); }
+async function ensureLoaded(key, options) {
+  const images = preloadSpriteFrames(key, options && options.animations), timeout = options && options.timeoutMs || 8000;
+  const errors = [];
+  await Promise.all(images.map(image => new Promise(resolve => { const done = () => resolve(); if (imageStatus(image) === 'ready') return done(); const timer = setTimeout(() => { errors.push('sprite load timeout'); done(); }, timeout); image.onload = () => { clearTimeout(timer); done(); }; image.onerror = () => { clearTimeout(timer); errors.push('sprite load failed'); done(); }; }))); return errors;
 }
-function animFrame(key, anim, tMs, fps) {
-  const s = (typeof SPRITES !== 'undefined') ? SPRITES[key] : null;
-  const def = s && (s.anims[anim] || s.anims.idle);
-  const frames = Array.isArray(def) ? def : def && def.frames;
-  const meta = s && s.meta && (s.meta[anim] || s.meta.idle);
-  fps = spritePlaybackFps(key, anim, fps);
-  const n = (frames && frames.length) || 1;
-  const raw = Math.floor(tMs / (1000 / fps));
-  return meta && meta.loop === false ? Math.min(n - 1, raw) : raw % n;
-}
-
-if (typeof module !== 'undefined' && module.exports) {
-  module.exports = { drawSprite, drawSpriteEffect, animFrame, spritePlaybackFps, preloadSpriteFrames, _imageCache: SPRITE_IMAGE_CACHE };
-}
+async function ensureBattleReady(keys, options) { const errors = []; for (const key of [...new Set(keys)]) { if (!spriteFor(key)) continue; errors.push(...(await ensureLoaded(key, options)).map(error => `${key}: ${error}`)); } return { errors }; }
+function release() { SPRITE_IMAGE_CACHE.clear(); }
+const SpriteRuntime = Object.freeze({ draw: drawSprite, drawEffect: drawSpriteEffect, animFrame, spritePlaybackFps, preloadSpriteFrames, ensureLoaded, ensureBattleReady, release, animationNames, hasAnimation, animationFrameCount, animationDurationMs, animationFramesEqual, getMetrics, getStatus, inferLegacyFormat });
+if (typeof globalThis !== 'undefined') globalThis.SpriteRuntime = SpriteRuntime;
+if (typeof module !== 'undefined' && module.exports) module.exports = { drawSprite, drawSpriteEffect, animFrame, spritePlaybackFps, preloadSpriteFrames, ensureLoaded, ensureBattleReady, SpriteRuntime, inferLegacyFormat, _imageCache: SPRITE_IMAGE_CACHE };

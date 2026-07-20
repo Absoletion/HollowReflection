@@ -193,22 +193,20 @@ const Stage = (() => {
   function bOf(uid) { return battlers.find(b => b.uid === uid); }
   function actionSpriteAnim(b, act) {
     const u = b && unitOf(b), key = u && (b.side === 'party' ? pkey(u) : ekey(u));
-    const anims = key && typeof SPRITES !== 'undefined' && SPRITES[key] && SPRITES[key].anims;
-    if (!anims) return act && (act.tier === 'Art' || act.tier === 'Burst') ? 'cast' : 'attack';
+    const anims = key && typeof SpriteRuntime !== 'undefined' ? SpriteRuntime.animationNames(key) : [];
+    if (!anims.length) return act && (act.tier === 'Art' || act.tier === 'Burst') ? 'cast' : 'attack';
     const desired = act && act.tier === 'Burst' ? ['burst','cast','attack'] : act && act.tier === 'Art' ? ['arts','cast','attack'] : act && act.tier === 'Skill' ? ['skill','attack','cast'] : ['attack','skill'];
-    return desired.find(name => anims[name]) || 'idle';
+    return desired.find(name => anims.includes(name)) || 'idle';
   }
   function spriteAnimDuration(b, anim, fallback) {
     const u = b && unitOf(b), key = u && (b.side === 'party' ? pkey(u) : ekey(u));
-    const s = key && typeof SPRITES !== 'undefined' && SPRITES[key], def = s && s.anims && s.anims[anim];
-    const frames = Array.isArray(def) ? def : def && def.frames;
-    if (!frames || typeof spritePlaybackFps !== 'function') return fallback;
-    return Math.max(fallback, Math.ceil(frames.length / spritePlaybackFps(key, anim) * 1000));
+    if (typeof SpriteRuntime === 'undefined' || !SpriteRuntime.hasAnimation(key, anim)) return fallback;
+    return Math.max(fallback, SpriteRuntime.animationDurationMs(key, anim));
   }
   const MELEE_ACTIONS = new Set(['basic','cross_slash','fracture_edge','coup','curtain_call','anchor_drop','keelhaul','kegcracker','blast_mining','grand_opening','diagnostic_crush','contrast_study']);
   function moveAnim(b) {
     const u = b && unitOf(b), key = u && (b.side === 'party' ? pkey(u) : ekey(u));
-    return typeof SPRITES !== 'undefined' && SPRITES[key] && SPRITES[key].anims.move ? 'move' : 'idle';
+    return typeof SpriteRuntime !== 'undefined' && SpriteRuntime.hasAnimation(key, 'move') ? 'move' : 'idle';
   }
   function easeMove(p) { return p * p * (3 - 2 * p); }
 
@@ -514,8 +512,7 @@ const Stage = (() => {
       const u = unitOf(b); if (!u) continue;
       const key = b.side === 'party' ? pkey(u) : ekey(u);
       const dead = !u.alive;
-      const battleSprite = typeof SPRITES !== 'undefined' ? SPRITES[key] : null;
-      const anim = dead ? (battleSprite && battleSprite.anims && battleSprite.anims.defeat ? 'defeat' : 'hit') : b.anim;
+      const anim = dead ? (typeof SpriteRuntime !== 'undefined' && SpriteRuntime.hasAnimation(key, 'defeat') ? 'defeat' : 'hit') : b.anim;
       const x = b.home.x + b.off.x, y = b.home.y + b.off.y + (dead ? 5 : 0);
       const tSince = clock - (b.animT || 0);
       if (dead) {
@@ -537,7 +534,7 @@ const Stage = (() => {
         else if (anim === 'cast') { breathe = 1 + 0.02 * Math.sin(clock / 120); }
       }
       // Canonical pixel combat sprites take priority. Painted rigs remain migration fallbacks and high-detail source art.
-      const px = (typeof SPRITES !== 'undefined') && SPRITES[key] && SPRITES[key].anims && SPRITES[key].anims.idle;
+      const px = typeof SpriteRuntime !== 'undefined' && SpriteRuntime.hasAnimation(key, 'idle');
       const rig = !px && rigFor(key);
       const im = artFor(key);
       ctx.save();
@@ -560,7 +557,13 @@ const Stage = (() => {
       } else if (px) {
         const frameIdx = (typeof animFrame === 'function') ? animFrame(key, anim, clock - (b.animT || 0)) : 0;
         const pixelScale = b.side === 'enemy' ? (key.indexOf('lowingman') === 0 ? 1.45 : 1.25) : 1;
-        drawSprite(ctx, key, anim, frameIdx, 0, 0, pixelScale, b.side === 'enemy'); // source sheets face left; enemies are mirrored right toward the party.
+        const spriteResult = SpriteRuntime.draw(ctx, key, anim, frameIdx, 0, 0, pixelScale, b.side === 'enemy'); // source sheets face left; enemies are mirrored right toward the party.
+        if (!spriteResult.drawn) {
+          const hex = ELEM_HEX[u.awakened ? 'hollow' : u.elem] || '#9adfd4';
+          ctx.fillStyle = '#0d1318ee'; ctx.strokeStyle = hex; ctx.lineWidth = 1.5;
+          ctx.beginPath(); if (ctx.roundRect) ctx.roundRect(-20, -84, 40, 84, 7); else ctx.rect(-20, -84, 40, 84); ctx.fill(); ctx.stroke();
+          ctx.fillStyle = hex; ctx.font = 'bold 24px serif'; ctx.textAlign = 'center'; ctx.fillText(NAME_INITIAL(key), 0, -45);
+        }
       } else if (im) {
         const w2 = targetH * (im.naturalWidth / im.naturalHeight);
         ctx.drawImage(im, -w2 / 2, -targetH, w2, targetH);

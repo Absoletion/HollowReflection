@@ -29,7 +29,6 @@ const rigPartSrc = embedDir('rigparts', 'RIGPARTS');
 // shim if sprites2/ has no sprite files yet (archive pixel pipeline lives in dev/sprites;
 // sprite-viewer still builds from that).
 function spriteSrc() {
-  const shim = 'var SPRITES = {}; function drawSprite(){} function animFrame(){return 0}';
   const dir = p('sprites2');
   const generatedPixelLab = p(path.join('..', 'generated', 'pixellab-sprites.js'));
   const generatedProfiles = p(path.join('..', 'generated', 'pixellab-sprite-profiles.js'));
@@ -40,7 +39,12 @@ function spriteSrc() {
     if (fs.existsSync(generatedPixelLab) && generatedKeys.has(f)) return false;
     return fs.statSync(path.join(dir, f)).isFile(); // excludes _build/_preview subfolders
   }).sort() : [];
-  if (!files.length && !fs.existsSync(generatedPixelLab)) { console.log('SPRITES2 embedded: (none) -> shim'); return shim; }
+  if (!fs.existsSync(generatedPixelLab)) {
+    const allowMissing = buildMode === 'dev' && process.env.HOLLOW_ALLOW_MISSING_ART === '1';
+    if (!allowMissing) throw new Error('Required player sprite runtime is missing: ' + generatedPixelLab);
+    console.warn('SPRITES2 embedded: missing player bundle (explicit development override)');
+    return 'var SPRITES = {}; function drawSprite(){return {drawn:false,status:"missing"}} function animFrame(){return 0}';
+  }
   const bodies = files.map(f => fs.readFileSync(path.join(dir, f), 'utf8'));
   const enemyFiles = ['construct.js', 'hound.js', 'ox.js', 'calf.js', 'lowingman_beast.js', 'lowingman_man.js', 'glasswright.js'];
   const enemyBodies = enemyFiles.map(f => fs.readFileSync(p(path.join('sprites', f)), 'utf8'));
@@ -77,9 +81,9 @@ const parts = [
   fs.readFileSync(p('market.js'), 'utf8'),
   fs.readFileSync(p('encounter-components.js'), 'utf8'),
   fs.readFileSync(p('passive-registry.js'), 'utf8'),
+  fs.readFileSync(p('story-registry.js'), 'utf8'),
   fs.readFileSync(p('engine-dev.js'), 'utf8'),
   ...(buildMode === 'dev' ? [fs.readFileSync(p('tests-dev.js'), 'utf8')] : []),
-  fs.readFileSync(p('story-registry.js'), 'utf8'),
   fs.readFileSync(p('game-state.js'), 'utf8'),
   fs.readFileSync(p('mui1.js'), 'utf8'),
   fs.readFileSync(p('mui3-stage.js'), 'utf8'),

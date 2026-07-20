@@ -26,6 +26,7 @@ const Engine = (function () {
   const MD = typeof MarketData !== 'undefined' ? MarketData : require('./market.js');
   const MARKET_ITEMS = MD.items;
   const ECD = typeof EncounterComponents !== 'undefined' ? EncounterComponents : require('./encounter-components.js');
+  const SD = typeof STORY_REGISTRY !== 'undefined' ? STORY_REGISTRY : require('./story-registry.js');
 
   /* ------------------------------------------------------------------ *
    *  Elements
@@ -265,12 +266,8 @@ const Engine = (function () {
     for (const [key, flag] of Object.entries(value)) if (flag === true && (!allowed || allowed.has(key))) out[key] = true;
     return out;
   }
-  const CANONICAL_STORY_CHAPTERS = Object.freeze([
-    Object.freeze(Array.from({ length: 10 }, (_, i) => `act1_${i + 1}`)),
-    Object.freeze(Array.from({ length: 8 }, (_, i) => `act2_${i + 1}`)),
-    Object.freeze(Array.from({ length: 7 }, (_, i) => `act3_${i + 1}`)),
-    Object.freeze(Array.from({ length: 7 }, (_, i) => `act4_${i + 1}`)),
-  ]);
+  const CANONICAL_STORY_CHAPTERS = Object.freeze(SD.chapters.map(chapter => Object.freeze(chapter.missions.map(mission => mission.id))));
+  const STORY_MISSION_IDS = new Set(CANONICAL_STORY_CHAPTERS.flat());
   const STORY_RECRUITS = Object.freeze({
     act1_3: Object.freeze(['hearthgar']),
     act2_4: Object.freeze(['marlowe', 'brant']),
@@ -377,12 +374,8 @@ const Engine = (function () {
     }
     trueMap('evolutionUnlocks', unitKeys); trueMap('libraryUnlocked', libraryIds); trueMap('featureUnlocks', new Set(['summon']));
     if (present('missionClears')) {
-      const caps = { 1: 10, 2: 8, 3: 7, 4: 7 };
       if (!s.missionClears || typeof s.missionClears !== 'object' || Array.isArray(s.missionClears)) errors.push('missionClears must be an object');
-      else for (const [id, value] of Object.entries(s.missionClears)) {
-        const match = /^act([1-9])_([1-9][0-9]?)$/.exec(id);
-        if (value !== true || !match || !caps[Number(match[1])] || Number(match[2]) > caps[Number(match[1])]) errors.push(`missionClears.${id} is invalid`);
-      }
+      else for (const [id, value] of Object.entries(s.missionClears)) if (value !== true || !STORY_MISSION_IDS.has(id)) errors.push(`missionClears.${id} is invalid`);
     }
     if (present('sideMissionProgress')) {
       if (!s.sideMissionProgress || typeof s.sideMissionProgress !== 'object' || Array.isArray(s.sideMissionProgress)) errors.push('sideMissionProgress must be an object');
@@ -416,7 +409,9 @@ const Engine = (function () {
     const s = input && typeof input === 'object' ? input : {};
     const unitKeys = new Set(Object.keys(UNITS));
     const libraryIds = new Set(UNIT_LIBRARY.map(x => x.id));
-    let owned = Array.isArray(s.owned) ? [...new Set(s.owned.filter(k => unitKeys.has(k)))] : ['hale', 'cinnia', 'tobin'];
+    const defaultOwned = ['hale', 'cinnia', 'tobin'];
+    const filteredOwned = Array.isArray(s.owned) ? [...new Set(s.owned.filter(k => unitKeys.has(k)))] : defaultOwned;
+    let owned = filteredOwned.length ? filteredOwned : defaultOwned;
     const requestedParty = Array.isArray(s.activeParty) ? [...new Set(s.activeParty.filter(k => owned.includes(k)))].slice(0, PARTY_SIZE) : [];
     let activeParty = requestedParty.length ? requestedParty : owned.slice(0, PARTY_SIZE);
     const ranks = {};
@@ -1852,6 +1847,7 @@ const Engine = (function () {
     livingParty, livingEnemies, partyHPfrac, byKey, byUid,
     UNITS, ENEMIES, BATTLES, SIDE_MISSIONS, HALE_AWAKENED, ELEM_ICON, UNIT_PROGRESSION, LEVEL_CAPS, xpToNext, grantUnitXP, combatProfile, applyStoryEvolutions, UNIT_LIBRARY, recordOwnedDiscoveries,
     LIVE_GESTURE_THRESHOLDS, liveGestureTier, PARTY_SIZE,
+    STORY_MISSION_IDS,
     SAVE_SCHEMA_VERSION, normalizeSaveState, validateSaveState, migrateSaveEnvelope,
     CHALLENGES, CHALLENGE_ITEMS, challengeUnlocked, evaluateChallengeMastery, sideMissionUnlocked,
     MARKET_ITEMS, marketRestockTier, marketItemUnlocked, BANNERS, bannerPool,

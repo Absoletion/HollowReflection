@@ -1131,6 +1131,7 @@ function showTown() {
     document.getElementById('townlibrary').onclick = () => { go('party'); showUnitLibrary(); };
     document.getElementById('towntalk').onclick = () => {
       const keys = META.owned.filter(k => QUOTES[k]);
+      if (!keys.length) { document.getElementById('towntalkbox').textContent = 'The common room is quiet right now.'; return; }
       const key = keys[talkIndex++ % keys.length];
       document.getElementById('towntalkbox').innerHTML = `<b>${esc(Engine.UNITS[key].name)}</b><span>${esc(QUOTES[key])}</span>`;
     };
@@ -1190,6 +1191,7 @@ function showDialogue(scenes, done, sceneId) {
   let i = 0;
   const chapterLine = (scenes[0] && scenes[0].ch !== undefined) ? scenes[0].ch : '';
   const lines = scenes.filter(s => s.tx);
+  if (!lines.length) { done(); return; }
   function render() {
     const s = lines[i];
     app.innerHTML = `

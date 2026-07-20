@@ -31,12 +31,13 @@ const ctx = {
   fillRect() {}, set fillStyle(value) { this._fillStyle = value; }
 };
 
-assert.strictEqual(R.drawSprite(ctx, 'generated', 'idle', 0, 100, 200, 1, false), true);
+assert.deepStrictEqual(R.drawSprite(ctx, 'generated', 'idle', 0, 100, 200, 1, false), { drawn: true, status: 'ready' });
 const draw = calls.find(call => call[0] === 'drawImage');
 assert(draw, 'generated image frame should reach drawImage');
 assert.strictEqual(draw[4], 256 * 0.355, 'renderScale should normalize generated frame width');
 assert.strictEqual(draw[5], 256 * 0.355, 'renderScale should normalize generated frame height');
 assert.doesNotThrow(() => R.drawSprite(ctx, 'legacy', 'idle', 0, 0, 0, 1, false));
 assert.strictEqual(R.preloadSpriteFrames('generated').length, 1);
+assert.strictEqual(R.SpriteRuntime.hasAnimation('generated', 'idle'), true);
 
 console.log('Renderer tests: passed.');

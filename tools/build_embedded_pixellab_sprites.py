@@ -1,9 +1,29 @@
 import base64
+import argparse
+import hashlib
 import json
+import re
 from pathlib import Path
 
-STAGING = Path(r"C:\Users\Clayn\OneDrive\Documents\Study Program\gacha-design-staging")
-OUT = STAGING / "generated" / "pixellab-sprites.js"
+try:
+    from PIL import Image
+except ImportError as exc:
+    raise SystemExit("Pillow is required to build the PixelLab runtime bundle.") from exc
+
+ARGS = argparse.ArgumentParser(description="Build the frame-image-v1 PixelLab runtime bundle.")
+ARGS.add_argument("--staging", type=Path, default=Path(__file__).resolve().parents[1])
+ARGS.add_argument("--output", type=Path, default=None)
+OPTIONS = ARGS.parse_args()
+STAGING = OPTIONS.staging.resolve()
+OUT = (OPTIONS.output or (STAGING / "generated" / "pixellab-sprites.js")).resolve()
+NUMBER = re.compile(r"(\d+)")
+
+def natural_key(path: Path):
+    return [int(part) if part.isdigit() else part.lower() for part in NUMBER.split(path.name)]
+
+def rgba_hash(path: Path) -> str:
+    with Image.open(path) as image:
+        return hashlib.sha256(image.convert("RGBA").tobytes()).hexdigest()
 
 SETS = {
     "hale": {
@@ -307,16 +327,16 @@ def build_unit(name, animations):
         folders = folder if isinstance(folder, list) else [folder]
         frames = []
         for part_index, part in enumerate(folders):
-            part_frames = sorted(part.glob("frame_*.png"))
+            part_frames = sorted(part.glob("frame_*.png"), key=natural_key)
             if not part_frames:
-                part_frames = sorted(part.glob("frame-*.png"))
-            if part_index and part_frames:
-                part_frames = part_frames[1:]  # drop the repeated reference pose between stitched phases
+                part_frames = sorted(part.glob("frame-*.png"), key=natural_key)
+            if part_index and part_frames and frames and rgba_hash(part_frames[0]) == rgba_hash(frames[-1]):
+                part_frames = part_frames[1:]
             frames.extend(part_frames)
         if not frames:
             raise FileNotFoundError(f"No frames found for {name}.{anim}: {folder}")
         anims[anim] = [data_url(frame) for frame in frames]
-        meta[anim] = {"fps": rate, "loop": loop, "imageFrames": True}
+        meta[anim] = {"sourceFps": rate, "playbackFps": rate, "fps": rate, "loop": loop}
         fps[anim] = rate
     unit = {
         "w": 256,
@@ -332,6 +352,7 @@ def build_unit(name, animations):
             "referenceCanvasPx": 256,
             "feetLineY": 238,
         },
+        "format": "frame-image-v1",
         "imageFrames": True,
         "anims": anims,
         "meta": meta,

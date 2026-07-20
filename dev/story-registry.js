@@ -49,6 +49,8 @@ const STORY_REGISTRY = {
   ]
 };
 
+if (typeof module !== 'undefined' && module.exports) module.exports = STORY_REGISTRY;
+
 // Runtime details for the revised Chapters 2–4 drafts. Keeping this enrichment
 // separate from the compact title table makes the canonical mission sequence
 // easy to scan while still giving the UI complete progression metadata.

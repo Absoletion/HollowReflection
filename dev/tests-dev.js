@@ -437,6 +437,11 @@ function runHollowingSelfTests(E, print) {
     ok(legacyMissionClears.act1_1 && legacyMissionClears.act1_2 && legacyMissionClears.act1_3 && !legacyMissionClears.act1_4, 'legacy Act 1 progress migrates into durable per-mission clear flags');
     const filteredMissionClears = E.normalizeSaveState({ missionClears: { act1_5: true, act4_7: true, act0_1: true, act1_0: true, act1_99: true, act2_2: false, nonsense: true } }).missionClears;
     ok(Object.keys(filteredMissionClears).length === 0, 'mission clear normalization retains only the continuous canonical prefix');
+    let unknownMissionRejected = false;
+    try { E.validateSaveState(Object.assign({}, E.normalizeSaveState({}), { missionClears: { fake_chapter_1: true } }), true); } catch (err) { unknownMissionRejected = /fake_chapter_1/.test(err.message); }
+    ok(unknownMissionRejected, 'unknown mission IDs are rejected by the canonical story registry');
+    const futureRegisteredMission = [...(E.STORY_MISSION_IDS || [])].find(id => /^act5_/.test(id));
+    if (futureRegisteredMission) ok(E.normalizeSaveState({ missionClears: Object.fromEntries([...E.STORY_MISSION_IDS].filter(id => id <= futureRegisteredMission).map(id => [id, true])) }).missionClears[futureRegisteredMission] === true, 'registered future mission clears survive normalization');
     const legacyChapters = E.migrateSaveEnvelope({ schemaVersion: 5, state: { storyStep: 3 } }).state.missionClears;
     ok(legacyChapters.act1_10 && legacyChapters.act2_8 && legacyChapters.act3_7 && !legacyChapters.act4_1, 'legacy chapter-spine progress unlocks the equivalent expanded mission chapters without skipping Greywick');
     const legacyRoster = E.migrateSaveEnvelope({ schemaVersion: 5, state: { storyStep: 2, owned: ['hale', 'cinnia', 'tobin'] } }).state;

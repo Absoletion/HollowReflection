@@ -59,8 +59,9 @@ const required = [
   'MELEE_ACTIONS',
   'const reactionDuration = spriteAnimDuration',
   'const defeatDuration = spriteAnimDuration',
-  'if (sprite.imageFrames)',
-  "name === 'attack' && sprite.anims.skill",
+  'format":"frame-image-v1"',
+  'format === \'atlas-v2\'',
+  'runtime.animationFramesEqual(spriteKey',
 ];
 
 // Python JSON emits lowercase booleans inside the actual generated bundle.
@@ -125,4 +126,6 @@ const counts = {
   bytes: Buffer.byteLength(html),
 };
 if (counts.embeddedFrames < 150) throw new Error(`Embedded frame count unexpectedly low: ${counts.embeddedFrames}`);
+const atlasPages = [...html.matchAll(/"([a-z0-9-]+-[0-9a-f]{8}\.png)":"data:image\/png;base64/g)].map(match => match[1]);
+if (new Set(atlasPages).size !== atlasPages.length) throw new Error('A standalone atlas page was embedded more than once.');
 console.log(JSON.stringify({ ok: true, ...counts }, null, 2));

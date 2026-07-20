@@ -1,0 +1,18 @@
+{
+  "key": "tobin",
+  "sourceCanvas": { "width": 256, "height": 256 },
+  "anchor": { "x": 128, "y": 238 },
+  "renderScale": 0.359965034965035,
+  "animations": {
+    "idle": { "path": "assets/animations/tobin/idle-still-water-listening-v1", "sourceFps": 8, "playbackFps": 6, "loop": true },
+    "move": { "path": "assets/animations/tobin/move-purposeful-pace-v1", "sourceFps": 11, "playbackFps": 8, "loop": true },
+    "skill": { "path": "assets/animations/tobin/skill-dampen-pilot-v1", "sourceFps": 15, "playbackFps": 12, "loop": false },
+    "attack": { "aliasOf": "skill" },
+    "arts": { "paths": ["assets/animations/tobin/arts-read-phase-v1", "assets/animations/tobin/arts-ward-phase-v2"], "sourceFps": 12, "playbackFps": 12, "loop": false },
+    "burst": { "paths": ["assets/animations/tobin/burst-silence-phase-v1", "assets/animations/tobin/burst-confession-phase-v1", "assets/animations/tobin/burst-pressure-phase-v1"], "sourceFps": 11, "playbackFps": 11, "loop": false },
+    "hit": { "path": "assets/animations/tobin/hit-v1", "sourceFps": 14, "playbackFps": 10, "loop": false },
+    "stagger": { "path": "assets/animations/tobin/flinch-stagger-v1", "sourceFps": 12, "playbackFps": 10, "loop": false },
+    "victory": { "path": "assets/animations/tobin/victory-v1", "sourceFps": 9, "playbackFps": 8, "loop": false },
+    "defeat": { "path": "assets/animations/tobin/defeat-v1", "sourceFps": 9, "playbackFps": 8, "loop": false }
+  }
+}

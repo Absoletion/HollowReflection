@@ -1,0 +1,7 @@
+{
+  "format": "atlas-v2-registry",
+  "packs": [
+    "tobin.json",
+    "tobin.json"
+  ]
+}

@@ -788,52 +788,29 @@ function launchTraining(featuredKey, returnToLibrary) {
 }
 function showUnitAnimationPreview(key, requestedForm, returnToLibrary) {
   const spriteKey = key === 'hale' && requestedForm === 'awk' ? 'hale_awakened' : key;
-  const sprite = typeof SPRITES !== 'undefined' && SPRITES[spriteKey];
-  if (!sprite || !sprite.anims) { toast('No preview animations are available for this unit yet.'); return; }
+  const runtime = typeof SpriteRuntime !== 'undefined' ? SpriteRuntime : null;
+  if (!runtime || !runtime.animationNames(spriteKey).length) { toast('No preview animations are available for this unit yet.'); return; }
   const order = ['idle', 'move', 'skill', 'attack', 'arts', 'burst', 'cast', 'hit', 'stagger', 'victory', 'defeat'];
   const labels = { idle: 'Idle', move: 'Move', skill: 'Skill', attack: 'Attack', arts: 'Arts', burst: 'Burst', cast: 'Cast', hit: 'Hit', stagger: 'Flinch', victory: 'Victory', defeat: 'Defeat' };
-  const sameFrames = (a, b) => {
-    const left = sprite.anims[a], right = sprite.anims[b];
-    return Array.isArray(left) && Array.isArray(right) &&
-      left.length === right.length && left.every((frame, index) => frame === right[index]);
-  };
+  const sameFrames = (a, b) => runtime.animationFramesEqual(spriteKey, a, b);
   // `attack` is a renderer compatibility alias for the combat Skill on the
   // current roster. Do not show a duplicate menu item when both arrays are
   // identical.
-  const animations = order.filter(name =>
-    sprite.anims[name] && !(name === 'attack' && sprite.anims.skill && sameFrames('attack', 'skill'))
-  );
+  const available = new Set(runtime.animationNames(spriteKey));
+  const animations = order.filter(name => available.has(name) && !(name === 'attack' && available.has('skill') && sameFrames('attack', 'skill')));
   let selected = animations[0], playing = true, playback = 1, startedAt = performance.now(), pausedAt = 0, raf = 0;
   chrome('nonav'); META.stage = 'animation-preview';
   app.innerHTML = `<div class="anim-preview"><div class="anim-preview-head"><button id="animback">← Unit Details</button><div><b>${esc(Engine.UNITS[key].name)}</b><span>Single-unit animation preview</span></div></div><div class="anim-stage"><canvas id="animcanvas" width="480" height="300" aria-label="${esc(Engine.UNITS[key].name)} animation preview"></canvas><div class="anim-label" id="animlabel">${labels[selected]}</div></div><div class="anim-menu">${animations.map(name => `<button data-preview-anim="${name}" class="${name === selected ? 'on' : ''}">${labels[name]}</button>`).join('')}</div><div class="anim-controls"><button id="animplay">Pause</button><button id="animspeed">Speed 1×</button></div><p class="anim-note">Only ${esc(Engine.UNITS[key].name)} is rendered. Choose an animation above to restart its preview.</p></div>`;
   const canvas = document.getElementById('animcanvas'), ctx = canvas.getContext('2d');
-  const framesOf = name => { const def = sprite.anims[name]; return Array.isArray(def) ? def : def.frames; };
-  let globalBounds = { w: 1, h: 1 };
-  if (sprite.imageFrames) {
-    // Image-frame sprites are data URLs, not character grids. Scanning them as
-    // strings made every pixel appear occupied, performed millions of useless
-    // comparisons, and shrank the preview dramatically. Use the documented
-    // production scale and visible height instead.
-    const authoredScale = Number.isFinite(sprite.renderScale) ? sprite.renderScale : 1;
-    globalBounds.w = sprite.w * authoredScale;
-    globalBounds.h = (sprite.sourceVisibleHeightPx || sprite.h) * authoredScale;
-  } else {
-    for (const name of animations) {
-      let minX = sprite.w, maxX = -1, minY = sprite.h, maxY = -1;
-      for (const frame of framesOf(name)) for (let y = 0; y < sprite.h; y++) for (let x = 0; x < sprite.w; x++) if (frame[y][x] !== '.') { minX = Math.min(minX, x); maxX = Math.max(maxX, x); minY = Math.min(minY, y); maxY = Math.max(maxY, y); }
-      globalBounds.w = Math.max(globalBounds.w, maxX - minX + 1);
-      globalBounds.h = Math.max(globalBounds.h, maxY - minY + 1);
-    }
-  }
+  const globalBounds = runtime.getMetrics(spriteKey);
   function draw(now) {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     const grad = ctx.createLinearGradient(0, 0, 0, canvas.height); grad.addColorStop(0, '#172238'); grad.addColorStop(1, '#080d15'); ctx.fillStyle = grad; ctx.fillRect(0, 0, canvas.width, canvas.height);
     ctx.strokeStyle = '#25354b'; ctx.lineWidth = 1; for (let x = 0; x <= canvas.width; x += 24) { ctx.beginPath(); ctx.moveTo(x, 232); ctx.lineTo(x, 270); ctx.stroke(); } ctx.beginPath(); ctx.moveTo(0, 250); ctx.lineTo(canvas.width, 250); ctx.stroke();
-    const frames = framesOf(selected), fps = typeof spritePlaybackFps === 'function' ? spritePlaybackFps(spriteKey, selected) : 8;
     const elapsed = playing ? (now - startedAt) * playback : pausedAt;
-    const frame = typeof animFrame === 'function' ? animFrame(spriteKey, selected, elapsed) : Math.floor(elapsed / (1000 / fps)) % frames.length;
+    const frame = runtime.animFrame(spriteKey, selected, elapsed);
     const scale = Math.min(1.8, (canvas.width * 0.82) / globalBounds.w, (canvas.height * 0.72) / globalBounds.h);
-    drawSprite(ctx, spriteKey, selected, frame, canvas.width / 2, 252, scale, false);
+    runtime.draw(ctx, spriteKey, selected, frame, canvas.width / 2, 252, scale, false);
     raf = requestAnimationFrame(draw);
   }
   app.querySelectorAll('[data-preview-anim]').forEach(button => button.onclick = () => {

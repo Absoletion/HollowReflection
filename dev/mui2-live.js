@@ -11,7 +11,7 @@ const BSCENE = { training: 'sc-hall', act1_1: 'sc-hall', act1_2: 'sc-hall', act1
   act2_2:'sc-road',act2_4:'sc-fields',act2_6:'sc-road',act2_7:'sc-road',act3_1:'sc-road',act3_3:'sc-road',act3_5:'sc-road',act3_6:'sc-road',act3_7:'sc-fields',
   act4_1:'sc-fields',act4_2:'sc-fields',act4_3:'sc-fields',act4_4:'sc-fields',act4_5:'sc-seam',act4_6:'sc-seam',act4_7:'sc-seam', challenge_ember:'sc-arena', challenge_feastkeeper:'sc-arena' };
 
-function startBattle(key, partyKeys, onEnd) {
+async function startBattle(key, partyKeys, onEnd) {
   META.stage = key;
   const S = Engine.newBattle(key, partyKeys, { awakenedHale: !!META.haleAwakened, profiles: META.unitProgress });
   // Legacy encounters were tuned around one action per round. Live combat
@@ -22,6 +22,14 @@ function startBattle(key, partyKeys, onEnd) {
     en.maxhp = Math.round(en.maxhp * liveHpScale);
     en.hp = en.maxhp;
     en.atk = Math.round(en.atk * liveAtkScale);
+  }
+  const spriteKeys = [
+    ...S.party.map(unit => unit.key === 'hale' && unit.awakened ? 'hale_awakened' : unit.key),
+    ...S.enemies.map(enemy => Stage.spriteKeyForEnemy ? Stage.spriteKeyForEnemy(enemy) : enemy.key),
+  ];
+  if (typeof SpriteRuntime !== 'undefined' && SpriteRuntime.ensureBattleReady) {
+    const readiness = await SpriteRuntime.ensureBattleReady(spriteKeys, { animations: ['idle', 'move', 'hit', 'defeat'], timeoutMs: 8000 });
+    if (readiness.errors.length) toast('Some combat art could not load. Fallback art will be used.');
   }
   Stage.init(S, key);
 

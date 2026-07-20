@@ -1,0 +1,3225 @@
+{
+  "anchor": {
+    "x": 128,
+    "y": 238
+  },
+  "animations": {
+    "arts": {
+      "loop": false,
+      "playbackFps": 12,
+      "sourceFps": 12,
+      "timeline": [
+        {
+          "durationMs": 83,
+          "frame": {
+            "hash": "04f91b6fc83667ac3c964f9215109a6b70fa06bd07683b54d0536dbfb7bb3a10",
+            "page": "tobin-core-0",
+            "pivot": {
+              "x": 68,
+              "y": 145
+            },
+            "source": {
+              "h": 147,
+              "w": 134,
+              "x": 248,
+              "y": 0
+            }
+          }
+        },
+        {
+          "durationMs": 83,
+          "frame": {
+            "hash": "181e3001750d73b035852f4deaa4e88b75a421f297c5e8310dccf8968b1a354c",
+            "page": "tobin-core-0",
+            "pivot": {
+              "x": 68,
+              "y": 161
+            },
+            "source": {
+              "h": 163,
+              "w": 133,
+              "x": 594,
+              "y": 228
+            }
+          }
+        },
+        {
+          "durationMs": 83,
+          "frame": {
+            "hash": "3a0c106fddbcaec87e9a153364bd376391ea318e7d4b4fbc5ec96ec6d99af99f",
+            "page": "tobin-core-0",
+            "pivot": {
+              "x": 54,
+              "y": 216
+            },
+            "source": {
+              "h": 218,
+              "w": 109,
+              "x": 1491,
+              "y": 228
+            }
+          }
+        },
+        {
+          "durationMs": 83,
+          "frame": {
+            "hash": "3a251fd931987151c4ca5a8d992bbe01b196a8fbcbaa57898b249dedd6f5bc76",
+            "page": "tobin-core-0",
+            "pivot": {
+              "x": 57,
+              "y": 220
+            },
+            "source": {
+              "h": 222,
+              "w": 112,
+              "x": 1749,
+              "y": 228
+            }
+          }
+        },
+        {
+          "durationMs": 83,
+          "frame": {
+            "hash": "c245479e004104ffae72404f454bbe36c8b49846baea19ee7c02c764fcd628e7",
+            "page": "tobin-core-0",
+            "pivot": {
+              "x": 57,
+              "y": 220
+            },
+            "source": {
+              "h": 222,
+              "w": 112,
+              "x": 1345,
+              "y": 1141
+            }
+          }
+        },
+        {
+          "durationMs": 83,
+          "frame": {
+            "hash": "001b3330864af445b63f6015509ba4a6e58e636c664513db618c5ad8b54bdb5a",
+            "page": "tobin-core-0",
+            "pivot": {
+              "x": 57,
+              "y": 220
+            },
+            "source": {
+              "h": 222,
+              "w": 112,
+              "x": 0,
+              "y": 0
+            }
+          }
+        },
+        {
+          "durationMs": 83,
+          "frame": {
+            "hash": "16210a398050a76de12c89630f6090d91ffe94b91aceac9e1263fd7809d1f490",
+            "page": "tobin-core-0",
+            "pivot": {
+              "x": 57,
+              "y": 220
+            },
+            "source": {
+              "h": 222,
+              "w": 111,
+              "x": 483,
+              "y": 228
+            }
+          }
+        },
+        {
+          "durationMs": 83,
+          "frame": {
+            "hash": "44f92e632f0044fb02dc676b9e35d4660e7aa78cbd178d23352744523406da7d",
+            "page": "tobin-core-0",
+            "pivot": {
+              "x": 59,
+              "y": 219
+            },
+            "source": {
+              "h": 221,
+              "w": 114,
+              "x": 523,
+              "y": 455
+            }
+          }
+        },
+        {
+          "durationMs": 83,
+          "frame": {
+            "hash": "6d88134382bb5f271c32c7729391a125c9611b3decb9be08d516869f99b4bdcd",
+            "page": "tobin-core-0",
+            "pivot": {
+              "x": 60,
+              "y": 209
+            },
+            "source": {
+              "h": 211,
+              "w": 147,
+              "x": 544,
+              "y": 679
+            }
+          }
+        },
+        {
+          "durationMs": 83,
+          "frame": {
+            "hash": "6d88134382bb5f271c32c7729391a125c9611b3decb9be08d516869f99b4bdcd",
+            "page": "tobin-core-0",
+            "pivot": {
+              "x": 60,
+              "y": 209
+            },
+            "source": {
+              "h": 211,
+              "w": 147,
+              "x": 544,
+              "y": 679
+            }
+          }
+        },
+        {
+          "durationMs": 83,
+          "frame": {
+            "hash": "5da1265e0dae58045625f49bb5086bca39fef4ab48cb14c7e075dfdea6ca3058",
+            "page": "tobin-core-0",
+            "pivot": {
+              "x": 58,
+              "y": 216
+            },
+            "source": {
+              "h": 218,
+              "w": 145,
+              "x": 0,
+              "y": 679
+            }
+          }
+        },
+        {
+          "durationMs": 83,
+          "frame": {
+            "hash": "c4fede2134f6df17c9e28ffdc0420a451d32f3af071e68d1c95acd91e72f565c",
+            "page": "tobin-core-0",
+            "pivot": {
+              "x": 58,
+              "y": 221
+            },
+            "source": {
+              "h": 223,
+              "w": 145,
+              "x": 1562,
+              "y": 1141
+            }
+          }
+        },
+        {
+          "durationMs": 83,
+          "frame": {
+            "hash": "725006f8611f0482099d83681b4f28a205b204e070a932fd92d8c8d06638a8bd",
+            "page": "tobin-core-0",
+            "pivot": {
+              "x": 63,
+              "y": 223
+            },
+            "source": {
+              "h": 225,
+              "w": 150,
+              "x": 859,
+              "y": 679
+            }
+          }
+        },
+        {
+          "durationMs": 83,
+          "frame": {
+            "hash": "b3e8a470041cc915839d436bebbcb1ad271166cd0f383143d441defb37dbadc2",
+            "page": "tobin-core-0",
+            "pivot": {
+              "x": 75,
+              "y": 224
+            },
+            "source": {
+              "h": 226,
+              "w": 162,
+              "x": 931,
+              "y": 1141
+            }
+          }
+        },
+        {
+          "durationMs": 83,
+          "frame": {
+            "hash": "fe0eb82115d38d2c54b83dbbb32bb88ef61bc01216d7b23dfefff41165666c03",
+            "page": "tobin-core-0",
+            "pivot": {
+              "x": 85,
+              "y": 224
+            },
+            "source": {
+              "h": 226,
+              "w": 172,
+              "x": 1447,
+              "y": 1367
+            }
+          }
+        },
+        {
+          "durationMs": 83,
+          "frame": {
+            "hash": "ae69f26067a789777df64fb8f73d6d3b1d14bf37e13fb0a6960ce2fc5904f532",
+            "page": "tobin-core-0",
+            "pivot": {
+              "x": 93,
+              "y": 214
+            },
+            "source": {
+              "h": 216,
+              "w": 180,
+              "x": 258,
+              "y": 1141
+            }
+          }
+        },
+        {
+          "durationMs": 83,
+          "frame": {
+            "hash": "3cf805e329801dc39fdcaff11d3ce286d3ae78d3e31418429cdc18d924c40025",
+            "page": "tobin-core-0",
+            "pivot": {
+              "x": 99,
+              "y": 213
+            },
+            "source": {
+              "h": 215,
+              "w": 194,
+              "x": 0,
+              "y": 455
+            }
+          }
+        },
+        {
+          "durationMs": 83,
+          "frame": {
+            "hash": "a1a57898947afc95a8469d95c9d812d1df1a6f50463a4b5e26babf5d944f75ab",
+            "page": "tobin-core-0",
+            "pivot": {
+              "x": 104,
+              "y": 143
+            },
+            "source": {
+              "h": 145,
+              "w": 197,
+              "x": 1749,
+              "y": 910
+            }
+          }
+        }
+      ]
+    },
+    "attack": {
+      "aliasOf": "skill"
+    },
+    "burst": {
+      "loop": false,
+      "playbackFps": 11,
+      "sourceFps": 11,
+      "timeline": [
+        {
+          "durationMs": 91,
+          "frame": {
+            "hash": "04f91b6fc83667ac3c964f9215109a6b70fa06bd07683b54d0536dbfb7bb3a10",
+            "page": "tobin-core-0",
+            "pivot": {
+              "x": 68,
+              "y": 145
+            },
+            "source": {
+              "h": 147,
+              "w": 134,
+              "x": 248,
+              "y": 0
+            }
+          }
+        },
+        {
+          "durationMs": 91,
+          "frame": {
+            "hash": "f0789afea317b6bde7dbe8841b58d33c57b426b29abd576338f2f792940c4c3c",
+            "page": "tobin-core-0",
+            "pivot": {
+              "x": 70,
+              "y": 156
+            },
+            "source": {
+              "h": 158,
+              "w": 141,
+              "x": 738,
+              "y": 1367
+            }
+          }
+        },
+        {
+          "durationMs": 91,
+          "frame": {
+            "hash": "88de759798c295d699930f5618c13dc182e5294da459edbc51af1197f44a27db",
+            "page": "tobin-core-0",
+            "pivot": {
+              "x": 60,
+              "y": 168
+            },
+            "source": {
+              "h": 171,
+              "w": 114,
+              "x": 603,
+              "y": 910
+            }
+          }
+        },
+        {
+          "durationMs": 91,
+          "frame": {
+            "hash": "5c85caf3e55bbaef31c429c6b12ad5b53c4e7500a7cc82a7a8022f54d9b715fe",
+            "page": "tobin-core-0",
+            "pivot": {
+              "x": 68,
+              "y": 189
+            },
+            "source": {
+              "h": 192,
+              "w": 133,
+              "x": 1859,
+              "y": 455
+            }
+          }
+        },
+        {
+          "durationMs": 91,
+          "frame": {
+            "hash": "0c9f8ef9f9ebe9328123b677a71db68c87506c0ad69f7ce03955e805000118e4",
+            "page": "tobin-core-0",
+            "pivot": {
+              "x": 72,
+              "y": 202
+            },
+            "source": {
+              "h": 205,
+              "w": 144,
+              "x": 1459,
+              "y": 0
+            }
+          }
+        },
+        {
+          "durationMs": 91,
+          "frame": {
+            "hash": "a78a84cf3bdd2069136177192703bbbd4db9226395e82d85b5e637af0dd06adf",
+            "page": "tobin-core-0",
+            "pivot": {
+              "x": 74,
+              "y": 214
+            },
+            "source": {
+              "h": 217,
+              "w": 151,
+              "x": 0,
+              "y": 1141
+            }
+          }
+        },
+        {
+          "durationMs": 91,
+          "frame": {
+            "hash": "0b96569908e108e580d2a19aa667a6f7a114cd2fe655d5c9317948780152b2bb",
+            "page": "tobin-core-0",
+            "pivot": {
+              "x": 77,
+              "y": 220
+            },
+            "source": {
+              "h": 222,
+              "w": 157,
+              "x": 1144,
+              "y": 0
+            }
+          }
+        },
+        {
+          "durationMs": 91,
+          "frame": {
+            "hash": "32ff817ea9f40eb88969c2c834bf024f0d13d36b96f4ea38030681506dd7cef9",
+            "page": "tobin-core-0",
+            "pivot": {
+              "x": 78,
+              "y": 223
+            },
+            "source": {
+              "h": 226,
+              "w": 160,
+              "x": 1186,
+              "y": 228
+            }
+          }
+        },
+        {
+          "durationMs": 91,
+          "frame": {
+            "hash": "805749d52c1812ac31cc65409879ec99c2313fbcba90f74bb756d53523af8914",
+            "page": "tobin-core-0",
+            "pivot": {
+              "x": 79,
+              "y": 226
+            },
+            "source": {
+              "h": 229,
+              "w": 161,
+              "x": 1830,
+              "y": 679
+            }
+          }
+        },
+        {
+          "durationMs": 91,
+          "frame": {
+            "hash": "805749d52c1812ac31cc65409879ec99c2313fbcba90f74bb756d53523af8914",
+            "page": "tobin-core-0",
+            "pivot": {
+              "x": 79,
+              "y": 226
+            },
+            "source": {
+              "h": 229,
+              "w": 161,
+              "x": 1830,
+              "y": 679
+            }
+          }
+        },
+        {
+          "durationMs": 91,
+          "frame": {
+            "hash": "9870ddfdf7f6992407b9e8c65aa3d6375f7f5e949e0d4fcc9a3bd3acf5cf3cd3",
+            "page": "tobin-core-0",
+            "pivot": {
+              "x": 86,
+              "y": 221
+            },
+            "source": {
+              "h": 224,
+              "w": 175,
+              "x": 1574,
+              "y": 910
+            }
+          }
+        },
+        {
+          "durationMs": 91,
+          "frame": {
+            "hash": "4a6ad66a24cd254e7eb9ae971b6f8fd65a60e5b4672340bb1445947196c34163",
+            "page": "tobin-core-0",
+            "pivot": {
+              "x": 96,
+              "y": 221
+            },
+            "source": {
+              "h": 223,
+              "w": 192,
+              "x": 784,
+              "y": 455
+            }
+          }
+        },
+        {
+          "durationMs": 91,
+          "frame": {
+            "hash": "0a852d4df7797ed5fd9b1e90a43d3eb1c17322b6bdb32d004e7099a1054011b5",
+            "page": "tobin-core-0",
+            "pivot": {
+              "x": 92,
+              "y": 220
+            },
+            "source": {
+              "h": 222,
+              "w": 188,
+              "x": 799,
+              "y": 0
+            }
+          }
+        },
+        {
+          "durationMs": 91,
+          "frame": {
+            "hash": "790c7bc22ece9471a13664a1f3f856353b3c1dee1351598e413462d5654e5d8d",
+            "page": "tobin-core-0",
+            "pivot": {
+              "x": 93,
+              "y": 222
+            },
+            "source": {
+              "h": 225,
+              "w": 183,
+              "x": 1446,
+              "y": 679
+            }
+          }
+        },
+        {
+          "durationMs": 91,
+          "frame": {
+            "hash": "11b540ac11dcf7bc3e298d4794f1a6bd09374debfc497a10e28eea53037ef227",
+            "page": "tobin-core-0",
+            "pivot": {
+              "x": 88,
+              "y": 221
+            },
+            "source": {
+              "h": 223,
+              "w": 178,
+              "x": 0,
+              "y": 228
+            }
+          }
+        },
+        {
+          "durationMs": 91,
+          "frame": {
+            "hash": "4eca9035033b9faf8fb6bee88d29db18e41399174b44cb8f3c39b3aa97ac7489",
+            "page": "tobin-core-0",
+            "pivot": {
+              "x": 88,
+              "y": 221
+            },
+            "source": {
+              "h": 224,
+              "w": 178,
+              "x": 1308,
+              "y": 455
+            }
+          }
+        },
+        {
+          "durationMs": 91,
+          "frame": {
+            "hash": "8748e85dcca958dec6052c06f953dde3b4de6b8f7144e3c84a3b91424c125c15",
+            "page": "tobin-core-0",
+            "pivot": {
+              "x": 90,
+              "y": 221
+            },
+            "source": {
+              "h": 223,
+              "w": 180,
+              "x": 423,
+              "y": 910
+            }
+          }
+        },
+        {
+          "durationMs": 91,
+          "frame": {
+            "hash": "084dcc3147689578d4ad2bd31ca4ea815efeccf27f9bf99de713543686934ec5",
+            "page": "tobin-core-0",
+            "pivot": {
+              "x": 90,
+              "y": 221
+            },
+            "source": {
+              "h": 223,
+              "w": 180,
+              "x": 491,
+              "y": 0
+            }
+          }
+        },
+        {
+          "durationMs": 91,
+          "frame": {
+            "hash": "084dcc3147689578d4ad2bd31ca4ea815efeccf27f9bf99de713543686934ec5",
+            "page": "tobin-core-0",
+            "pivot": {
+              "x": 90,
+              "y": 221
+            },
+            "source": {
+              "h": 223,
+              "w": 180,
+              "x": 491,
+              "y": 0
+            }
+          }
+        },
+        {
+          "durationMs": 91,
+          "frame": {
+            "hash": "b1c494d1d7ae9e1119296b1f25e02ee4f585a0e96d554960ca3b1020b56f192f",
+            "page": "tobin-core-0",
+            "pivot": {
+              "x": 90,
+              "y": 223
+            },
+            "source": {
+              "h": 225,
+              "w": 180,
+              "x": 438,
+              "y": 1141
+            }
+          }
+        },
+        {
+          "durationMs": 91,
+          "frame": {
+            "hash": "14d0ccbc3df9f4e848150c4ba99c03d38c84a1be4f40141c54c73eb839b8afa2",
+            "page": "tobin-core-0",
+            "pivot": {
+              "x": 93,
+              "y": 223
+            },
+            "source": {
+              "h": 225,
+              "w": 183,
+              "x": 300,
+              "y": 228
+            }
+          }
+        },
+        {
+          "durationMs": 91,
+          "frame": {
+            "hash": "93a2414fbe42d3440d3510ace869cafd20fe8b9d8690cf724ec8776b83bb65a5",
+            "page": "tobin-core-0",
+            "pivot": {
+              "x": 102,
+              "y": 226
+            },
+            "source": {
+              "h": 228,
+              "w": 207,
+              "x": 1095,
+              "y": 910
+            }
+          }
+        },
+        {
+          "durationMs": 91,
+          "frame": {
+            "hash": "7637c07087428300851a829d50ff5fe5fa0e1f031017f107dff52ccfbf8cb75e",
+            "page": "tobin-core-0",
+            "pivot": {
+              "x": 99,
+              "y": 225
+            },
+            "source": {
+              "h": 227,
+              "w": 198,
+              "x": 1248,
+              "y": 679
+            }
+          }
+        },
+        {
+          "durationMs": 91,
+          "frame": {
+            "hash": "40097eaf4f7791d87be5cf493b0a3c0bb50d95e7a05353af3b13e66fe1dfcc96",
+            "page": "tobin-core-0",
+            "pivot": {
+              "x": 96,
+              "y": 214
+            },
+            "source": {
+              "h": 216,
+              "w": 189,
+              "x": 194,
+              "y": 455
+            }
+          }
+        },
+        {
+          "durationMs": 91,
+          "frame": {
+            "hash": "79231a6c7b6d7c0b4dd71bc41dd78171fd827f8c89074c3885f035fe3737c406",
+            "page": "tobin-core-0",
+            "pivot": {
+              "x": 102,
+              "y": 210
+            },
+            "source": {
+              "h": 212,
+              "w": 201,
+              "x": 1629,
+              "y": 679
+            }
+          }
+        },
+        {
+          "durationMs": 91,
+          "frame": {
+            "hash": "b2c95877b8876dbbd6155bb267809b6033e2c9b065f2f973d9fabe5872d06b94",
+            "page": "tobin-core-0",
+            "pivot": {
+              "x": 80,
+              "y": 217
+            },
+            "source": {
+              "h": 219,
+              "w": 161,
+              "x": 618,
+              "y": 1141
+            }
+          }
+        },
+        {
+          "durationMs": 91,
+          "frame": {
+            "hash": "4b71bbbafe8253590cb987e6364af350ee54d2fcc85dfd477cd14d423cc23f15",
+            "page": "tobin-core-0",
+            "pivot": {
+              "x": 87,
+              "y": 220
+            },
+            "source": {
+              "h": 222,
+              "w": 171,
+              "x": 976,
+              "y": 455
+            }
+          }
+        }
+      ]
+    },
+    "defeat": {
+      "loop": false,
+      "playbackFps": 8,
+      "sourceFps": 9,
+      "timeline": [
+        {
+          "durationMs": 125,
+          "frame": {
+            "hash": "04f91b6fc83667ac3c964f9215109a6b70fa06bd07683b54d0536dbfb7bb3a10",
+            "page": "tobin-core-0",
+            "pivot": {
+              "x": 68,
+              "y": 145
+            },
+            "source": {
+              "h": 147,
+              "w": 134,
+              "x": 248,
+              "y": 0
+            }
+          }
+        },
+        {
+          "durationMs": 125,
+          "frame": {
+            "hash": "2f0ff916d0d30898455dc42426dac2301cf50dcd585a3a379540c24d5b4297d9",
+            "page": "tobin-core-0",
+            "pivot": {
+              "x": 68,
+              "y": 211
+            },
+            "source": {
+              "h": 213,
+              "w": 139,
+              "x": 868,
+              "y": 228
+            }
+          }
+        },
+        {
+          "durationMs": 125,
+          "frame": {
+            "hash": "939c7400233e7bd06ab79c6d57979a9c5276a6a1208aa614c6fdda0a0641550c",
+            "page": "tobin-core-0",
+            "pivot": {
+              "x": 67,
+              "y": 218
+            },
+            "source": {
+              "h": 219,
+              "w": 139,
+              "x": 956,
+              "y": 910
+            }
+          }
+        },
+        {
+          "durationMs": 125,
+          "frame": {
+            "hash": "0d20a334c119bc7aba1cb8f086c13447ad08466c390cbe90a03aeff0191f4fcf",
+            "page": "tobin-core-0",
+            "pivot": {
+              "x": 60,
+              "y": 224
+            },
+            "source": {
+              "h": 225,
+              "w": 132,
+              "x": 1711,
+              "y": 0
+            }
+          }
+        },
+        {
+          "durationMs": 125,
+          "frame": {
+            "hash": "72ab1513b5e1bd9dafe095dd0a1374cac611e80416b799ea4a0b5877f45d500a",
+            "page": "tobin-core-0",
+            "pivot": {
+              "x": 67,
+              "y": 227
+            },
+            "source": {
+              "h": 228,
+              "w": 137,
+              "x": 1009,
+              "y": 679
+            }
+          }
+        },
+        {
+          "durationMs": 125,
+          "frame": {
+            "hash": "2a90330ee22b92f531145cae9c448bcde9d34b31cb14caabf436e882a9411a03",
+            "page": "tobin-core-0",
+            "pivot": {
+              "x": 78,
+              "y": 225
+            },
+            "source": {
+              "h": 227,
+              "w": 141,
+              "x": 727,
+              "y": 228
+            }
+          }
+        },
+        {
+          "durationMs": 125,
+          "frame": {
+            "hash": "636213592feb7e4d33923ff95b5dc40a8d3cf5b0f434f7f3915bbeed0009282b",
+            "page": "tobin-core-0",
+            "pivot": {
+              "x": 88,
+              "y": 227
+            },
+            "source": {
+              "h": 231,
+              "w": 149,
+              "x": 256,
+              "y": 679
+            }
+          }
+        },
+        {
+          "durationMs": 125,
+          "frame": {
+            "hash": "ead53dec95b7f01e7c04368929fdee9e62cedeab4011760e8e9cc75cfa0faddb",
+            "page": "tobin-core-0",
+            "pivot": {
+              "x": 96,
+              "y": 113
+            },
+            "source": {
+              "h": 117,
+              "w": 157,
+              "x": 581,
+              "y": 1367
+            }
+          }
+        },
+        {
+          "durationMs": 125,
+          "frame": {
+            "hash": "4c23b4ab63f11489dfb98c4d9c10f8f72e073d845a953fa14406a83bfe861fdb",
+            "page": "tobin-core-0",
+            "pivot": {
+              "x": 100,
+              "y": 189
+            },
+            "source": {
+              "h": 193,
+              "w": 161,
+              "x": 1147,
+              "y": 455
+            }
+          }
+        }
+      ]
+    },
+    "hit": {
+      "loop": false,
+      "playbackFps": 10,
+      "sourceFps": 14,
+      "timeline": [
+        {
+          "durationMs": 100,
+          "frame": {
+            "hash": "04f91b6fc83667ac3c964f9215109a6b70fa06bd07683b54d0536dbfb7bb3a10",
+            "page": "tobin-core-0",
+            "pivot": {
+              "x": 68,
+              "y": 145
+            },
+            "source": {
+              "h": 147,
+              "w": 134,
+              "x": 248,
+              "y": 0
+            }
+          }
+        },
+        {
+          "durationMs": 100,
+          "frame": {
+            "hash": "d7cd7548a0839143940385cadeb7b5a0bd2ab4f67f590471a95015210d8a4da0",
+            "page": "tobin-core-0",
+            "pivot": {
+              "x": 67,
+              "y": 173
+            },
+            "source": {
+              "h": 175,
+              "w": 135,
+              "x": 140,
+              "y": 1367
+            }
+          }
+        },
+        {
+          "durationMs": 100,
+          "frame": {
+            "hash": "faf62a56697e560ebd9cb26092252b196a217ff255088c3158bacf96a768ba38",
+            "page": "tobin-core-0",
+            "pivot": {
+              "x": 67,
+              "y": 200
+            },
+            "source": {
+              "h": 202,
+              "w": 132,
+              "x": 1011,
+              "y": 1367
+            }
+          }
+        },
+        {
+          "durationMs": 100,
+          "frame": {
+            "hash": "8e51449ac2d753817f7d36e0264f2ac7f35576057f99adae2b14054f52a9bb9e",
+            "page": "tobin-core-0",
+            "pivot": {
+              "x": 67,
+              "y": 214
+            },
+            "source": {
+              "h": 216,
+              "w": 130,
+              "x": 717,
+              "y": 910
+            }
+          }
+        },
+        {
+          "durationMs": 100,
+          "frame": {
+            "hash": "14cc18b92e96cbe9240536b94a1b54fb1f468db24e695392fecedf84ea49e4eb",
+            "page": "tobin-core-0",
+            "pivot": {
+              "x": 54,
+              "y": 222
+            },
+            "source": {
+              "h": 224,
+              "w": 122,
+              "x": 178,
+              "y": 228
+            }
+          }
+        },
+        {
+          "durationMs": 100,
+          "frame": {
+            "hash": "5bbcab524f941ac2d1d50645ec7d136478be59788a966fd36f71604ce5d8fcd8",
+            "page": "tobin-core-0",
+            "pivot": {
+              "x": 51,
+              "y": 144
+            },
+            "source": {
+              "h": 146,
+              "w": 100,
+              "x": 1759,
+              "y": 455
+            }
+          }
+        },
+        {
+          "durationMs": 100,
+          "frame": {
+            "hash": "e6d6b86a27e40fb50d7efc529d159196bcb644b7643398f82056792d1ca846d2",
+            "page": "tobin-core-0",
+            "pivot": {
+              "x": 51,
+              "y": 145
+            },
+            "source": {
+              "h": 147,
+              "w": 96,
+              "x": 485,
+              "y": 1367
+            }
+          }
+        }
+      ]
+    },
+    "idle": {
+      "loop": true,
+      "playbackFps": 6,
+      "sourceFps": 8,
+      "timeline": [
+        {
+          "durationMs": 167,
+          "frame": {
+            "hash": "04f91b6fc83667ac3c964f9215109a6b70fa06bd07683b54d0536dbfb7bb3a10",
+            "page": "tobin-core-0",
+            "pivot": {
+              "x": 68,
+              "y": 145
+            },
+            "source": {
+              "h": 147,
+              "w": 134,
+              "x": 248,
+              "y": 0
+            }
+          }
+        },
+        {
+          "durationMs": 167,
+          "frame": {
+            "hash": "c7dd0353e20031ca7f144fcc98da9b500f7c698cf131ed6460c30d9b2ae20bc8",
+            "page": "tobin-core-0",
+            "pivot": {
+              "x": 68,
+              "y": 194
+            },
+            "source": {
+              "h": 196,
+              "w": 134,
+              "x": 1707,
+              "y": 1141
+            }
+          }
+        },
+        {
+          "durationMs": 167,
+          "frame": {
+            "hash": "848c24e1078deae2c630bd3610b3811de162108b0992b3eb4bffd3e3556666e1",
+            "page": "tobin-core-0",
+            "pivot": {
+              "x": 66,
+              "y": 203
+            },
+            "source": {
+              "h": 205,
+              "w": 130,
+              "x": 293,
+              "y": 910
+            }
+          }
+        },
+        {
+          "durationMs": 167,
+          "frame": {
+            "hash": "815b873adefd70625869f3c82d7113f52bf3de5e50feb66dc77b9f43feda9540",
+            "page": "tobin-core-0",
+            "pivot": {
+              "x": 65,
+              "y": 212
+            },
+            "source": {
+              "h": 214,
+              "w": 125,
+              "x": 0,
+              "y": 910
+            }
+          }
+        },
+        {
+          "durationMs": 167,
+          "frame": {
+            "hash": "73a1278277a86acb49f1cd3f9d54d5f6c77cc73f6d9747e700f920691121d314",
+            "page": "tobin-core-0",
+            "pivot": {
+              "x": 52,
+              "y": 217
+            },
+            "source": {
+              "h": 219,
+              "w": 102,
+              "x": 1146,
+              "y": 679
+            }
+          }
+        },
+        {
+          "durationMs": 167,
+          "frame": {
+            "hash": "c2a50ebcade3c185529653c7fc48221ed8dc0313baa9e85c0eefa44d07a72470",
+            "page": "tobin-core-0",
+            "pivot": {
+              "x": 52,
+              "y": 220
+            },
+            "source": {
+              "h": 222,
+              "w": 105,
+              "x": 1457,
+              "y": 1141
+            }
+          }
+        },
+        {
+          "durationMs": 167,
+          "frame": {
+            "hash": "07e8894e8155f58d54bae6eef59ca79b828216c45dc917ba99f0cb23ce24c43b",
+            "page": "tobin-core-0",
+            "pivot": {
+              "x": 52,
+              "y": 222
+            },
+            "source": {
+              "h": 224,
+              "w": 109,
+              "x": 382,
+              "y": 0
+            }
+          }
+        },
+        {
+          "durationMs": 167,
+          "frame": {
+            "hash": "5e16a81f847b9bb6390200e7eeb385dd5812ab37225c13349620d7ee0bbd00bf",
+            "page": "tobin-core-0",
+            "pivot": {
+              "x": 53,
+              "y": 217
+            },
+            "source": {
+              "h": 219,
+              "w": 111,
+              "x": 145,
+              "y": 679
+            }
+          }
+        },
+        {
+          "durationMs": 167,
+          "frame": {
+            "hash": "c1aa9f4615e227c8228625491d6f5e4b2415eb15a2d060c2c428c4640c84c89f",
+            "page": "tobin-core-0",
+            "pivot": {
+              "x": 57,
+              "y": 146
+            },
+            "source": {
+              "h": 148,
+              "w": 113,
+              "x": 1232,
+              "y": 1141
+            }
+          }
+        }
+      ]
+    },
+    "move": {
+      "loop": true,
+      "playbackFps": 8,
+      "sourceFps": 11,
+      "timeline": [
+        {
+          "durationMs": 125,
+          "frame": {
+            "hash": "04f91b6fc83667ac3c964f9215109a6b70fa06bd07683b54d0536dbfb7bb3a10",
+            "page": "tobin-core-0",
+            "pivot": {
+              "x": 68,
+              "y": 145
+            },
+            "source": {
+              "h": 147,
+              "w": 134,
+              "x": 248,
+              "y": 0
+            }
+          }
+        },
+        {
+          "durationMs": 125,
+          "frame": {
+            "hash": "fff9b28bee0234d46aef7181d7f406fbd34bc8143941a5225c6b6f868cad434b",
+            "page": "tobin-core-0",
+            "pivot": {
+              "x": 73,
+              "y": 152
+            },
+            "source": {
+              "h": 154,
+              "w": 145,
+              "x": 1758,
+              "y": 1367
+            }
+          }
+        },
+        {
+          "durationMs": 125,
+          "frame": {
+            "hash": "48a4ce47180c9c4d9552ba8f8565dda7af4d673a1106e02cee8260459df78422",
+            "page": "tobin-core-0",
+            "pivot": {
+              "x": 73,
+              "y": 166
+            },
+            "source": {
+              "h": 168,
+              "w": 147,
+              "x": 637,
+              "y": 455
+            }
+          }
+        },
+        {
+          "durationMs": 125,
+          "frame": {
+            "hash": "1024f00afa14d42f7dc784344ab625094b658d4762a013232219783ed9efd18a",
+            "page": "tobin-core-0",
+            "pivot": {
+              "x": 72,
+              "y": 182
+            },
+            "source": {
+              "h": 183,
+              "w": 139,
+              "x": 1843,
+              "y": 0
+            }
+          }
+        },
+        {
+          "durationMs": 125,
+          "frame": {
+            "hash": "fe54ddc7880e60e7cc8cb043b612e05426a994e56159fe7a17b27f4bde197779",
+            "page": "tobin-core-0",
+            "pivot": {
+              "x": 76,
+              "y": 192
+            },
+            "source": {
+              "h": 193,
+              "w": 139,
+              "x": 1619,
+              "y": 1367
+            }
+          }
+        },
+        {
+          "durationMs": 125,
+          "frame": {
+            "hash": "cfc6ab112e65b5892f9883942e415519cc748065200dde2893e44a32754ea375",
+            "page": "tobin-core-0",
+            "pivot": {
+              "x": 76,
+              "y": 203
+            },
+            "source": {
+              "h": 205,
+              "w": 140,
+              "x": 0,
+              "y": 1367
+            }
+          }
+        },
+        {
+          "durationMs": 125,
+          "frame": {
+            "hash": "3bebaacdd31a97ea1ec3b829f2ed112bbe9cebd18ceaeb64b95799c42377aaf8",
+            "page": "tobin-core-0",
+            "pivot": {
+              "x": 75,
+              "y": 214
+            },
+            "source": {
+              "h": 217,
+              "w": 141,
+              "x": 1861,
+              "y": 228
+            }
+          }
+        },
+        {
+          "durationMs": 125,
+          "frame": {
+            "hash": "b7c8dde33edbf818dd58d7b169bcadad5cc7aea3f4b8e4b6a43401ef53d6ebfc",
+            "page": "tobin-core-0",
+            "pivot": {
+              "x": 71,
+              "y": 218
+            },
+            "source": {
+              "h": 221,
+              "w": 139,
+              "x": 1093,
+              "y": 1141
+            }
+          }
+        },
+        {
+          "durationMs": 125,
+          "frame": {
+            "hash": "08fe4cfee41dc1274c1edac876e1e5c3efbdcd09a9515592a08000001d4f29cc",
+            "page": "tobin-core-0",
+            "pivot": {
+              "x": 72,
+              "y": 225
+            },
+            "source": {
+              "h": 228,
+              "w": 128,
+              "x": 671,
+              "y": 0
+            }
+          }
+        }
+      ]
+    },
+    "skill": {
+      "loop": false,
+      "playbackFps": 12,
+      "sourceFps": 15,
+      "timeline": [
+        {
+          "durationMs": 83,
+          "frame": {
+            "hash": "04f91b6fc83667ac3c964f9215109a6b70fa06bd07683b54d0536dbfb7bb3a10",
+            "page": "tobin-core-0",
+            "pivot": {
+              "x": 68,
+              "y": 145
+            },
+            "source": {
+              "h": 147,
+              "w": 134,
+              "x": 248,
+              "y": 0
+            }
+          }
+        },
+        {
+          "durationMs": 83,
+          "frame": {
+            "hash": "3a24a9ce2b71401db13eb3727b53cbc0fa68befef96ef8c50a3775636ad5faad",
+            "page": "tobin-core-0",
+            "pivot": {
+              "x": 71,
+              "y": 155
+            },
+            "source": {
+              "h": 157,
+              "w": 149,
+              "x": 1600,
+              "y": 228
+            }
+          }
+        },
+        {
+          "durationMs": 83,
+          "frame": {
+            "hash": "0b8d03a54a0c6852214c88c71caf5dc49aedfac5b0ef8be798a80dec90c19b62",
+            "page": "tobin-core-0",
+            "pivot": {
+              "x": 72,
+              "y": 171
+            },
+            "source": {
+              "h": 173,
+              "w": 157,
+              "x": 987,
+              "y": 0
+            }
+          }
+        },
+        {
+          "durationMs": 83,
+          "frame": {
+            "hash": "0c373d33cc94927fcd3a1e2209664cbf2ecdf725c3fb6c30d0e134f58f7582d5",
+            "page": "tobin-core-0",
+            "pivot": {
+              "x": 73,
+              "y": 186
+            },
+            "source": {
+              "h": 188,
+              "w": 158,
+              "x": 1301,
+              "y": 0
+            }
+          }
+        },
+        {
+          "durationMs": 83,
+          "frame": {
+            "hash": "b37f9784d860cf81227b076d6eb8cf89c2fc6fcd085f1ae4a321f8693ab483b8",
+            "page": "tobin-core-0",
+            "pivot": {
+              "x": 70,
+              "y": 200
+            },
+            "source": {
+              "h": 202,
+              "w": 152,
+              "x": 779,
+              "y": 1141
+            }
+          }
+        },
+        {
+          "durationMs": 83,
+          "frame": {
+            "hash": "7000c529c124d8b51586a6b80ff994e11d96c69e24a52ec009234e88dd78b4db",
+            "page": "tobin-core-0",
+            "pivot": {
+              "x": 88,
+              "y": 211
+            },
+            "source": {
+              "h": 212,
+              "w": 168,
+              "x": 691,
+              "y": 679
+            }
+          }
+        },
+        {
+          "durationMs": 83,
+          "frame": {
+            "hash": "2f41e37c018aa5332e2c26a1258b51199d9b5481a0c120a7e3e3f80e8959b278",
+            "page": "tobin-core-0",
+            "pivot": {
+              "x": 106,
+              "y": 224
+            },
+            "source": {
+              "h": 225,
+              "w": 179,
+              "x": 1007,
+              "y": 228
+            }
+          }
+        },
+        {
+          "durationMs": 83,
+          "frame": {
+            "hash": "8366060a920a475a73f1fb46be40b6a725d7f44f910721b750f60e661240e24e",
+            "page": "tobin-core-0",
+            "pivot": {
+              "x": 114,
+              "y": 230
+            },
+            "source": {
+              "h": 231,
+              "w": 168,
+              "x": 125,
+              "y": 910
+            }
+          }
+        },
+        {
+          "durationMs": 83,
+          "frame": {
+            "hash": "fdd684bf88a62c5be05ae2177a181c55e903b7938063dea99c39d503c4ff2c4e",
+            "page": "tobin-core-0",
+            "pivot": {
+              "x": 114,
+              "y": 186
+            },
+            "source": {
+              "h": 188,
+              "w": 171,
+              "x": 1276,
+              "y": 1367
+            }
+          }
+        }
+      ]
+    },
+    "stagger": {
+      "loop": false,
+      "playbackFps": 10,
+      "sourceFps": 12,
+      "timeline": [
+        {
+          "durationMs": 100,
+          "frame": {
+            "hash": "04f91b6fc83667ac3c964f9215109a6b70fa06bd07683b54d0536dbfb7bb3a10",
+            "page": "tobin-core-0",
+            "pivot": {
+              "x": 68,
+              "y": 145
+            },
+            "source": {
+              "h": 147,
+              "w": 134,
+              "x": 248,
+              "y": 0
+            }
+          }
+        },
+        {
+          "durationMs": 100,
+          "frame": {
+            "hash": "f3dda7273e47010ade29ba9fc7ed7a108ae647402c029aa0f0a901ddc9bda369",
+            "page": "tobin-core-0",
+            "pivot": {
+              "x": 67,
+              "y": 143
+            },
+            "source": {
+              "h": 145,
+              "w": 132,
+              "x": 879,
+              "y": 1367
+            }
+          }
+        },
+        {
+          "durationMs": 100,
+          "frame": {
+            "hash": "59c5d5b0c15e55e63f3afc36b5c8ad6bbcd2b6c8b249e7b720dbe6c895daea2c",
+            "page": "tobin-core-0",
+            "pivot": {
+              "x": 67,
+              "y": 126
+            },
+            "source": {
+              "h": 127,
+              "w": 130,
+              "x": 1629,
+              "y": 455
+            }
+          }
+        },
+        {
+          "durationMs": 100,
+          "frame": {
+            "hash": "95c27224ff08e03234563c7da4be00d7171994638a75f0b0d751490f92c7a6b4",
+            "page": "tobin-core-0",
+            "pivot": {
+              "x": 69,
+              "y": 125
+            },
+            "source": {
+              "h": 126,
+              "w": 132,
+              "x": 1302,
+              "y": 910
+            }
+          }
+        },
+        {
+          "durationMs": 100,
+          "frame": {
+            "hash": "fb38df1170d66d9b3074743273e8e59d1d93cc2942988ff17a66ffddf9601e75",
+            "page": "tobin-core-0",
+            "pivot": {
+              "x": 70,
+              "y": 125
+            },
+            "source": {
+              "h": 126,
+              "w": 133,
+              "x": 1143,
+              "y": 1367
+            }
+          }
+        },
+        {
+          "durationMs": 100,
+          "frame": {
+            "hash": "020bf2359d4f003c2a7300cd20c9ad5bf859ca9b636860fc54deaba9aabe43e8",
+            "page": "tobin-core-0",
+            "pivot": {
+              "x": 72,
+              "y": 126
+            },
+            "source": {
+              "h": 127,
+              "w": 136,
+              "x": 112,
+              "y": 0
+            }
+          }
+        },
+        {
+          "durationMs": 100,
+          "frame": {
+            "hash": "4168e39b9956885816a2c069b6297dc35e3ff3c30fd9fc7d891201eb3741de3e",
+            "page": "tobin-core-0",
+            "pivot": {
+              "x": 76,
+              "y": 127
+            },
+            "source": {
+              "h": 137,
+              "w": 140,
+              "x": 383,
+              "y": 455
+            }
+          }
+        },
+        {
+          "durationMs": 100,
+          "frame": {
+            "hash": "5742a5b4205f7eee5d2a824552dd7d41b1e5b28ef665073345366e6939ed5dda",
+            "page": "tobin-core-0",
+            "pivot": {
+              "x": 72,
+              "y": 141
+            },
+            "source": {
+              "h": 153,
+              "w": 143,
+              "x": 1486,
+              "y": 455
+            }
+          }
+        },
+        {
+          "durationMs": 100,
+          "frame": {
+            "hash": "391572dc3c855bce92bb7fe49995dd9b3c5702ba10e03409204310a345ad9a68",
+            "page": "tobin-core-0",
+            "pivot": {
+              "x": 76,
+              "y": 145
+            },
+            "source": {
+              "h": 157,
+              "w": 145,
+              "x": 1346,
+              "y": 228
+            }
+          }
+        }
+      ]
+    },
+    "victory": {
+      "loop": false,
+      "playbackFps": 8,
+      "sourceFps": 9,
+      "timeline": [
+        {
+          "durationMs": 125,
+          "frame": {
+            "hash": "04f91b6fc83667ac3c964f9215109a6b70fa06bd07683b54d0536dbfb7bb3a10",
+            "page": "tobin-core-0",
+            "pivot": {
+              "x": 68,
+              "y": 145
+            },
+            "source": {
+              "h": 147,
+              "w": 134,
+              "x": 248,
+              "y": 0
+            }
+          }
+        },
+        {
+          "durationMs": 125,
+          "frame": {
+            "hash": "65f99c78b2a32ee62476b44d4c2e2b1ee6702941311f5bc6ec445964e393e8c5",
+            "page": "tobin-core-0",
+            "pivot": {
+              "x": 70,
+              "y": 151
+            },
+            "source": {
+              "h": 153,
+              "w": 139,
+              "x": 405,
+              "y": 679
+            }
+          }
+        },
+        {
+          "durationMs": 125,
+          "frame": {
+            "hash": "97831ba1bf4ffe0035650a10b37b8a5e19dc5cad2c3a91a760be113715b3a866",
+            "page": "tobin-core-0",
+            "pivot": {
+              "x": 71,
+              "y": 157
+            },
+            "source": {
+              "h": 159,
+              "w": 140,
+              "x": 1434,
+              "y": 910
+            }
+          }
+        },
+        {
+          "durationMs": 125,
+          "frame": {
+            "hash": "da1c68a718985939e716002bb3e6e5f75b287064d50e0c08ea00f9cf6826fd69",
+            "page": "tobin-core-0",
+            "pivot": {
+              "x": 53,
+              "y": 168
+            },
+            "source": {
+              "h": 170,
+              "w": 105,
+              "x": 275,
+              "y": 1367
+            }
+          }
+        },
+        {
+          "durationMs": 125,
+          "frame": {
+            "hash": "0cbdc7f30e98d0fbcf31c2ca31c2b0454615c3b491ff0179d360053ec1a76894",
+            "page": "tobin-core-0",
+            "pivot": {
+              "x": 54,
+              "y": 176
+            },
+            "source": {
+              "h": 178,
+              "w": 108,
+              "x": 1603,
+              "y": 0
+            }
+          }
+        },
+        {
+          "durationMs": 125,
+          "frame": {
+            "hash": "8f0180f4b447ecd75015e0a2d7eb876bae8fced29e38f552247d882295e22215",
+            "page": "tobin-core-0",
+            "pivot": {
+              "x": 54,
+              "y": 187
+            },
+            "source": {
+              "h": 189,
+              "w": 109,
+              "x": 847,
+              "y": 910
+            }
+          }
+        },
+        {
+          "durationMs": 125,
+          "frame": {
+            "hash": "cfc2c77c0d94be5d8bf36622585427e1b9d5701fa5d2f7afbfd0db28c518f80d",
+            "page": "tobin-core-0",
+            "pivot": {
+              "x": 54,
+              "y": 196
+            },
+            "source": {
+              "h": 198,
+              "w": 109,
+              "x": 1841,
+              "y": 1141
+            }
+          }
+        },
+        {
+          "durationMs": 125,
+          "frame": {
+            "hash": "ae1551970c85ceb1fc38f7aaa5d66d5a60400c459b2f7486098b0231ea742f8b",
+            "page": "tobin-core-0",
+            "pivot": {
+              "x": 53,
+              "y": 202
+            },
+            "source": {
+              "h": 204,
+              "w": 107,
+              "x": 151,
+              "y": 1141
+            }
+          }
+        },
+        {
+          "durationMs": 125,
+          "frame": {
+            "hash": "df6a38964d97393e907fe962fa94ea0f520788d7888195169259611ee60a97ae",
+            "page": "tobin-core-0",
+            "pivot": {
+              "x": 53,
+              "y": 210
+            },
+            "source": {
+              "h": 212,
+              "w": 105,
+              "x": 380,
+              "y": 1367
+            }
+          }
+        }
+      ]
+    }
+  },
+  "format": "atlas-v2",
+  "frames": {
+    "001b3330864af445b63f6015509ba4a6e58e636c664513db618c5ad8b54bdb5a": {
+      "hash": "001b3330864af445b63f6015509ba4a6e58e636c664513db618c5ad8b54bdb5a",
+      "page": "tobin-core-0",
+      "pivot": {
+        "x": 57,
+        "y": 220
+      },
+      "source": {
+        "h": 222,
+        "w": 112,
+        "x": 0,
+        "y": 0
+      }
+    },
+    "020bf2359d4f003c2a7300cd20c9ad5bf859ca9b636860fc54deaba9aabe43e8": {
+      "hash": "020bf2359d4f003c2a7300cd20c9ad5bf859ca9b636860fc54deaba9aabe43e8",
+      "page": "tobin-core-0",
+      "pivot": {
+        "x": 72,
+        "y": 126
+      },
+      "source": {
+        "h": 127,
+        "w": 136,
+        "x": 112,
+        "y": 0
+      }
+    },
+    "04f91b6fc83667ac3c964f9215109a6b70fa06bd07683b54d0536dbfb7bb3a10": {
+      "hash": "04f91b6fc83667ac3c964f9215109a6b70fa06bd07683b54d0536dbfb7bb3a10",
+      "page": "tobin-core-0",
+      "pivot": {
+        "x": 68,
+        "y": 145
+      },
+      "source": {
+        "h": 147,
+        "w": 134,
+        "x": 248,
+        "y": 0
+      }
+    },
+    "07e8894e8155f58d54bae6eef59ca79b828216c45dc917ba99f0cb23ce24c43b": {
+      "hash": "07e8894e8155f58d54bae6eef59ca79b828216c45dc917ba99f0cb23ce24c43b",
+      "page": "tobin-core-0",
+      "pivot": {
+        "x": 52,
+        "y": 222
+      },
+      "source": {
+        "h": 224,
+        "w": 109,
+        "x": 382,
+        "y": 0
+      }
+    },
+    "084dcc3147689578d4ad2bd31ca4ea815efeccf27f9bf99de713543686934ec5": {
+      "hash": "084dcc3147689578d4ad2bd31ca4ea815efeccf27f9bf99de713543686934ec5",
+      "page": "tobin-core-0",
+      "pivot": {
+        "x": 90,
+        "y": 221
+      },
+      "source": {
+        "h": 223,
+        "w": 180,
+        "x": 491,
+        "y": 0
+      }
+    },
+    "08fe4cfee41dc1274c1edac876e1e5c3efbdcd09a9515592a08000001d4f29cc": {
+      "hash": "08fe4cfee41dc1274c1edac876e1e5c3efbdcd09a9515592a08000001d4f29cc",
+      "page": "tobin-core-0",
+      "pivot": {
+        "x": 72,
+        "y": 225
+      },
+      "source": {
+        "h": 228,
+        "w": 128,
+        "x": 671,
+        "y": 0
+      }
+    },
+    "0a852d4df7797ed5fd9b1e90a43d3eb1c17322b6bdb32d004e7099a1054011b5": {
+      "hash": "0a852d4df7797ed5fd9b1e90a43d3eb1c17322b6bdb32d004e7099a1054011b5",
+      "page": "tobin-core-0",
+      "pivot": {
+        "x": 92,
+        "y": 220
+      },
+      "source": {
+        "h": 222,
+        "w": 188,
+        "x": 799,
+        "y": 0
+      }
+    },
+    "0b8d03a54a0c6852214c88c71caf5dc49aedfac5b0ef8be798a80dec90c19b62": {
+      "hash": "0b8d03a54a0c6852214c88c71caf5dc49aedfac5b0ef8be798a80dec90c19b62",
+      "page": "tobin-core-0",
+      "pivot": {
+        "x": 72,
+        "y": 171
+      },
+      "source": {
+        "h": 173,
+        "w": 157,
+        "x": 987,
+        "y": 0
+      }
+    },
+    "0b96569908e108e580d2a19aa667a6f7a114cd2fe655d5c9317948780152b2bb": {
+      "hash": "0b96569908e108e580d2a19aa667a6f7a114cd2fe655d5c9317948780152b2bb",
+      "page": "tobin-core-0",
+      "pivot": {
+        "x": 77,
+        "y": 220
+      },
+      "source": {
+        "h": 222,
+        "w": 157,
+        "x": 1144,
+        "y": 0
+      }
+    },
+    "0c373d33cc94927fcd3a1e2209664cbf2ecdf725c3fb6c30d0e134f58f7582d5": {
+      "hash": "0c373d33cc94927fcd3a1e2209664cbf2ecdf725c3fb6c30d0e134f58f7582d5",
+      "page": "tobin-core-0",
+      "pivot": {
+        "x": 73,
+        "y": 186
+      },
+      "source": {
+        "h": 188,
+        "w": 158,
+        "x": 1301,
+        "y": 0
+      }
+    },
+    "0c9f8ef9f9ebe9328123b677a71db68c87506c0ad69f7ce03955e805000118e4": {
+      "hash": "0c9f8ef9f9ebe9328123b677a71db68c87506c0ad69f7ce03955e805000118e4",
+      "page": "tobin-core-0",
+      "pivot": {
+        "x": 72,
+        "y": 202
+      },
+      "source": {
+        "h": 205,
+        "w": 144,
+        "x": 1459,
+        "y": 0
+      }
+    },
+    "0cbdc7f30e98d0fbcf31c2ca31c2b0454615c3b491ff0179d360053ec1a76894": {
+      "hash": "0cbdc7f30e98d0fbcf31c2ca31c2b0454615c3b491ff0179d360053ec1a76894",
+      "page": "tobin-core-0",
+      "pivot": {
+        "x": 54,
+        "y": 176
+      },
+      "source": {
+        "h": 178,
+        "w": 108,
+        "x": 1603,
+        "y": 0
+      }
+    },
+    "0d20a334c119bc7aba1cb8f086c13447ad08466c390cbe90a03aeff0191f4fcf": {
+      "hash": "0d20a334c119bc7aba1cb8f086c13447ad08466c390cbe90a03aeff0191f4fcf",
+      "page": "tobin-core-0",
+      "pivot": {
+        "x": 60,
+        "y": 224
+      },
+      "source": {
+        "h": 225,
+        "w": 132,
+        "x": 1711,
+        "y": 0
+      }
+    },
+    "1024f00afa14d42f7dc784344ab625094b658d4762a013232219783ed9efd18a": {
+      "hash": "1024f00afa14d42f7dc784344ab625094b658d4762a013232219783ed9efd18a",
+      "page": "tobin-core-0",
+      "pivot": {
+        "x": 72,
+        "y": 182
+      },
+      "source": {
+        "h": 183,
+        "w": 139,
+        "x": 1843,
+        "y": 0
+      }
+    },
+    "11b540ac11dcf7bc3e298d4794f1a6bd09374debfc497a10e28eea53037ef227": {
+      "hash": "11b540ac11dcf7bc3e298d4794f1a6bd09374debfc497a10e28eea53037ef227",
+      "page": "tobin-core-0",
+      "pivot": {
+        "x": 88,
+        "y": 221
+      },
+      "source": {
+        "h": 223,
+        "w": 178,
+        "x": 0,
+        "y": 228
+      }
+    },
+    "14cc18b92e96cbe9240536b94a1b54fb1f468db24e695392fecedf84ea49e4eb": {
+      "hash": "14cc18b92e96cbe9240536b94a1b54fb1f468db24e695392fecedf84ea49e4eb",
+      "page": "tobin-core-0",
+      "pivot": {
+        "x": 54,
+        "y": 222
+      },
+      "source": {
+        "h": 224,
+        "w": 122,
+        "x": 178,
+        "y": 228
+      }
+    },
+    "14d0ccbc3df9f4e848150c4ba99c03d38c84a1be4f40141c54c73eb839b8afa2": {
+      "hash": "14d0ccbc3df9f4e848150c4ba99c03d38c84a1be4f40141c54c73eb839b8afa2",
+      "page": "tobin-core-0",
+      "pivot": {
+        "x": 93,
+        "y": 223
+      },
+      "source": {
+        "h": 225,
+        "w": 183,
+        "x": 300,
+        "y": 228
+      }
+    },
+    "16210a398050a76de12c89630f6090d91ffe94b91aceac9e1263fd7809d1f490": {
+      "hash": "16210a398050a76de12c89630f6090d91ffe94b91aceac9e1263fd7809d1f490",
+      "page": "tobin-core-0",
+      "pivot": {
+        "x": 57,
+        "y": 220
+      },
+      "source": {
+        "h": 222,
+        "w": 111,
+        "x": 483,
+        "y": 228
+      }
+    },
+    "181e3001750d73b035852f4deaa4e88b75a421f297c5e8310dccf8968b1a354c": {
+      "hash": "181e3001750d73b035852f4deaa4e88b75a421f297c5e8310dccf8968b1a354c",
+      "page": "tobin-core-0",
+      "pivot": {
+        "x": 68,
+        "y": 161
+      },
+      "source": {
+        "h": 163,
+        "w": 133,
+        "x": 594,
+        "y": 228
+      }
+    },
+    "2a90330ee22b92f531145cae9c448bcde9d34b31cb14caabf436e882a9411a03": {
+      "hash": "2a90330ee22b92f531145cae9c448bcde9d34b31cb14caabf436e882a9411a03",
+      "page": "tobin-core-0",
+      "pivot": {
+        "x": 78,
+        "y": 225
+      },
+      "source": {
+        "h": 227,
+        "w": 141,
+        "x": 727,
+        "y": 228
+      }
+    },
+    "2f0ff916d0d30898455dc42426dac2301cf50dcd585a3a379540c24d5b4297d9": {
+      "hash": "2f0ff916d0d30898455dc42426dac2301cf50dcd585a3a379540c24d5b4297d9",
+      "page": "tobin-core-0",
+      "pivot": {
+        "x": 68,
+        "y": 211
+      },
+      "source": {
+        "h": 213,
+        "w": 139,
+        "x": 868,
+        "y": 228
+      }
+    },
+    "2f41e37c018aa5332e2c26a1258b51199d9b5481a0c120a7e3e3f80e8959b278": {
+      "hash": "2f41e37c018aa5332e2c26a1258b51199d9b5481a0c120a7e3e3f80e8959b278",
+      "page": "tobin-core-0",
+      "pivot": {
+        "x": 106,
+        "y": 224
+      },
+      "source": {
+        "h": 225,
+        "w": 179,
+        "x": 1007,
+        "y": 228
+      }
+    },
+    "32ff817ea9f40eb88969c2c834bf024f0d13d36b96f4ea38030681506dd7cef9": {
+      "hash": "32ff817ea9f40eb88969c2c834bf024f0d13d36b96f4ea38030681506dd7cef9",
+      "page": "tobin-core-0",
+      "pivot": {
+        "x": 78,
+        "y": 223
+      },
+      "source": {
+        "h": 226,
+        "w": 160,
+        "x": 1186,
+        "y": 228
+      }
+    },
+    "391572dc3c855bce92bb7fe49995dd9b3c5702ba10e03409204310a345ad9a68": {
+      "hash": "391572dc3c855bce92bb7fe49995dd9b3c5702ba10e03409204310a345ad9a68",
+      "page": "tobin-core-0",
+      "pivot": {
+        "x": 76,
+        "y": 145
+      },
+      "source": {
+        "h": 157,
+        "w": 145,
+        "x": 1346,
+        "y": 228
+      }
+    },
+    "3a0c106fddbcaec87e9a153364bd376391ea318e7d4b4fbc5ec96ec6d99af99f": {
+      "hash": "3a0c106fddbcaec87e9a153364bd376391ea318e7d4b4fbc5ec96ec6d99af99f",
+      "page": "tobin-core-0",
+      "pivot": {
+        "x": 54,
+        "y": 216
+      },
+      "source": {
+        "h": 218,
+        "w": 109,
+        "x": 1491,
+        "y": 228
+      }
+    },
+    "3a24a9ce2b71401db13eb3727b53cbc0fa68befef96ef8c50a3775636ad5faad": {
+      "hash": "3a24a9ce2b71401db13eb3727b53cbc0fa68befef96ef8c50a3775636ad5faad",
+      "page": "tobin-core-0",
+      "pivot": {
+        "x": 71,
+        "y": 155
+      },
+      "source": {
+        "h": 157,
+        "w": 149,
+        "x": 1600,
+        "y": 228
+      }
+    },
+    "3a251fd931987151c4ca5a8d992bbe01b196a8fbcbaa57898b249dedd6f5bc76": {
+      "hash": "3a251fd931987151c4ca5a8d992bbe01b196a8fbcbaa57898b249dedd6f5bc76",
+      "page": "tobin-core-0",
+      "pivot": {
+        "x": 57,
+        "y": 220
+      },
+      "source": {
+        "h": 222,
+        "w": 112,
+        "x": 1749,
+        "y": 228
+      }
+    },
+    "3bebaacdd31a97ea1ec3b829f2ed112bbe9cebd18ceaeb64b95799c42377aaf8": {
+      "hash": "3bebaacdd31a97ea1ec3b829f2ed112bbe9cebd18ceaeb64b95799c42377aaf8",
+      "page": "tobin-core-0",
+      "pivot": {
+        "x": 75,
+        "y": 214
+      },
+      "source": {
+        "h": 217,
+        "w": 141,
+        "x": 1861,
+        "y": 228
+      }
+    },
+    "3cf805e329801dc39fdcaff11d3ce286d3ae78d3e31418429cdc18d924c40025": {
+      "hash": "3cf805e329801dc39fdcaff11d3ce286d3ae78d3e31418429cdc18d924c40025",
+      "page": "tobin-core-0",
+      "pivot": {
+        "x": 99,
+        "y": 213
+      },
+      "source": {
+        "h": 215,
+        "w": 194,
+        "x": 0,
+        "y": 455
+      }
+    },
+    "40097eaf4f7791d87be5cf493b0a3c0bb50d95e7a05353af3b13e66fe1dfcc96": {
+      "hash": "40097eaf4f7791d87be5cf493b0a3c0bb50d95e7a05353af3b13e66fe1dfcc96",
+      "page": "tobin-core-0",
+      "pivot": {
+        "x": 96,
+        "y": 214
+      },
+      "source": {
+        "h": 216,
+        "w": 189,
+        "x": 194,
+        "y": 455
+      }
+    },
+    "4168e39b9956885816a2c069b6297dc35e3ff3c30fd9fc7d891201eb3741de3e": {
+      "hash": "4168e39b9956885816a2c069b6297dc35e3ff3c30fd9fc7d891201eb3741de3e",
+      "page": "tobin-core-0",
+      "pivot": {
+        "x": 76,
+        "y": 127
+      },
+      "source": {
+        "h": 137,
+        "w": 140,
+        "x": 383,
+        "y": 455
+      }
+    },
+    "44f92e632f0044fb02dc676b9e35d4660e7aa78cbd178d23352744523406da7d": {
+      "hash": "44f92e632f0044fb02dc676b9e35d4660e7aa78cbd178d23352744523406da7d",
+      "page": "tobin-core-0",
+      "pivot": {
+        "x": 59,
+        "y": 219
+      },
+      "source": {
+        "h": 221,
+        "w": 114,
+        "x": 523,
+        "y": 455
+      }
+    },
+    "48a4ce47180c9c4d9552ba8f8565dda7af4d673a1106e02cee8260459df78422": {
+      "hash": "48a4ce47180c9c4d9552ba8f8565dda7af4d673a1106e02cee8260459df78422",
+      "page": "tobin-core-0",
+      "pivot": {
+        "x": 73,
+        "y": 166
+      },
+      "source": {
+        "h": 168,
+        "w": 147,
+        "x": 637,
+        "y": 455
+      }
+    },
+    "4a6ad66a24cd254e7eb9ae971b6f8fd65a60e5b4672340bb1445947196c34163": {
+      "hash": "4a6ad66a24cd254e7eb9ae971b6f8fd65a60e5b4672340bb1445947196c34163",
+      "page": "tobin-core-0",
+      "pivot": {
+        "x": 96,
+        "y": 221
+      },
+      "source": {
+        "h": 223,
+        "w": 192,
+        "x": 784,
+        "y": 455
+      }
+    },
+    "4b71bbbafe8253590cb987e6364af350ee54d2fcc85dfd477cd14d423cc23f15": {
+      "hash": "4b71bbbafe8253590cb987e6364af350ee54d2fcc85dfd477cd14d423cc23f15",
+      "page": "tobin-core-0",
+      "pivot": {
+        "x": 87,
+        "y": 220
+      },
+      "source": {
+        "h": 222,
+        "w": 171,
+        "x": 976,
+        "y": 455
+      }
+    },
+    "4c23b4ab63f11489dfb98c4d9c10f8f72e073d845a953fa14406a83bfe861fdb": {
+      "hash": "4c23b4ab63f11489dfb98c4d9c10f8f72e073d845a953fa14406a83bfe861fdb",
+      "page": "tobin-core-0",
+      "pivot": {
+        "x": 100,
+        "y": 189
+      },
+      "source": {
+        "h": 193,
+        "w": 161,
+        "x": 1147,
+        "y": 455
+      }
+    },
+    "4eca9035033b9faf8fb6bee88d29db18e41399174b44cb8f3c39b3aa97ac7489": {
+      "hash": "4eca9035033b9faf8fb6bee88d29db18e41399174b44cb8f3c39b3aa97ac7489",
+      "page": "tobin-core-0",
+      "pivot": {
+        "x": 88,
+        "y": 221
+      },
+      "source": {
+        "h": 224,
+        "w": 178,
+        "x": 1308,
+        "y": 455
+      }
+    },
+    "5742a5b4205f7eee5d2a824552dd7d41b1e5b28ef665073345366e6939ed5dda": {
+      "hash": "5742a5b4205f7eee5d2a824552dd7d41b1e5b28ef665073345366e6939ed5dda",
+      "page": "tobin-core-0",
+      "pivot": {
+        "x": 72,
+        "y": 141
+      },
+      "source": {
+        "h": 153,
+        "w": 143,
+        "x": 1486,
+        "y": 455
+      }
+    },
+    "59c5d5b0c15e55e63f3afc36b5c8ad6bbcd2b6c8b249e7b720dbe6c895daea2c": {
+      "hash": "59c5d5b0c15e55e63f3afc36b5c8ad6bbcd2b6c8b249e7b720dbe6c895daea2c",
+      "page": "tobin-core-0",
+      "pivot": {
+        "x": 67,
+        "y": 126
+      },
+      "source": {
+        "h": 127,
+        "w": 130,
+        "x": 1629,
+        "y": 455
+      }
+    },
+    "5bbcab524f941ac2d1d50645ec7d136478be59788a966fd36f71604ce5d8fcd8": {
+      "hash": "5bbcab524f941ac2d1d50645ec7d136478be59788a966fd36f71604ce5d8fcd8",
+      "page": "tobin-core-0",
+      "pivot": {
+        "x": 51,
+        "y": 144
+      },
+      "source": {
+        "h": 146,
+        "w": 100,
+        "x": 1759,
+        "y": 455
+      }
+    },
+    "5c85caf3e55bbaef31c429c6b12ad5b53c4e7500a7cc82a7a8022f54d9b715fe": {
+      "hash": "5c85caf3e55bbaef31c429c6b12ad5b53c4e7500a7cc82a7a8022f54d9b715fe",
+      "page": "tobin-core-0",
+      "pivot": {
+        "x": 68,
+        "y": 189
+      },
+      "source": {
+        "h": 192,
+        "w": 133,
+        "x": 1859,
+        "y": 455
+      }
+    },
+    "5da1265e0dae58045625f49bb5086bca39fef4ab48cb14c7e075dfdea6ca3058": {
+      "hash": "5da1265e0dae58045625f49bb5086bca39fef4ab48cb14c7e075dfdea6ca3058",
+      "page": "tobin-core-0",
+      "pivot": {
+        "x": 58,
+        "y": 216
+      },
+      "source": {
+        "h": 218,
+        "w": 145,
+        "x": 0,
+        "y": 679
+      }
+    },
+    "5e16a81f847b9bb6390200e7eeb385dd5812ab37225c13349620d7ee0bbd00bf": {
+      "hash": "5e16a81f847b9bb6390200e7eeb385dd5812ab37225c13349620d7ee0bbd00bf",
+      "page": "tobin-core-0",
+      "pivot": {
+        "x": 53,
+        "y": 217
+      },
+      "source": {
+        "h": 219,
+        "w": 111,
+        "x": 145,
+        "y": 679
+      }
+    },
+    "636213592feb7e4d33923ff95b5dc40a8d3cf5b0f434f7f3915bbeed0009282b": {
+      "hash": "636213592feb7e4d33923ff95b5dc40a8d3cf5b0f434f7f3915bbeed0009282b",
+      "page": "tobin-core-0",
+      "pivot": {
+        "x": 88,
+        "y": 227
+      },
+      "source": {
+        "h": 231,
+        "w": 149,
+        "x": 256,
+        "y": 679
+      }
+    },
+    "65f99c78b2a32ee62476b44d4c2e2b1ee6702941311f5bc6ec445964e393e8c5": {
+      "hash": "65f99c78b2a32ee62476b44d4c2e2b1ee6702941311f5bc6ec445964e393e8c5",
+      "page": "tobin-core-0",
+      "pivot": {
+        "x": 70,
+        "y": 151
+      },
+      "source": {
+        "h": 153,
+        "w": 139,
+        "x": 405,
+        "y": 679
+      }
+    },
+    "6d88134382bb5f271c32c7729391a125c9611b3decb9be08d516869f99b4bdcd": {
+      "hash": "6d88134382bb5f271c32c7729391a125c9611b3decb9be08d516869f99b4bdcd",
+      "page": "tobin-core-0",
+      "pivot": {
+        "x": 60,
+        "y": 209
+      },
+      "source": {
+        "h": 211,
+        "w": 147,
+        "x": 544,
+        "y": 679
+      }
+    },
+    "7000c529c124d8b51586a6b80ff994e11d96c69e24a52ec009234e88dd78b4db": {
+      "hash": "7000c529c124d8b51586a6b80ff994e11d96c69e24a52ec009234e88dd78b4db",
+      "page": "tobin-core-0",
+      "pivot": {
+        "x": 88,
+        "y": 211
+      },
+      "source": {
+        "h": 212,
+        "w": 168,
+        "x": 691,
+        "y": 679
+      }
+    },
+    "725006f8611f0482099d83681b4f28a205b204e070a932fd92d8c8d06638a8bd": {
+      "hash": "725006f8611f0482099d83681b4f28a205b204e070a932fd92d8c8d06638a8bd",
+      "page": "tobin-core-0",
+      "pivot": {
+        "x": 63,
+        "y": 223
+      },
+      "source": {
+        "h": 225,
+        "w": 150,
+        "x": 859,
+        "y": 679
+      }
+    },
+    "72ab1513b5e1bd9dafe095dd0a1374cac611e80416b799ea4a0b5877f45d500a": {
+      "hash": "72ab1513b5e1bd9dafe095dd0a1374cac611e80416b799ea4a0b5877f45d500a",
+      "page": "tobin-core-0",
+      "pivot": {
+        "x": 67,
+        "y": 227
+      },
+      "source": {
+        "h": 228,
+        "w": 137,
+        "x": 1009,
+        "y": 679
+      }
+    },
+    "73a1278277a86acb49f1cd3f9d54d5f6c77cc73f6d9747e700f920691121d314": {
+      "hash": "73a1278277a86acb49f1cd3f9d54d5f6c77cc73f6d9747e700f920691121d314",
+      "page": "tobin-core-0",
+      "pivot": {
+        "x": 52,
+        "y": 217
+      },
+      "source": {
+        "h": 219,
+        "w": 102,
+        "x": 1146,
+        "y": 679
+      }
+    },
+    "7637c07087428300851a829d50ff5fe5fa0e1f031017f107dff52ccfbf8cb75e": {
+      "hash": "7637c07087428300851a829d50ff5fe5fa0e1f031017f107dff52ccfbf8cb75e",
+      "page": "tobin-core-0",
+      "pivot": {
+        "x": 99,
+        "y": 225
+      },
+      "source": {
+        "h": 227,
+        "w": 198,
+        "x": 1248,
+        "y": 679
+      }
+    },
+    "790c7bc22ece9471a13664a1f3f856353b3c1dee1351598e413462d5654e5d8d": {
+      "hash": "790c7bc22ece9471a13664a1f3f856353b3c1dee1351598e413462d5654e5d8d",
+      "page": "tobin-core-0",
+      "pivot": {
+        "x": 93,
+        "y": 222
+      },
+      "source": {
+        "h": 225,
+        "w": 183,
+        "x": 1446,
+        "y": 679
+      }
+    },
+    "79231a6c7b6d7c0b4dd71bc41dd78171fd827f8c89074c3885f035fe3737c406": {
+      "hash": "79231a6c7b6d7c0b4dd71bc41dd78171fd827f8c89074c3885f035fe3737c406",
+      "page": "tobin-core-0",
+      "pivot": {
+        "x": 102,
+        "y": 210
+      },
+      "source": {
+        "h": 212,
+        "w": 201,
+        "x": 1629,
+        "y": 679
+      }
+    },
+    "805749d52c1812ac31cc65409879ec99c2313fbcba90f74bb756d53523af8914": {
+      "hash": "805749d52c1812ac31cc65409879ec99c2313fbcba90f74bb756d53523af8914",
+      "page": "tobin-core-0",
+      "pivot": {
+        "x": 79,
+        "y": 226
+      },
+      "source": {
+        "h": 229,
+        "w": 161,
+        "x": 1830,
+        "y": 679
+      }
+    },
+    "815b873adefd70625869f3c82d7113f52bf3de5e50feb66dc77b9f43feda9540": {
+      "hash": "815b873adefd70625869f3c82d7113f52bf3de5e50feb66dc77b9f43feda9540",
+      "page": "tobin-core-0",
+      "pivot": {
+        "x": 65,
+        "y": 212
+      },
+      "source": {
+        "h": 214,
+        "w": 125,
+        "x": 0,
+        "y": 910
+      }
+    },
+    "8366060a920a475a73f1fb46be40b6a725d7f44f910721b750f60e661240e24e": {
+      "hash": "8366060a920a475a73f1fb46be40b6a725d7f44f910721b750f60e661240e24e",
+      "page": "tobin-core-0",
+      "pivot": {
+        "x": 114,
+        "y": 230
+      },
+      "source": {
+        "h": 231,
+        "w": 168,
+        "x": 125,
+        "y": 910
+      }
+    },
+    "848c24e1078deae2c630bd3610b3811de162108b0992b3eb4bffd3e3556666e1": {
+      "hash": "848c24e1078deae2c630bd3610b3811de162108b0992b3eb4bffd3e3556666e1",
+      "page": "tobin-core-0",
+      "pivot": {
+        "x": 66,
+        "y": 203
+      },
+      "source": {
+        "h": 205,
+        "w": 130,
+        "x": 293,
+        "y": 910
+      }
+    },
+    "8748e85dcca958dec6052c06f953dde3b4de6b8f7144e3c84a3b91424c125c15": {
+      "hash": "8748e85dcca958dec6052c06f953dde3b4de6b8f7144e3c84a3b91424c125c15",
+      "page": "tobin-core-0",
+      "pivot": {
+        "x": 90,
+        "y": 221
+      },
+      "source": {
+        "h": 223,
+        "w": 180,
+        "x": 423,
+        "y": 910
+      }
+    },
+    "88de759798c295d699930f5618c13dc182e5294da459edbc51af1197f44a27db": {
+      "hash": "88de759798c295d699930f5618c13dc182e5294da459edbc51af1197f44a27db",
+      "page": "tobin-core-0",
+      "pivot": {
+        "x": 60,
+        "y": 168
+      },
+      "source": {
+        "h": 171,
+        "w": 114,
+        "x": 603,
+        "y": 910
+      }
+    },
+    "8e51449ac2d753817f7d36e0264f2ac7f35576057f99adae2b14054f52a9bb9e": {
+      "hash": "8e51449ac2d753817f7d36e0264f2ac7f35576057f99adae2b14054f52a9bb9e",
+      "page": "tobin-core-0",
+      "pivot": {
+        "x": 67,
+        "y": 214
+      },
+      "source": {
+        "h": 216,
+        "w": 130,
+        "x": 717,
+        "y": 910
+      }
+    },
+    "8f0180f4b447ecd75015e0a2d7eb876bae8fced29e38f552247d882295e22215": {
+      "hash": "8f0180f4b447ecd75015e0a2d7eb876bae8fced29e38f552247d882295e22215",
+      "page": "tobin-core-0",
+      "pivot": {
+        "x": 54,
+        "y": 187
+      },
+      "source": {
+        "h": 189,
+        "w": 109,
+        "x": 847,
+        "y": 910
+      }
+    },
+    "939c7400233e7bd06ab79c6d57979a9c5276a6a1208aa614c6fdda0a0641550c": {
+      "hash": "939c7400233e7bd06ab79c6d57979a9c5276a6a1208aa614c6fdda0a0641550c",
+      "page": "tobin-core-0",
+      "pivot": {
+        "x": 67,
+        "y": 218
+      },
+      "source": {
+        "h": 219,
+        "w": 139,
+        "x": 956,
+        "y": 910
+      }
+    },
+    "93a2414fbe42d3440d3510ace869cafd20fe8b9d8690cf724ec8776b83bb65a5": {
+      "hash": "93a2414fbe42d3440d3510ace869cafd20fe8b9d8690cf724ec8776b83bb65a5",
+      "page": "tobin-core-0",
+      "pivot": {
+        "x": 102,
+        "y": 226
+      },
+      "source": {
+        "h": 228,
+        "w": 207,
+        "x": 1095,
+        "y": 910
+      }
+    },
+    "95c27224ff08e03234563c7da4be00d7171994638a75f0b0d751490f92c7a6b4": {
+      "hash": "95c27224ff08e03234563c7da4be00d7171994638a75f0b0d751490f92c7a6b4",
+      "page": "tobin-core-0",
+      "pivot": {
+        "x": 69,
+        "y": 125
+      },
+      "source": {
+        "h": 126,
+        "w": 132,
+        "x": 1302,
+        "y": 910
+      }
+    },
+    "97831ba1bf4ffe0035650a10b37b8a5e19dc5cad2c3a91a760be113715b3a866": {
+      "hash": "97831ba1bf4ffe0035650a10b37b8a5e19dc5cad2c3a91a760be113715b3a866",
+      "page": "tobin-core-0",
+      "pivot": {
+        "x": 71,
+        "y": 157
+      },
+      "source": {
+        "h": 159,
+        "w": 140,
+        "x": 1434,
+        "y": 910
+      }
+    },
+    "9870ddfdf7f6992407b9e8c65aa3d6375f7f5e949e0d4fcc9a3bd3acf5cf3cd3": {
+      "hash": "9870ddfdf7f6992407b9e8c65aa3d6375f7f5e949e0d4fcc9a3bd3acf5cf3cd3",
+      "page": "tobin-core-0",
+      "pivot": {
+        "x": 86,
+        "y": 221
+      },
+      "source": {
+        "h": 224,
+        "w": 175,
+        "x": 1574,
+        "y": 910
+      }
+    },
+    "a1a57898947afc95a8469d95c9d812d1df1a6f50463a4b5e26babf5d944f75ab": {
+      "hash": "a1a57898947afc95a8469d95c9d812d1df1a6f50463a4b5e26babf5d944f75ab",
+      "page": "tobin-core-0",
+      "pivot": {
+        "x": 104,
+        "y": 143
+      },
+      "source": {
+        "h": 145,
+        "w": 197,
+        "x": 1749,
+        "y": 910
+      }
+    },
+    "a78a84cf3bdd2069136177192703bbbd4db9226395e82d85b5e637af0dd06adf": {
+      "hash": "a78a84cf3bdd2069136177192703bbbd4db9226395e82d85b5e637af0dd06adf",
+      "page": "tobin-core-0",
+      "pivot": {
+        "x": 74,
+        "y": 214
+      },
+      "source": {
+        "h": 217,
+        "w": 151,
+        "x": 0,
+        "y": 1141
+      }
+    },
+    "ae1551970c85ceb1fc38f7aaa5d66d5a60400c459b2f7486098b0231ea742f8b": {
+      "hash": "ae1551970c85ceb1fc38f7aaa5d66d5a60400c459b2f7486098b0231ea742f8b",
+      "page": "tobin-core-0",
+      "pivot": {
+        "x": 53,
+        "y": 202
+      },
+      "source": {
+        "h": 204,
+        "w": 107,
+        "x": 151,
+        "y": 1141
+      }
+    },
+    "ae69f26067a789777df64fb8f73d6d3b1d14bf37e13fb0a6960ce2fc5904f532": {
+      "hash": "ae69f26067a789777df64fb8f73d6d3b1d14bf37e13fb0a6960ce2fc5904f532",
+      "page": "tobin-core-0",
+      "pivot": {
+        "x": 93,
+        "y": 214
+      },
+      "source": {
+        "h": 216,
+        "w": 180,
+        "x": 258,
+        "y": 1141
+      }
+    },
+    "b1c494d1d7ae9e1119296b1f25e02ee4f585a0e96d554960ca3b1020b56f192f": {
+      "hash": "b1c494d1d7ae9e1119296b1f25e02ee4f585a0e96d554960ca3b1020b56f192f",
+      "page": "tobin-core-0",
+      "pivot": {
+        "x": 90,
+        "y": 223
+      },
+      "source": {
+        "h": 225,
+        "w": 180,
+        "x": 438,
+        "y": 1141
+      }
+    },
+    "b2c95877b8876dbbd6155bb267809b6033e2c9b065f2f973d9fabe5872d06b94": {
+      "hash": "b2c95877b8876dbbd6155bb267809b6033e2c9b065f2f973d9fabe5872d06b94",
+      "page": "tobin-core-0",
+      "pivot": {
+        "x": 80,
+        "y": 217
+      },
+      "source": {
+        "h": 219,
+        "w": 161,
+        "x": 618,
+        "y": 1141
+      }
+    },
+    "b37f9784d860cf81227b076d6eb8cf89c2fc6fcd085f1ae4a321f8693ab483b8": {
+      "hash": "b37f9784d860cf81227b076d6eb8cf89c2fc6fcd085f1ae4a321f8693ab483b8",
+      "page": "tobin-core-0",
+      "pivot": {
+        "x": 70,
+        "y": 200
+      },
+      "source": {
+        "h": 202,
+        "w": 152,
+        "x": 779,
+        "y": 1141
+      }
+    },
+    "b3e8a470041cc915839d436bebbcb1ad271166cd0f383143d441defb37dbadc2": {
+      "hash": "b3e8a470041cc915839d436bebbcb1ad271166cd0f383143d441defb37dbadc2",
+      "page": "tobin-core-0",
+      "pivot": {
+        "x": 75,
+        "y": 224
+      },
+      "source": {
+        "h": 226,
+        "w": 162,
+        "x": 931,
+        "y": 1141
+      }
+    },
+    "b7c8dde33edbf818dd58d7b169bcadad5cc7aea3f4b8e4b6a43401ef53d6ebfc": {
+      "hash": "b7c8dde33edbf818dd58d7b169bcadad5cc7aea3f4b8e4b6a43401ef53d6ebfc",
+      "page": "tobin-core-0",
+      "pivot": {
+        "x": 71,
+        "y": 218
+      },
+      "source": {
+        "h": 221,
+        "w": 139,
+        "x": 1093,
+        "y": 1141
+      }
+    },
+    "c1aa9f4615e227c8228625491d6f5e4b2415eb15a2d060c2c428c4640c84c89f": {
+      "hash": "c1aa9f4615e227c8228625491d6f5e4b2415eb15a2d060c2c428c4640c84c89f",
+      "page": "tobin-core-0",
+      "pivot": {
+        "x": 57,
+        "y": 146
+      },
+      "source": {
+        "h": 148,
+        "w": 113,
+        "x": 1232,
+        "y": 1141
+      }
+    },
+    "c245479e004104ffae72404f454bbe36c8b49846baea19ee7c02c764fcd628e7": {
+      "hash": "c245479e004104ffae72404f454bbe36c8b49846baea19ee7c02c764fcd628e7",
+      "page": "tobin-core-0",
+      "pivot": {
+        "x": 57,
+        "y": 220
+      },
+      "source": {
+        "h": 222,
+        "w": 112,
+        "x": 1345,
+        "y": 1141
+      }
+    },
+    "c2a50ebcade3c185529653c7fc48221ed8dc0313baa9e85c0eefa44d07a72470": {
+      "hash": "c2a50ebcade3c185529653c7fc48221ed8dc0313baa9e85c0eefa44d07a72470",
+      "page": "tobin-core-0",
+      "pivot": {
+        "x": 52,
+        "y": 220
+      },
+      "source": {
+        "h": 222,
+        "w": 105,
+        "x": 1457,
+        "y": 1141
+      }
+    },
+    "c4fede2134f6df17c9e28ffdc0420a451d32f3af071e68d1c95acd91e72f565c": {
+      "hash": "c4fede2134f6df17c9e28ffdc0420a451d32f3af071e68d1c95acd91e72f565c",
+      "page": "tobin-core-0",
+      "pivot": {
+        "x": 58,
+        "y": 221
+      },
+      "source": {
+        "h": 223,
+        "w": 145,
+        "x": 1562,
+        "y": 1141
+      }
+    },
+    "c7dd0353e20031ca7f144fcc98da9b500f7c698cf131ed6460c30d9b2ae20bc8": {
+      "hash": "c7dd0353e20031ca7f144fcc98da9b500f7c698cf131ed6460c30d9b2ae20bc8",
+      "page": "tobin-core-0",
+      "pivot": {
+        "x": 68,
+        "y": 194
+      },
+      "source": {
+        "h": 196,
+        "w": 134,
+        "x": 1707,
+        "y": 1141
+      }
+    },
+    "cfc2c77c0d94be5d8bf36622585427e1b9d5701fa5d2f7afbfd0db28c518f80d": {
+      "hash": "cfc2c77c0d94be5d8bf36622585427e1b9d5701fa5d2f7afbfd0db28c518f80d",
+      "page": "tobin-core-0",
+      "pivot": {
+        "x": 54,
+        "y": 196
+      },
+      "source": {
+        "h": 198,
+        "w": 109,
+        "x": 1841,
+        "y": 1141
+      }
+    },
+    "cfc6ab112e65b5892f9883942e415519cc748065200dde2893e44a32754ea375": {
+      "hash": "cfc6ab112e65b5892f9883942e415519cc748065200dde2893e44a32754ea375",
+      "page": "tobin-core-0",
+      "pivot": {
+        "x": 76,
+        "y": 203
+      },
+      "source": {
+        "h": 205,
+        "w": 140,
+        "x": 0,
+        "y": 1367
+      }
+    },
+    "d7cd7548a0839143940385cadeb7b5a0bd2ab4f67f590471a95015210d8a4da0": {
+      "hash": "d7cd7548a0839143940385cadeb7b5a0bd2ab4f67f590471a95015210d8a4da0",
+      "page": "tobin-core-0",
+      "pivot": {
+        "x": 67,
+        "y": 173
+      },
+      "source": {
+        "h": 175,
+        "w": 135,
+        "x": 140,
+        "y": 1367
+      }
+    },
+    "da1c68a718985939e716002bb3e6e5f75b287064d50e0c08ea00f9cf6826fd69": {
+      "hash": "da1c68a718985939e716002bb3e6e5f75b287064d50e0c08ea00f9cf6826fd69",
+      "page": "tobin-core-0",
+      "pivot": {
+        "x": 53,
+        "y": 168
+      },
+      "source": {
+        "h": 170,
+        "w": 105,
+        "x": 275,
+        "y": 1367
+      }
+    },
+    "df6a38964d97393e907fe962fa94ea0f520788d7888195169259611ee60a97ae": {
+      "hash": "df6a38964d97393e907fe962fa94ea0f520788d7888195169259611ee60a97ae",
+      "page": "tobin-core-0",
+      "pivot": {
+        "x": 53,
+        "y": 210
+      },
+      "source": {
+        "h": 212,
+        "w": 105,
+        "x": 380,
+        "y": 1367
+      }
+    },
+    "e6d6b86a27e40fb50d7efc529d159196bcb644b7643398f82056792d1ca846d2": {
+      "hash": "e6d6b86a27e40fb50d7efc529d159196bcb644b7643398f82056792d1ca846d2",
+      "page": "tobin-core-0",
+      "pivot": {
+        "x": 51,
+        "y": 145
+      },
+      "source": {
+        "h": 147,
+        "w": 96,
+        "x": 485,
+        "y": 1367
+      }
+    },
+    "ead53dec95b7f01e7c04368929fdee9e62cedeab4011760e8e9cc75cfa0faddb": {
+      "hash": "ead53dec95b7f01e7c04368929fdee9e62cedeab4011760e8e9cc75cfa0faddb",
+      "page": "tobin-core-0",
+      "pivot": {
+        "x": 96,
+        "y": 113
+      },
+      "source": {
+        "h": 117,
+        "w": 157,
+        "x": 581,
+        "y": 1367
+      }
+    },
+    "f0789afea317b6bde7dbe8841b58d33c57b426b29abd576338f2f792940c4c3c": {
+      "hash": "f0789afea317b6bde7dbe8841b58d33c57b426b29abd576338f2f792940c4c3c",
+      "page": "tobin-core-0",
+      "pivot": {
+        "x": 70,
+        "y": 156
+      },
+      "source": {
+        "h": 158,
+        "w": 141,
+        "x": 738,
+        "y": 1367
+      }
+    },
+    "f3dda7273e47010ade29ba9fc7ed7a108ae647402c029aa0f0a901ddc9bda369": {
+      "hash": "f3dda7273e47010ade29ba9fc7ed7a108ae647402c029aa0f0a901ddc9bda369",
+      "page": "tobin-core-0",
+      "pivot": {
+        "x": 67,
+        "y": 143
+      },
+      "source": {
+        "h": 145,
+        "w": 132,
+        "x": 879,
+        "y": 1367
+      }
+    },
+    "faf62a56697e560ebd9cb26092252b196a217ff255088c3158bacf96a768ba38": {
+      "hash": "faf62a56697e560ebd9cb26092252b196a217ff255088c3158bacf96a768ba38",
+      "page": "tobin-core-0",
+      "pivot": {
+        "x": 67,
+        "y": 200
+      },
+      "source": {
+        "h": 202,
+        "w": 132,
+        "x": 1011,
+        "y": 1367
+      }
+    },
+    "fb38df1170d66d9b3074743273e8e59d1d93cc2942988ff17a66ffddf9601e75": {
+      "hash": "fb38df1170d66d9b3074743273e8e59d1d93cc2942988ff17a66ffddf9601e75",
+      "page": "tobin-core-0",
+      "pivot": {
+        "x": 70,
+        "y": 125
+      },
+      "source": {
+        "h": 126,
+        "w": 133,
+        "x": 1143,
+        "y": 1367
+      }
+    },
+    "fdd684bf88a62c5be05ae2177a181c55e903b7938063dea99c39d503c4ff2c4e": {
+      "hash": "fdd684bf88a62c5be05ae2177a181c55e903b7938063dea99c39d503c4ff2c4e",
+      "page": "tobin-core-0",
+      "pivot": {
+        "x": 114,
+        "y": 186
+      },
+      "source": {
+        "h": 188,
+        "w": 171,
+        "x": 1276,
+        "y": 1367
+      }
+    },
+    "fe0eb82115d38d2c54b83dbbb32bb88ef61bc01216d7b23dfefff41165666c03": {
+      "hash": "fe0eb82115d38d2c54b83dbbb32bb88ef61bc01216d7b23dfefff41165666c03",
+      "page": "tobin-core-0",
+      "pivot": {
+        "x": 85,
+        "y": 224
+      },
+      "source": {
+        "h": 226,
+        "w": 172,
+        "x": 1447,
+        "y": 1367
+      }
+    },
+    "fe54ddc7880e60e7cc8cb043b612e05426a994e56159fe7a17b27f4bde197779": {
+      "hash": "fe54ddc7880e60e7cc8cb043b612e05426a994e56159fe7a17b27f4bde197779",
+      "page": "tobin-core-0",
+      "pivot": {
+        "x": 76,
+        "y": 192
+      },
+      "source": {
+        "h": 193,
+        "w": 139,
+        "x": 1619,
+        "y": 1367
+      }
+    },
+    "fff9b28bee0234d46aef7181d7f406fbd34bc8143941a5225c6b6f868cad434b": {
+      "hash": "fff9b28bee0234d46aef7181d7f406fbd34bc8143941a5225c6b6f868cad434b",
+      "page": "tobin-core-0",
+      "pivot": {
+        "x": 73,
+        "y": 152
+      },
+      "source": {
+        "h": 154,
+        "w": 145,
+        "x": 1758,
+        "y": 1367
+      }
+    }
+  },
+  "gutter": 2,
+  "key": "tobin",
+  "pages": [
+    {
+      "file": "tobin-core-17538c03.png",
+      "height": 2048,
+      "id": "tobin-core-0",
+      "sha256": "17538c03eb226b959ca3f7353652ab71c2b1d9d384959658532802b66ae90159",
+      "width": 2048
+    }
+  ],
+  "renderScale": 0.359965034965035,
+  "sourceCanvas": {
+    "height": 256,
+    "width": 256
+  }
+}

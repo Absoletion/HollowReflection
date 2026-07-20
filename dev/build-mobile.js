@@ -25,6 +25,20 @@ const battleartSrc = embedDir('battleart', 'BATTLEART');
 const cutinSrc = embedDir('cutins', 'CUTINS');
 const rigPartSrc = embedDir('rigparts', 'RIGPARTS');
 
+function embedAtlasPilot() {
+  const dir = p(path.join('..', 'assets', 'sprite-atlas-runtime'));
+  const manifestFile = path.join(dir, 'tobin.json');
+  if (!fs.existsSync(manifestFile)) return '';
+  const manifest = JSON.parse(fs.readFileSync(manifestFile, 'utf8'));
+  const pages = {};
+  for (const page of manifest.pages || []) {
+    const file = path.join(dir, page.file);
+    if (!fs.existsSync(file)) throw new Error('Required atlas page is missing: ' + file);
+    pages[page.file] = 'data:image/png;base64,' + fs.readFileSync(file).toString('base64');
+  }
+  return `var ATLAS_PAGE_DATA = ${JSON.stringify(pages)}; var ATLAS_MANIFESTS = {tobin:${JSON.stringify(manifest)}}; Object.keys(ATLAS_MANIFESTS).forEach(function(key){var pack=ATLAS_MANIFESTS[key]; pack.pages=pack.pages.map(function(page){return Object.assign({},page,{src:ATLAS_PAGE_DATA[page.file]});}); SPRITES[key]=pack;});`;
+}
+
 // ---- pixel-sprite battle path: dev/sprites2/<key>.js (new). Falls back to a dead
 // shim if sprites2/ has no sprite files yet (archive pixel pipeline lives in dev/sprites;
 // sprite-viewer still builds from that).
@@ -33,6 +47,7 @@ function spriteSrc() {
   const generatedPixelLab = p(path.join('..', 'generated', 'pixellab-sprites.js'));
   const generatedProfiles = p(path.join('..', 'generated', 'pixellab-sprite-profiles.js'));
   const generatedEffects = p(path.join('..', 'generated', 'cinnia-legacy-effects.js'));
+  const atlasPilot = embedAtlasPilot();
   const generatedKeys = new Set(['cinnia.js', 'hale.js', 'hale_awakened.js', 'katie.js', 'tobin.js', 'hearthgar.js', 'brigga.js', 'marlowe.js', 'brant.js', 'milla.js', 'nix.js']);
   const files = fs.existsSync(dir) ? fs.readdirSync(dir).filter(f => {
     if (!f.endsWith('.js') || f === 'verify2.js') return false;
@@ -57,7 +72,7 @@ function spriteSrc() {
   const approvedProfiles = fs.existsSync(generatedProfiles) ? fs.readFileSync(generatedProfiles, 'utf8') : '';
   const legacyEffects = approvedPixelLab && fs.existsSync(generatedEffects) ? fs.readFileSync(generatedEffects, 'utf8') : '';
   if (approvedPixelLab) console.log('SPRITES2 embedded: approved PixelLab libraries for cinnia, hale, hale_awakened, katie, tobin, hearthgar, brigga, marlowe, brant, milla, nix');
-  return ['var SPRITES = {};', ...bodies, ...enemyBodies, approvedPixelLab, legacyEffects, approvedProfiles, fs.readFileSync(p('sprites/renderer.js'), 'utf8')].join('\n');
+  return ['var SPRITES = {};', ...bodies, ...enemyBodies, approvedPixelLab, legacyEffects, approvedProfiles, atlasPilot, fs.readFileSync(p('sprites/renderer.js'), 'utf8')].join('\n');
 }
 const spriteShim = spriteSrc();
 

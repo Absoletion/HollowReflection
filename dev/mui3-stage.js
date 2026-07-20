@@ -718,6 +718,7 @@ const Stage = (() => {
 
   if (typeof window !== 'undefined') { window.__stageFast = () => { api.fast = true; }; window.__stageDebug = () => api.debugBattlers(); }
   api.init = init; api.mount = mount; api.snapshot = snapshot; api.play = play; api.whenIdle = whenIdle; api.finish = finish;
+  api.spriteKeyForEnemy = ekey;
   api.debugBattlers = () => battlers.map(b => ({ uid: b.uid, side: b.side, x: b.home.x + b.off.x, y: b.home.y + b.off.y, offX: b.off.x, anim: b.anim }));
   return api;
 })();

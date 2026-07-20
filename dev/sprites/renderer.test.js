@@ -17,6 +17,12 @@ global.SPRITES = {
   legacy: {
     w: 2, h: 2, anchor: { x: 1, y: 2 }, pal: { X: '#fff' },
     anims: { idle: [['XX', '.X']] }
+  },
+  atlas: {
+    format: 'atlas-v2', renderScale: 1, anchor: { x: 1, y: 2 },
+    pages: [{ id: 'atlas-page', src: 'data:image/png;base64,BBBB' }],
+    frames: { first: { page: 'atlas-page', source: { x: 3, y: 4, w: 5, h: 6 }, pivot: { x: 1, y: 2 } } },
+    animations: { idle: { timeline: [{ frame: { page: 'atlas-page', source: { x: 3, y: 4, w: 5, h: 6 }, pivot: { x: 1, y: 2 } }, durationMs: 100 }], loop: true, playbackFps: 10 } }
   }
 };
 
@@ -39,5 +45,6 @@ assert.strictEqual(draw[5], 256 * 0.355, 'renderScale should normalize generated
 assert.doesNotThrow(() => R.drawSprite(ctx, 'legacy', 'idle', 0, 0, 0, 1, false));
 assert.strictEqual(R.preloadSpriteFrames('generated').length, 1);
 assert.strictEqual(R.SpriteRuntime.hasAnimation('generated', 'idle'), true);
+assert.deepStrictEqual(R.drawSprite(ctx, 'atlas', 'idle', 0, 100, 200, 1, false), { drawn: true, status: 'ready' });
 
 console.log('Renderer tests: passed.');

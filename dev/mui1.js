@@ -1135,17 +1135,6 @@ function showTown() {
       document.getElementById('towntalkbox').innerHTML = `<b>${esc(Engine.UNITS[key].name)}</b><span>${esc(QUOTES[key])}</span>`;
     };
   }
-  function openBoard() {
-    panel.innerHTML = panelHead('Outside the Inn', 'Quest Board', 'Local contracts, character missions, and the guild training grounds are posted here.') + `<button class="quest-preview training-contract" id="traininggrounds"><div><b>Training Grounds</b><span>Practice Map · No rewards · Infinite-HP dummy</span></div><i>OPEN</i></button><div class="quest-preview"><div><b>Missing Caravan</b><span>Side Mission · Coming Soon</span></div><i>LOCKED</i></div><div class="quest-preview"><div><b>A Cook's Errand</b><span>Character Mission · Coming Soon</span></div><i>LOCKED</i></div>`;
-    document.getElementById('traininggrounds').onclick = () => launchTraining(META.owned[0] || 'hale', false);
-    panel.querySelectorAll('.quest-preview:not(#traininggrounds)').forEach(card => card.remove());
-    const sideCards = Object.values(Engine.SIDE_MISSIONS).map(cfg => {
-      const p = META.sideMissionProgress[cfg.id] || { clearCount: 0 };
-      return `<button class="quest-preview" data-side-mission="${cfg.id}"><div><b>${esc(cfg.title)}</b><span>Side Mission · ${esc(cfg.description)}</span><span>Clears: ${p.clearCount} · Gold and XP repeat rewards</span></div><i>ENTER</i></button>`;
-    }).join('');
-    document.getElementById('traininggrounds').insertAdjacentHTML('afterend', sideCards);
-    panel.querySelectorAll('[data-side-mission]').forEach(button => button.onclick = () => launchSideMission(button.dataset.sideMission));
-  }
   function openMarket() {
     const tier = Engine.marketRestockTier(captureSaveState()), purchases = META.marketState.tier === tier ? META.marketState.purchases : {};
     const targetOptions = META.owned.map(key => `<option value="${key}">${esc(Engine.UNITS[key].name)} · Lv. ${unitProgress(key).level}</option>`).join('');

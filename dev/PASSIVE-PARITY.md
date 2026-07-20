@@ -1,5 +1,9 @@
 # Passive parity checklist
 
+The runtime source of truth is `dev/passive-registry.js`; this report mirrors
+its classifications and names. `tools/validate_passive_parity.js` fails when a
+playable unit is missing, mismatched, or marked `not_implemented`.
+
 This table is the source-of-truth audit for unit passives. `Approximate` means the current engine expresses the intended gameplay direction but still needs a dedicated balance/assertion pass. `Cosmetic` means the text is flavor-only until a future mechanic is authored.
 
 | Unit | Passive | Trigger | Engine hook | Exact/Approximate/Cosmetic | Test |

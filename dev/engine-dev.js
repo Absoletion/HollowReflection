@@ -25,6 +25,7 @@ const Engine = (function () {
   const CHALLENGES = CD.challenges, CHALLENGE_ITEMS = CD.items;
   const MD = typeof MarketData !== 'undefined' ? MarketData : require('./market.js');
   const MARKET_ITEMS = MD.items;
+  const ECD = typeof EncounterComponents !== 'undefined' ? EncounterComponents : require('./encounter-components.js');
 
   /* ------------------------------------------------------------------ *
    *  Elements
@@ -641,21 +642,21 @@ const Engine = (function () {
     act3_5: { title: '3-5 · The Halfway Marker', enemies: ['hound','hollow_fragment','ox'], sigils: 20, rewards: { first:{gold:560,xp:365}, repeat:{gold:225,xp:145} } },
     act3_6: { title: '3-6 · The Last Inn', enemies: ['hound','hound','hollow_fragment'], sigils: 20, rewards: { first:{gold:600,xp:390}, repeat:{gold:240,xp:155} } },
     act3_7: { title: '3-7 · The Edge', enemies: ['hollow_fragment','ox','hollow_fragment'], sigils: 25, rewards: { first:{gold:660,xp:430}, repeat:{gold:265,xp:170} } },
-    act4_1: { title: '4-1 · The Silence', enemies: ['calf','hound','calf'], sigils: 20, rewards: { first:{gold:700,xp:455}, repeat:{gold:280,xp:180} } },
-    act4_2: { title: '4-2 · The Advance Camp', enemies: ['hollow_fragment','hound','ox'], sigils: 20, rewards: { first:{gold:740,xp:480}, repeat:{gold:295,xp:190} } },
-    act4_3: { title: '4-3 · Garrick', enemies: ['hound','hound','ox'], sigils: 25, rewards: { first:{gold:800,xp:520}, repeat:{gold:320,xp:205} } },
-    act4_4: { title: '4-4 · The Geologist', enemies: ['hollow_fragment','ox','hollow_fragment'], sigils: 25, rewards: { first:{gold:850,xp:550}, repeat:{gold:340,xp:220} } },
-    act4_5: { title: '4-5 · Following the Glass', enemies: ['calf','ox','calf'], sigils: 30, rewards: { first:{gold:920,xp:600}, repeat:{gold:365,xp:240} } },
-    act4_6: { title: '4-6 · The Center', enemies: ['ox','hollow_fragment','ox'], sigils: 35, rewards: { first:{gold:1000,xp:650}, repeat:{gold:400,xp:260} } },
-    act4_7: { title: '4-7 · The Crystallization', enemies: ['glasswright'], sigils: 50, rewards: { first:{gold:1200,xp:750}, repeat:{gold:480,xp:300} }, scripted: true },
+    act4_1: { title: '4-1 · The Silence', enemies: ['calf','hound','calf'], components: [{ id:'fracture', enemyIndex:0 }], sigils: 20, rewards: { first:{gold:700,xp:455}, repeat:{gold:280,xp:180} } },
+    act4_2: { title: '4-2 · The Advance Camp', enemies: ['hollow_fragment','hound','ox'], components: [{ id:'glass_ward', enemyIndex:0, shield:160 }], sigils: 20, rewards: { first:{gold:740,xp:480}, repeat:{gold:295,xp:190} } },
+    act4_3: { title: '4-3 · Garrick', enemies: ['hound','hound','ox'], components: [{ id:'protected_npc', hp:500, objectiveId:'injured_hunter', name:'Injured Hunter' }], sigils: 25, rewards: { first:{gold:800,xp:520}, repeat:{gold:320,xp:205} } },
+    act4_4: { title: '4-4 · The Geologist', enemies: ['hollow_fragment','ox','hollow_fragment'], components: [{ id:'fracture', enemyIndex:1 }, { id:'glass_ward', enemyIndex:0, shield:130 }], sigils: 25, rewards: { first:{gold:850,xp:550}, repeat:{gold:340,xp:220} } },
+    act4_5: { title: '4-5 · Following the Glass', enemies: ['calf','ox','calf'], components: [{ id:'contagion', enemyIndex:1 }], sigils: 30, rewards: { first:{gold:920,xp:600}, repeat:{gold:365,xp:240} } },
+    act4_6: { title: '4-6 · The Center', enemies: ['ox','hollow_fragment','ox'], components: [{ id:'hollow_call', enemyIndex:0, summonKey:'calf', summonCount:1 }, { id:'echo', enemyIndex:1 }], sigils: 35, rewards: { first:{gold:1000,xp:650}, repeat:{gold:400,xp:260} } },
+    act4_7: { title: '4-7 · The Crystallization', enemies: ['glasswright'], components: [{ id:'glass_ward', enemyIndex:0, shield:220 }], sigils: 50, rewards: { first:{gold:1200,xp:750}, repeat:{gold:480,xp:300} }, scripted: true },
     ch1: { title: 'The Guild Charter', enemies: ['construct', 'construct2'], sigils: 30, rewards: { first: { gold: 150, xp: 100 }, repeat: { gold: 90, xp: 65 } }, tutorial: true },
     ch2: { title: 'Greywick', enemies: ['hound', 'hound', 'ox'], sigils: 45, rewards: { first: { gold: 300, xp: 180 }, repeat: { gold: 180, xp: 115 } } },
     ch3: { title: 'The Glasswright', enemies: ['glasswright'], sigils: 60, rewards: { first: { gold: 450, xp: 250 }, repeat: { gold: 270, xp: 160 } }, scripted: true },
     ch6: { title: 'The Lowing Man', enemies: ['lowingman'], sigils: 150, rewards: { first: { gold: 1000, xp: 600 }, repeat: { gold: 600, xp: 380 } }, boss: true },
   };
   const SIDE_MISSIONS = Object.freeze({
-    missing_caravan: Object.freeze({ id: 'missing_caravan', title: 'Missing Caravan', battle: 'side_caravan', description: 'Track a lost supply wagon beyond the east road.', unlockMission: 'act1_5', rewardLimit: 5, scene: 'sc-road' }),
-    cook_errand: Object.freeze({ id: 'cook_errand', title: "A Cook's Errand", battle: 'side_cook', description: 'Clear the pantry route before tonight’s guild supper.', unlockMission: 'act1_5', rewardLimit: 5, scene: 'sc-hall' }),
+    missing_caravan: Object.freeze({ id: 'missing_caravan', title: 'Missing Caravan', battle: 'side_caravan', description: 'Track a lost supply wagon beyond the east road.', unlockMission: 'act1_5', repeatLimitByTier: 3, rewardLimit: 3, recommendedLevel: 8, scene: 'sc-road', pre:[{sp:'Cinnia',tx:'The caravan is late, which means the pantry is about to become a crime scene.'}], postFirstClear:[{sp:'',tx:'The missing wagons roll back into town before dusk.'}], postRepeat:[{sp:'Cinnia',tx:'Same road, fewer surprises. I approve.'}] }),
+    cook_errand: Object.freeze({ id: 'cook_errand', title: "A Cook's Errand", battle: 'side_cook', description: 'Clear the pantry route before tonight’s guild supper.', unlockMission: 'act1_5', repeatLimitByTier: 3, rewardLimit: 3, recommendedLevel: 6, scene: 'sc-hall', pre:[{sp:'Cinnia',tx:'The pantry route is crawling. Dinner is not going to defend itself.'}], postFirstClear:[{sp:'Cinnia',tx:'Excellent. The stew survives another night.'}], postRepeat:[{sp:'Cinnia',tx:'You cleared it again. I remembered the salt this time.'}] }),
   });
 
   /* ------------------------------------------------------------------ *
@@ -711,6 +712,7 @@ const Engine = (function () {
     opts = opts || {};
     const cfg = BATTLES[key];
     uidSeq = 0; // IDs are battle-local so seeded replays produce the same event stream.
+    const encounterComponents = ECD.normalizeList(cfg.components || []);
     const s = {
       key, title: cfg.title, round: 1, result: null, scripted: !!cfg.scripted,
       party: partyKeys.map(key2 => mkPlayer(key2, opts.profiles && opts.profiles[key2])),
@@ -722,8 +724,12 @@ const Engine = (function () {
       revealRound: 0,        // Read the Currents active this round
       attackedThisRound: [], // uids of allies who attacked (for Flourish)
       battleTimeMs: 0, eventSeq: 0, eventHistory: [], seed: opts.seed == null ? null : opts.seed,
+      components: encounterComponents, componentState: {}, objective: null,
       script: { counting: false, countingDone: false, awakened: false, finale: false, finaleDone: false, gwRounds: 0, figureSeen: false, figureGone: false },
     };
+    const startEvents = [];
+    applyEncounterStartComponents(s, startEvents);
+    sealCombatEvents(s, startEvents, null, []);
     if (opts.awakenedHale) { const h = byKey(s, 'hale'); if (h) awakenHale(s, h, [], true); }
     rollIntents(s);
     return s;
@@ -736,6 +742,17 @@ const Engine = (function () {
   function byUid(s, uid) { return s.party.concat(s.enemies).find(u => u.uid === uid); }
   function livingParty(s) { return s.party.filter(u => u.alive); }
   function livingEnemies(s) { return s.enemies.filter(u => u.alive); }
+  function componentsById(s, id) { return (s.components || []).filter(component => component.id === id); }
+  function componentState(s, component, index) {
+    const key = `${component.id}:${index}`;
+    if (!s.componentState[key]) s.componentState[key] = {};
+    return s.componentState[key];
+  }
+  function enemyForComponent(s, component) {
+    if (component.enemyUid) return byUid(s, component.enemyUid);
+    if (Number.isInteger(component.enemyIndex)) return s.enemies[component.enemyIndex] || null;
+    return livingEnemies(s)[0] || null;
+  }
   function partyHPfrac(s) {
     const cur = s.party.reduce((a, u) => a + u.hp, 0);
     const max = s.party.reduce((a, u) => a + u.maxhp, 0);
@@ -746,6 +763,66 @@ const Engine = (function () {
   function log(ev, msg, cls) { ev.push({ t: 'log', msg, cls: cls || '' }); }
   const COMBAT_EVENT_TYPES = new Set(['log','damage','heal','status_apply','status_remove','telegraph_start','telegraph_update','telegraph_cancel','telegraph_resolve','result','round','awakening','finale_lock','scripted_loss','finisher','hit_stop_hint','camera_shake_hint']);
   function emit(ev, type, sourceId, targetIds, payload, presentationKey) { ev.push({ t: type, sourceId: sourceId || null, targetIds: targetIds || [], payload: payload || {}, presentationKey: presentationKey || type }); }
+  function applyEncounterStartComponents(s, events) {
+    (s.components || []).forEach((component, index) => {
+      const local = componentState(s, component, index), enemy = enemyForComponent(s, component);
+      if (component.id === 'glass_ward' && enemy) {
+        enemy.componentShield = Math.max(0, Math.floor(component.shield)); local.started = true;
+        emit(events, 'status_apply', enemy.uid, [enemy.uid], { status:'glass_ward', amount:enemy.componentShield }, 'status_glass_ward');
+      }
+      if (component.id === 'protected_npc') {
+        local.maxHp = Math.max(1, Math.floor(component.hp)); local.hp = local.maxHp; local.alive = true;
+        s.objective = { type:'protect', id:component.objectiveId || 'injured_hunter', name:component.name || 'Injured Hunter', hp:local.hp, maxHp:local.maxHp, alive:true };
+      }
+    });
+  }
+  function applyEncounterUpkeepComponents(s, events) {
+    (s.components || []).forEach((component, index) => {
+      const local = componentState(s, component, index), enemy = enemyForComponent(s, component);
+      if (component.id === 'fracture' && enemy && enemy.alive && !local.triggered && enemy.hp / enemy.maxhp <= component.threshold) {
+        local.triggered = true; enemy.componentAtkMultiplier = component.attackMultiplier;
+        emit(events, 'status_apply', enemy.uid, [enemy.uid], { status:'fracture', multiplier:component.attackMultiplier }, 'status_fracture');
+        log(events, `${enemy.name} fractures. Its shape stops pretending to be stable.`, 'warn');
+      }
+      if (component.id === 'contagion' && enemy && enemy.alive && !local.triggered && s.round >= component.spreadAfter) {
+        local.triggered = true;
+        const victim = livingParty(s)[0];
+        if (victim) addBuff(victim, 'contagion', 0.1, component.duration, events, `${enemy.name} spreads a hollow contagion to ${victim.name}.`);
+      }
+      if (component.id === 'contagion' && local.triggered && s.round > component.spreadAfter && livingParty(s).some(u => hasBuff(u, 'contagion'))) {
+        const victim = livingParty(s).find(u => !hasBuff(u, 'contagion'));
+        if (victim) addBuff(victim, 'contagion', 0.1, component.duration, events, `${enemy ? enemy.name : 'The Hollow'} spreads the contagion again.`);
+      }
+      if (component.id === 'hollow_call' && enemy && enemy.alive && !local.triggered && s.round >= 2) {
+        local.triggered = true; for (let i=0;i<component.summonCount;i++) { const summoned = mkEnemy(component.summonKey); s.enemies.push(summoned); summoned.intent = decideIntent(s, summoned); }
+        log(events, `${enemy.name} calls a lesser Hollowed shape.`, 'warn');
+      }
+      if (component.id === 'echo' && enemy && enemy.alive && !local.triggered && s.round >= component.delayCycles + 1) {
+        local.triggered = true; enemy.echoIntent = enemy.intent ? { ...enemy.intent } : null; log(events, `${enemy.name} echoes its last telegraph.`, 'warn');
+      }
+    });
+  }
+  function damageProtectedObjective(s, amount, events) {
+    const objective = s.objective;
+    if (!objective || objective.type !== 'protect' || !objective.alive) return;
+    const paid = Math.min(objective.hp, Math.max(0, Math.floor(amount || 0)));
+    objective.hp -= paid;
+    emit(events, 'damage', null, [objective.id], { amount:paid, objective:true }, 'protected_objective_damage');
+    if (objective.hp <= 0) {
+      objective.hp = 0; objective.alive = false; s.result = 'defeat';
+      emit(events, 'result', null, [], { victory:false, reason:'protected_objective_defeated' }, 'result_objective_defeat');
+    }
+  }
+  function damageGlassWard(s, enemy, rawDamage, breakDamage, events) {
+    if (!enemy || !enemy.componentShield) return { hpDamage:rawDamage, breakDamage };
+    const ward = (s.components || []).find(component => component.id === 'glass_ward' && enemyForComponent(s, component) === enemy);
+    const effectiveBreak = Math.max(0, breakDamage || 0) * (ward ? ward.breakMultiplier : 2);
+    const absorbed = Math.min(enemy.componentShield, Math.max(0, rawDamage) + effectiveBreak);
+    enemy.componentShield -= absorbed;
+    emit(events, 'damage', null, [enemy.uid], { amount:absorbed, shield:true, status:'glass_ward' }, 'glass_ward_hit');
+    if (enemy.componentShield <= 0) { enemy.componentShield = 0; emit(events, 'status_remove', enemy.uid, [enemy.uid], { status:'glass_ward' }, 'status_glass_ward'); }
+    return { hpDamage:Math.max(0, rawDamage - absorbed), breakDamage };
+  }
   function sealCombatEvents(s, ev, sourceId, targetIds) {
     const sealed = ev.map(raw => {
       const type = COMBAT_EVENT_TYPES.has(raw.t) ? raw.t : 'log';
@@ -792,8 +869,10 @@ const Engine = (function () {
     if (en.form === 'beast') d *= 0.55 + 0.45 * defIgnore; // Defense ignore restores the resisted share.
     if (en.form === 'man') d *= 1.5;                 // Man half: DEF collapse
     if (en.staggered) d *= 1.5;                      // stagger: +50% damage taken
+    if (en.componentAtkMultiplier) d *= en.componentAtkMultiplier;
     if (o.executeBelow && en.hp / en.maxhp <= o.executeBelow) d *= Number(o.executeMult) || 1.5;
     d = vary(s, d);
+    const warded = damageGlassWard(s, en, d, brk, ev); d = warded.hpDamage;
     en.hp -= d;
     log(ev, `${atkUnit.name} hits ${en.name} for ${d}.`, 'dmg');
     emit(ev, 'damage', atkUnit.uid, [en.uid], { amount: d, element: atkUnit.elem, critical: false }, d >= en.maxhp * .18 ? 'hit_heavy' : 'hit');
@@ -895,6 +974,7 @@ const Engine = (function () {
       if (u.key === 'hearthgar' && u.cinders < 5) { u.cinders++; }
       // Tobin's Read the Currents rider: guarding through a revealed attack pays +1⚡.
       if (u.guarding && s.revealRound === s.round && !u._rtcPaid) { gainEnergy(u, 1); u._rtcPaid = true; log(ev, `${u.name} read the blow coming — +1⚡.`, 'buff'); }
+      if (s.objective && s.objective.alive && s.key === 'act4_3' && !o.aoe) damageProtectedObjective(s, Math.max(1, Math.round(d * 0.25)), ev);
     }
     if (u.hp <= 0) {
       if (s.scripted) { u.hp = 1; } // scripted fight: no real deaths (un-breakable)
@@ -1514,7 +1594,8 @@ const Engine = (function () {
       log(ev, 'The reflection pauses. It is trying to count its herd.');
       return;
     }
-    const i = en.intent || decideIntent(s, en);
+    const i = en.echoIntent || en.intent || decideIntent(s, en);
+    en.echoIntent = null;
     let t = i.target ? byUid(s, i.target) : null;
     // Dead or missing pre-rolled target: re-pick. Taunt overrides (single-target only).
     const taunter = livingParty(s).find(x => hasBuff(x, 'taunt'));
@@ -1613,6 +1694,7 @@ const Engine = (function () {
    * ------------------------------------------------------------------ */
   function endRound(s, ev) {
     if (s.result) return;
+    applyEncounterUpkeepComponents(s, ev);
     // Regen ticks (Well-Fed etc.)
     for (const u of livingParty(s)) {
       const r = buffVal(u, 'regen');
@@ -1775,7 +1857,7 @@ const Engine = (function () {
     MARKET_ITEMS, marketRestockTier, marketItemUnlocked, BANNERS, bannerPool,
     COMBAT_EVENT_TYPES, combatEventHash,
     // Internal hooks exposed for the self-test suite only.
-    _test: { dealToPlayer, dealToEnemy, dealBreak, heal, enemyPhase, endRound, rollIntents },
+    _test: { dealToPlayer, dealToEnemy, dealBreak, heal, enemyPhase, endRound, rollIntents, damageProtectedObjective, applyEncounterStartComponents, applyEncounterUpkeepComponents },
   };
 })();
 

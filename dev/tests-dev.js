@@ -586,6 +586,42 @@ function runHollowingSelfTests(E, print) {
     for (let i = 0; i < 520; i++) E.liveUpkeep(s);
     ok(s.eventHistory.length <= 500, 'combat event history remains bounded at 500 entries');
   }
+  /* --- 20. Reusable Chapter 4 encounter components --- */
+  {
+    const ward = fresh('act4_2', ['hale']);
+    const target = ward.enemies[0], before = target.hp;
+    ok(ward.components.some(c => c.id === 'glass_ward') && target.componentShield === 160, 'Glass Ward starts on its configured enemy');
+    T.dealToEnemy(ward, ward.party[0], target, 40, 0, []);
+    ok(target.hp === before && target.componentShield < 160, 'Glass Ward absorbs normal damage before HP');
+    T.dealToEnemy(ward, ward.party[0], target, 200, 100, []);
+    ok(target.componentShield === 0 && target.hp < before, 'Break damage efficiently shatters Glass Ward');
+  }
+  {
+    const fracture = fresh('act4_1', ['hale']);
+    const target = fracture.enemies[0]; target.hp = Math.floor(target.maxhp * 0.5);
+    const ev = []; T.applyEncounterUpkeepComponents(fracture, ev);
+    ok(target.componentAtkMultiplier === 1.25 && ev.some(e => e.t === 'status_apply'), 'Fracture applies its threshold multiplier once');
+  }
+  {
+    const protect = fresh('act4_3', ['hale']);
+    ok(protect.objective && protect.objective.hp === 500 && protect.objective.alive, 'Protected NPC objective starts in battle state');
+    const ev = []; T.damageProtectedObjective(protect, 500, ev);
+    ok(protect.result === 'defeat' && !protect.objective.alive && ev.some(e => e.t === 'result'), 'Protected objective defeat ends the battle');
+    protect.enemies[0].hp = 1; T.dealToEnemy(protect, protect.party[0], protect.enemies[0], 100, 0, []);
+    ok(protect.result === 'defeat', 'Protected objective defeat cannot be replaced by a later victory');
+  }
+  {
+    const call = fresh('act4_6', ['hale']);
+    const before = call.enemies.length; call.round = 2; T.applyEncounterUpkeepComponents(call, []);
+    ok(call.enemies.length === before + 1, 'Hollow Call summons its configured lesser Hollowed');
+    const echo = fresh('act4_6', ['hale']); echo.round = 2; T.applyEncounterUpkeepComponents(echo, []);
+    ok(echo.enemies[1].echoIntent || echo.enemies[1].intent, 'Echo preserves a telegraphed action for the next enemy phase');
+  }
+  {
+    const contagion = fresh('act4_5', ['hale', 'cinnia']); contagion.round = 1; T.applyEncounterUpkeepComponents(contagion, []);
+    contagion.round = 2; T.applyEncounterUpkeepComponents(contagion, []);
+    ok(contagion.party.some(u => u.buffs.some(b => b.k === 'contagion')), 'Contagion applies a spreading debuff to the party');
+  }
 
   print(`Self-tests: ${pass} passed, ${fail} failed.`);
   if (fail) print('Failures: ' + failures.join(' | '));

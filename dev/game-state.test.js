@@ -144,7 +144,19 @@ assert.strictEqual(GameState.purchaseMarketItem(essence.state, 'essence_bundle',
 const telemetry = GameState.recordTelemetry(essence.state, { event: 'challenge_result', challengeId: 'ember_trial', outcome: 'defeat', elapsedMs: 1234, unitsDefeated: 2 });
 assert.strictEqual(telemetry.state.telemetry.at(-1).outcome, 'defeat');
 
-let summonState = Engine.normalizeSaveState({ sigils: 1000, missionClears: Object.fromEntries(Array.from({ length: 9 }, (_, i) => [`act1_${i + 1}`, true])) });
+let summonState = Engine.normalizeSaveState({ sigils: 1000, missionClears: Object.fromEntries([
+  ...Array.from({ length: 10 }, (_, i) => [`act1_${i + 1}`, true]),
+  ...Array.from({ length: 8 }, (_, i) => [`act2_${i + 1}`, true]),
+  ['act3_1', true], ['act3_2', true], ['act3_3', true],
+]) });
+const beforeNixGate = Engine.normalizeSaveState({ missionClears: Object.fromEntries(Array.from({ length: 10 }, (_, i) => [`act1_${i + 1}`, true])) });
+assert(Engine.bannerPool(beforeNixGate, 'standard', 3).some(entry => entry.id === 'nix'), 'Nix remains available in the standard banner policy');
+const nixGate = Engine.normalizeSaveState({ missionClears: Object.fromEntries([
+  ...Array.from({ length: 10 }, (_, i) => [`act1_${i + 1}`, true]),
+  ...Array.from({ length: 8 }, (_, i) => [`act2_${i + 1}`, true]),
+  ['act3_1', true], ['act3_2', true], ['act3_3', true],
+]) });
+assert(Engine.bannerPool(nixGate, 'standard', 3).some(entry => entry.id === 'nix'), 'Nix remains available after Chapter 3 progression');
 const rolls = [0.99, 0.1, 0.99, 0.1, 0.99, 0.1, 0.99, 0.1, 0.99, 0.1, 0.99, 0.1, 0.99, 0.1, 0.99, 0.1, 0.99, 0.1, 0.9, 0.9];
 const ten = GameState.performSummon(summonState, 'standard', 10, () => rolls.shift() ?? .9, { transactionId: 'summon:10' });
 assert.strictEqual(ten.ok, true);
@@ -154,7 +166,11 @@ assert.strictEqual(ten.state.summonHistory.length, 10);
 assert.strictEqual(ten.state.telemetry.at(-1).event, 'summon_settlement');
 assert.strictEqual(ten.state.telemetry.at(-1).pulls, 10);
 assert.strictEqual(GameState.performSummon(ten.state, 'standard', 10, Math.random, { transactionId: 'summon:10' }).rewards.length, 0);
-let capped = Engine.normalizeSaveState({ sigils: 20, missionClears: Object.fromEntries(Array.from({ length: 9 }, (_, i) => [`act1_${i + 1}`, true])), owned: ['hale', 'cinnia', 'tobin', 'nix'], ranks: { nix: 5 }, summonState: { standard: { pullsSinceFourStar: 0, featuredMisses: 0 } } });
+let capped = Engine.normalizeSaveState({ sigils: 20, missionClears: Object.fromEntries([
+  ...Array.from({ length: 10 }, (_, i) => [`act1_${i + 1}`, true]),
+  ...Array.from({ length: 8 }, (_, i) => [`act2_${i + 1}`, true]),
+  ['act3_1', true], ['act3_2', true], ['act3_3', true],
+]), owned: ['hale', 'cinnia', 'tobin', 'nix'], ranks: { nix: 5 }, summonState: { standard: { pullsSinceFourStar: 0, featuredMisses: 0 } } });
 const dust = GameState.performSummon(capped, 'standard', 1, () => .9, { transactionId: 'summon:dust' });
 assert.strictEqual(dust.state.glassDust, 10);
 const recruited = GameState.recruitStoryUnit(Engine.normalizeSaveState({ missionClears: { act1_1: true, act1_2: true, act1_3: true } }), 'hearthgar', 'act1_3');
@@ -192,8 +208,8 @@ const sideClear = GameState.completeSideMission(sideState, 'missing_caravan', si
 assert.strictEqual(sideClear.ok, true);
 assert.strictEqual(GameState.completeSideMission(sideClear.state, 'missing_caravan', sideResult, ['hale']).rewards.length, 0);
 sideState = sideClear.state;
-for (let i = 0; i < 4; i++) sideState = GameState.completeSideMission(sideState, 'missing_caravan', battleResult(`side-${i + 2}`, 'side_caravan', ['hale']), ['hale']).state;
-assert.strictEqual(GameState.completeSideMission(sideState, 'missing_caravan', battleResult('side-six', 'side_caravan', ['hale']), ['hale']).errorCode, 'LIMIT_REACHED');
+for (let i = 0; i < 2; i++) sideState = GameState.completeSideMission(sideState, 'missing_caravan', battleResult(`side-${i + 2}`, 'side_caravan', ['hale']), ['hale']).state;
+assert.strictEqual(GameState.completeSideMission(sideState, 'missing_caravan', battleResult('side-four', 'side_caravan', ['hale']), ['hale']).errorCode, 'LIMIT_REACHED');
 const invalidCommandState = { ...Engine.normalizeSaveState({}), gold: -500 };
 assert.strictEqual(GameState.setActiveParty(invalidCommandState, ['hale']).errorCode, 'SAVE_VALIDATION_FAILED');
 console.log('GameState tests: Challenge, Market, Summon, telemetry, migration, pacing, and evolution passed.');

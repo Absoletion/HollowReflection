@@ -1,0 +1,1317 @@
+{
+  "version": 1,
+  "seed": 1213333504,
+  "encounters": {
+    "act1_1": {
+      "story_default": {
+        "winRate": 1,
+        "medianClearTimeMs": 5000,
+        "p10ClearTimeMs": 5000,
+        "p90ClearTimeMs": 5000,
+        "averageDefeatedUnits": 0,
+        "averageDamageTaken": 0,
+        "averageBreakCount": 0,
+        "burstUsage": 0,
+        "retryRate": 0
+      },
+      "attacker_heavy": {
+        "winRate": 1,
+        "medianClearTimeMs": 5000,
+        "p10ClearTimeMs": 5000,
+        "p90ClearTimeMs": 5000,
+        "averageDefeatedUnits": 0,
+        "averageDamageTaken": 0,
+        "averageBreakCount": 0,
+        "burstUsage": 0,
+        "retryRate": 0
+      },
+      "break_heavy": {
+        "winRate": 1,
+        "medianClearTimeMs": 5000,
+        "p10ClearTimeMs": 5000,
+        "p90ClearTimeMs": 5000,
+        "averageDefeatedUnits": 0,
+        "averageDamageTaken": 0,
+        "averageBreakCount": 0,
+        "burstUsage": 0,
+        "retryRate": 0
+      },
+      "healer_light": {
+        "winRate": 1,
+        "medianClearTimeMs": 5000,
+        "p10ClearTimeMs": 5000,
+        "p90ClearTimeMs": 5000,
+        "averageDefeatedUnits": 0,
+        "averageDamageTaken": 0,
+        "averageBreakCount": 0,
+        "burstUsage": 0,
+        "retryRate": 0
+      },
+      "low_rarity": {
+        "winRate": 1,
+        "medianClearTimeMs": 5000,
+        "p10ClearTimeMs": 5000,
+        "p90ClearTimeMs": 5000,
+        "averageDefeatedUnits": 0,
+        "averageDamageTaken": 0,
+        "averageBreakCount": 0,
+        "burstUsage": 0,
+        "retryRate": 0
+      }
+    },
+    "act1_2": {
+      "story_default": {
+        "winRate": 1,
+        "medianClearTimeMs": 10000,
+        "p10ClearTimeMs": 10000,
+        "p90ClearTimeMs": 10000,
+        "averageDefeatedUnits": 0,
+        "averageDamageTaken": 13.9,
+        "averageBreakCount": 0,
+        "burstUsage": 0,
+        "retryRate": 0
+      },
+      "attacker_heavy": {
+        "winRate": 1,
+        "medianClearTimeMs": 10000,
+        "p10ClearTimeMs": 5000,
+        "p90ClearTimeMs": 10000,
+        "averageDefeatedUnits": 0,
+        "averageDamageTaken": 21.8,
+        "averageBreakCount": 0,
+        "burstUsage": 0,
+        "retryRate": 0
+      },
+      "break_heavy": {
+        "winRate": 1,
+        "medianClearTimeMs": 5000,
+        "p10ClearTimeMs": 5000,
+        "p90ClearTimeMs": 5000,
+        "averageDefeatedUnits": 0,
+        "averageDamageTaken": 0,
+        "averageBreakCount": 0,
+        "burstUsage": 0,
+        "retryRate": 0
+      },
+      "healer_light": {
+        "winRate": 1,
+        "medianClearTimeMs": 10000,
+        "p10ClearTimeMs": 10000,
+        "p90ClearTimeMs": 10000,
+        "averageDefeatedUnits": 0,
+        "averageDamageTaken": 18.7,
+        "averageBreakCount": 0,
+        "burstUsage": 0,
+        "retryRate": 0
+      },
+      "low_rarity": {
+        "winRate": 1,
+        "medianClearTimeMs": 10000,
+        "p10ClearTimeMs": 10000,
+        "p90ClearTimeMs": 10000,
+        "averageDefeatedUnits": 0,
+        "averageDamageTaken": 16.8,
+        "averageBreakCount": 0,
+        "burstUsage": 0,
+        "retryRate": 0
+      }
+    },
+    "act1_3": {
+      "story_default": {
+        "winRate": 1,
+        "medianClearTimeMs": 15000,
+        "p10ClearTimeMs": 15000,
+        "p90ClearTimeMs": 15000,
+        "averageDefeatedUnits": 0,
+        "averageDamageTaken": 33.7,
+        "averageBreakCount": 0,
+        "burstUsage": 0,
+        "retryRate": 0
+      },
+      "attacker_heavy": {
+        "winRate": 1,
+        "medianClearTimeMs": 10000,
+        "p10ClearTimeMs": 10000,
+        "p90ClearTimeMs": 10000,
+        "averageDefeatedUnits": 0,
+        "averageDamageTaken": 38.6,
+        "averageBreakCount": 0,
+        "burstUsage": 0,
+        "retryRate": 0
+      },
+      "break_heavy": {
+        "winRate": 1,
+        "medianClearTimeMs": 10000,
+        "p10ClearTimeMs": 10000,
+        "p90ClearTimeMs": 10000,
+        "averageDefeatedUnits": 0,
+        "averageDamageTaken": 15.7,
+        "averageBreakCount": 0,
+        "burstUsage": 0,
+        "retryRate": 0
+      },
+      "healer_light": {
+        "winRate": 1,
+        "medianClearTimeMs": 15000,
+        "p10ClearTimeMs": 10000,
+        "p90ClearTimeMs": 15000,
+        "averageDefeatedUnits": 0,
+        "averageDamageTaken": 50.3,
+        "averageBreakCount": 0,
+        "burstUsage": 0,
+        "retryRate": 0
+      },
+      "low_rarity": {
+        "winRate": 1,
+        "medianClearTimeMs": 15000,
+        "p10ClearTimeMs": 15000,
+        "p90ClearTimeMs": 15000,
+        "averageDefeatedUnits": 0,
+        "averageDamageTaken": 38.2,
+        "averageBreakCount": 0,
+        "burstUsage": 0,
+        "retryRate": 0
+      }
+    },
+    "act1_5": {
+      "story_default": {
+        "winRate": 1,
+        "medianClearTimeMs": 10000,
+        "p10ClearTimeMs": 10000,
+        "p90ClearTimeMs": 10000,
+        "averageDefeatedUnits": 0,
+        "averageDamageTaken": 8.6,
+        "averageBreakCount": 0,
+        "burstUsage": 0,
+        "retryRate": 0
+      },
+      "attacker_heavy": {
+        "winRate": 1,
+        "medianClearTimeMs": 5000,
+        "p10ClearTimeMs": 5000,
+        "p90ClearTimeMs": 10000,
+        "averageDefeatedUnits": 0,
+        "averageDamageTaken": 9.3,
+        "averageBreakCount": 0,
+        "burstUsage": 0,
+        "retryRate": 0
+      },
+      "break_heavy": {
+        "winRate": 1,
+        "medianClearTimeMs": 5000,
+        "p10ClearTimeMs": 5000,
+        "p90ClearTimeMs": 5000,
+        "averageDefeatedUnits": 0,
+        "averageDamageTaken": 0,
+        "averageBreakCount": 0,
+        "burstUsage": 0,
+        "retryRate": 0
+      },
+      "healer_light": {
+        "winRate": 1,
+        "medianClearTimeMs": 10000,
+        "p10ClearTimeMs": 10000,
+        "p90ClearTimeMs": 10000,
+        "averageDefeatedUnits": 0,
+        "averageDamageTaken": 13.1,
+        "averageBreakCount": 0,
+        "burstUsage": 0,
+        "retryRate": 0
+      },
+      "low_rarity": {
+        "winRate": 1,
+        "medianClearTimeMs": 10000,
+        "p10ClearTimeMs": 10000,
+        "p90ClearTimeMs": 10000,
+        "averageDefeatedUnits": 0,
+        "averageDamageTaken": 14.2,
+        "averageBreakCount": 0,
+        "burstUsage": 0,
+        "retryRate": 0
+      }
+    },
+    "act1_6": {
+      "story_default": {
+        "winRate": 1,
+        "medianClearTimeMs": 15000,
+        "p10ClearTimeMs": 15000,
+        "p90ClearTimeMs": 15000,
+        "averageDefeatedUnits": 0,
+        "averageDamageTaken": 37.7,
+        "averageBreakCount": 0,
+        "burstUsage": 0,
+        "retryRate": 0
+      },
+      "attacker_heavy": {
+        "winRate": 1,
+        "medianClearTimeMs": 10000,
+        "p10ClearTimeMs": 10000,
+        "p90ClearTimeMs": 10000,
+        "averageDefeatedUnits": 0,
+        "averageDamageTaken": 39.4,
+        "averageBreakCount": 0,
+        "burstUsage": 0,
+        "retryRate": 0
+      },
+      "break_heavy": {
+        "winRate": 1,
+        "medianClearTimeMs": 10000,
+        "p10ClearTimeMs": 10000,
+        "p90ClearTimeMs": 10000,
+        "averageDefeatedUnits": 0,
+        "averageDamageTaken": 23.6,
+        "averageBreakCount": 0,
+        "burstUsage": 0,
+        "retryRate": 0
+      },
+      "healer_light": {
+        "winRate": 1,
+        "medianClearTimeMs": 15000,
+        "p10ClearTimeMs": 15000,
+        "p90ClearTimeMs": 15000,
+        "averageDefeatedUnits": 0,
+        "averageDamageTaken": 59.5,
+        "averageBreakCount": 0,
+        "burstUsage": 0,
+        "retryRate": 0
+      },
+      "low_rarity": {
+        "winRate": 1,
+        "medianClearTimeMs": 15000,
+        "p10ClearTimeMs": 15000,
+        "p90ClearTimeMs": 15000,
+        "averageDefeatedUnits": 0,
+        "averageDamageTaken": 42.6,
+        "averageBreakCount": 0,
+        "burstUsage": 0,
+        "retryRate": 0
+      }
+    },
+    "act1_7": {
+      "story_default": {
+        "winRate": 1,
+        "medianClearTimeMs": 10000,
+        "p10ClearTimeMs": 10000,
+        "p90ClearTimeMs": 10000,
+        "averageDefeatedUnits": 0,
+        "averageDamageTaken": 22.5,
+        "averageBreakCount": 0,
+        "burstUsage": 0,
+        "retryRate": 0
+      },
+      "attacker_heavy": {
+        "winRate": 1,
+        "medianClearTimeMs": 10000,
+        "p10ClearTimeMs": 10000,
+        "p90ClearTimeMs": 10000,
+        "averageDefeatedUnits": 0,
+        "averageDamageTaken": 30.8,
+        "averageBreakCount": 0,
+        "burstUsage": 0,
+        "retryRate": 0
+      },
+      "break_heavy": {
+        "winRate": 1,
+        "medianClearTimeMs": 5000,
+        "p10ClearTimeMs": 5000,
+        "p90ClearTimeMs": 5000,
+        "averageDefeatedUnits": 0,
+        "averageDamageTaken": 0,
+        "averageBreakCount": 1,
+        "burstUsage": 0,
+        "retryRate": 0
+      },
+      "healer_light": {
+        "winRate": 1,
+        "medianClearTimeMs": 10000,
+        "p10ClearTimeMs": 10000,
+        "p90ClearTimeMs": 10000,
+        "averageDefeatedUnits": 0,
+        "averageDamageTaken": 22.5,
+        "averageBreakCount": 0,
+        "burstUsage": 0,
+        "retryRate": 0
+      },
+      "low_rarity": {
+        "winRate": 1,
+        "medianClearTimeMs": 10000,
+        "p10ClearTimeMs": 10000,
+        "p90ClearTimeMs": 10000,
+        "averageDefeatedUnits": 0,
+        "averageDamageTaken": 22.5,
+        "averageBreakCount": 0,
+        "burstUsage": 0,
+        "retryRate": 0
+      }
+    },
+    "act1_10": {
+      "story_default": {
+        "winRate": 1,
+        "medianClearTimeMs": 20000,
+        "p10ClearTimeMs": 20000,
+        "p90ClearTimeMs": 20000,
+        "averageDefeatedUnits": 0,
+        "averageDamageTaken": 83.5,
+        "averageBreakCount": 0,
+        "burstUsage": 0,
+        "retryRate": 0
+      },
+      "attacker_heavy": {
+        "winRate": 1,
+        "medianClearTimeMs": 15000,
+        "p10ClearTimeMs": 15000,
+        "p90ClearTimeMs": 15000,
+        "averageDefeatedUnits": 0,
+        "averageDamageTaken": 82,
+        "averageBreakCount": 0,
+        "burstUsage": 0,
+        "retryRate": 0
+      },
+      "break_heavy": {
+        "winRate": 1,
+        "medianClearTimeMs": 10000,
+        "p10ClearTimeMs": 10000,
+        "p90ClearTimeMs": 10000,
+        "averageDefeatedUnits": 0,
+        "averageDamageTaken": 30.9,
+        "averageBreakCount": 1,
+        "burstUsage": 0,
+        "retryRate": 0
+      },
+      "healer_light": {
+        "winRate": 1,
+        "medianClearTimeMs": 15000,
+        "p10ClearTimeMs": 15000,
+        "p90ClearTimeMs": 20000,
+        "averageDefeatedUnits": 0,
+        "averageDamageTaken": 71.9,
+        "averageBreakCount": 0.2,
+        "burstUsage": 0,
+        "retryRate": 0
+      },
+      "low_rarity": {
+        "winRate": 1,
+        "medianClearTimeMs": 20000,
+        "p10ClearTimeMs": 20000,
+        "p90ClearTimeMs": 20000,
+        "averageDefeatedUnits": 0,
+        "averageDamageTaken": 82.2,
+        "averageBreakCount": 0,
+        "burstUsage": 0,
+        "retryRate": 0
+      }
+    },
+    "act2_2": {
+      "story_default": {
+        "winRate": 1,
+        "medianClearTimeMs": 15000,
+        "p10ClearTimeMs": 10000,
+        "p90ClearTimeMs": 15000,
+        "averageDefeatedUnits": 0,
+        "averageDamageTaken": 31.3,
+        "averageBreakCount": 0,
+        "burstUsage": 0,
+        "retryRate": 0
+      },
+      "attacker_heavy": {
+        "winRate": 1,
+        "medianClearTimeMs": 10000,
+        "p10ClearTimeMs": 10000,
+        "p90ClearTimeMs": 10000,
+        "averageDefeatedUnits": 0,
+        "averageDamageTaken": 29.6,
+        "averageBreakCount": 0,
+        "burstUsage": 0,
+        "retryRate": 0
+      },
+      "break_heavy": {
+        "winRate": 1,
+        "medianClearTimeMs": 10000,
+        "p10ClearTimeMs": 10000,
+        "p90ClearTimeMs": 10000,
+        "averageDefeatedUnits": 0,
+        "averageDamageTaken": 14.6,
+        "averageBreakCount": 0,
+        "burstUsage": 0,
+        "retryRate": 0
+      },
+      "healer_light": {
+        "winRate": 1,
+        "medianClearTimeMs": 15000,
+        "p10ClearTimeMs": 10000,
+        "p90ClearTimeMs": 15000,
+        "averageDefeatedUnits": 0,
+        "averageDamageTaken": 50.1,
+        "averageBreakCount": 0,
+        "burstUsage": 0,
+        "retryRate": 0
+      },
+      "low_rarity": {
+        "winRate": 1,
+        "medianClearTimeMs": 15000,
+        "p10ClearTimeMs": 15000,
+        "p90ClearTimeMs": 15000,
+        "averageDefeatedUnits": 0,
+        "averageDamageTaken": 37.2,
+        "averageBreakCount": 0,
+        "burstUsage": 0,
+        "retryRate": 0
+      }
+    },
+    "act2_4": {
+      "story_default": {
+        "winRate": 1,
+        "medianClearTimeMs": 25000,
+        "p10ClearTimeMs": 25000,
+        "p90ClearTimeMs": 25000,
+        "averageDefeatedUnits": 0,
+        "averageDamageTaken": 141.1,
+        "averageBreakCount": 0,
+        "burstUsage": 0,
+        "retryRate": 0
+      },
+      "attacker_heavy": {
+        "winRate": 1,
+        "medianClearTimeMs": 15000,
+        "p10ClearTimeMs": 15000,
+        "p90ClearTimeMs": 20000,
+        "averageDefeatedUnits": 0,
+        "averageDamageTaken": 122.3,
+        "averageBreakCount": 0,
+        "burstUsage": 0,
+        "retryRate": 0
+      },
+      "break_heavy": {
+        "winRate": 1,
+        "medianClearTimeMs": 15000,
+        "p10ClearTimeMs": 15000,
+        "p90ClearTimeMs": 15000,
+        "averageDefeatedUnits": 0,
+        "averageDamageTaken": 84,
+        "averageBreakCount": 2,
+        "burstUsage": 0,
+        "retryRate": 0
+      },
+      "healer_light": {
+        "winRate": 1,
+        "medianClearTimeMs": 20000,
+        "p10ClearTimeMs": 20000,
+        "p90ClearTimeMs": 20000,
+        "averageDefeatedUnits": 0,
+        "averageDamageTaken": 152.2,
+        "averageBreakCount": 0,
+        "burstUsage": 0.3,
+        "retryRate": 0
+      },
+      "low_rarity": {
+        "winRate": 1,
+        "medianClearTimeMs": 25000,
+        "p10ClearTimeMs": 25000,
+        "p90ClearTimeMs": 25000,
+        "averageDefeatedUnits": 0,
+        "averageDamageTaken": 91.8,
+        "averageBreakCount": 1,
+        "burstUsage": 0,
+        "retryRate": 0
+      }
+    },
+    "act2_6": {
+      "story_default": {
+        "winRate": 1,
+        "medianClearTimeMs": 25000,
+        "p10ClearTimeMs": 25000,
+        "p90ClearTimeMs": 25000,
+        "averageDefeatedUnits": 0,
+        "averageDamageTaken": 179.8,
+        "averageBreakCount": 0,
+        "burstUsage": 0,
+        "retryRate": 0
+      },
+      "attacker_heavy": {
+        "winRate": 1,
+        "medianClearTimeMs": 15000,
+        "p10ClearTimeMs": 15000,
+        "p90ClearTimeMs": 20000,
+        "averageDefeatedUnits": 0,
+        "averageDamageTaken": 156,
+        "averageBreakCount": 1.1,
+        "burstUsage": 0,
+        "retryRate": 0
+      },
+      "break_heavy": {
+        "winRate": 1,
+        "medianClearTimeMs": 15000,
+        "p10ClearTimeMs": 15000,
+        "p90ClearTimeMs": 15000,
+        "averageDefeatedUnits": 0,
+        "averageDamageTaken": 146.1,
+        "averageBreakCount": 2,
+        "burstUsage": 0,
+        "retryRate": 0
+      },
+      "healer_light": {
+        "winRate": 1,
+        "medianClearTimeMs": 20000,
+        "p10ClearTimeMs": 20000,
+        "p90ClearTimeMs": 25000,
+        "averageDefeatedUnits": 0,
+        "averageDamageTaken": 213.8,
+        "averageBreakCount": 1,
+        "burstUsage": 0.5,
+        "retryRate": 0
+      },
+      "low_rarity": {
+        "winRate": 1,
+        "medianClearTimeMs": 25000,
+        "p10ClearTimeMs": 25000,
+        "p90ClearTimeMs": 25000,
+        "averageDefeatedUnits": 0,
+        "averageDamageTaken": 162.6,
+        "averageBreakCount": 1,
+        "burstUsage": 0,
+        "retryRate": 0
+      }
+    },
+    "act2_7": {
+      "story_default": {
+        "winRate": 1,
+        "medianClearTimeMs": 20000,
+        "p10ClearTimeMs": 20000,
+        "p90ClearTimeMs": 20000,
+        "averageDefeatedUnits": 0,
+        "averageDamageTaken": 82.9,
+        "averageBreakCount": 0,
+        "burstUsage": 0,
+        "retryRate": 0
+      },
+      "attacker_heavy": {
+        "winRate": 1,
+        "medianClearTimeMs": 15000,
+        "p10ClearTimeMs": 15000,
+        "p90ClearTimeMs": 15000,
+        "averageDefeatedUnits": 0,
+        "averageDamageTaken": 84,
+        "averageBreakCount": 0,
+        "burstUsage": 0,
+        "retryRate": 0
+      },
+      "break_heavy": {
+        "winRate": 1,
+        "medianClearTimeMs": 10000,
+        "p10ClearTimeMs": 10000,
+        "p90ClearTimeMs": 10000,
+        "averageDefeatedUnits": 0,
+        "averageDamageTaken": 35.9,
+        "averageBreakCount": 1,
+        "burstUsage": 0,
+        "retryRate": 0
+      },
+      "healer_light": {
+        "winRate": 1,
+        "medianClearTimeMs": 15000,
+        "p10ClearTimeMs": 15000,
+        "p90ClearTimeMs": 20000,
+        "averageDefeatedUnits": 0,
+        "averageDamageTaken": 73.1,
+        "averageBreakCount": 0.2,
+        "burstUsage": 0,
+        "retryRate": 0
+      },
+      "low_rarity": {
+        "winRate": 1,
+        "medianClearTimeMs": 20000,
+        "p10ClearTimeMs": 20000,
+        "p90ClearTimeMs": 20000,
+        "averageDefeatedUnits": 0,
+        "averageDamageTaken": 84,
+        "averageBreakCount": 0,
+        "burstUsage": 0,
+        "retryRate": 0
+      }
+    },
+    "act3_1": {
+      "story_default": {
+        "winRate": 1,
+        "medianClearTimeMs": 15000,
+        "p10ClearTimeMs": 15000,
+        "p90ClearTimeMs": 15000,
+        "averageDefeatedUnits": 0,
+        "averageDamageTaken": 37.7,
+        "averageBreakCount": 0,
+        "burstUsage": 0,
+        "retryRate": 0
+      },
+      "attacker_heavy": {
+        "winRate": 1,
+        "medianClearTimeMs": 10000,
+        "p10ClearTimeMs": 10000,
+        "p90ClearTimeMs": 10000,
+        "averageDefeatedUnits": 0,
+        "averageDamageTaken": 39.4,
+        "averageBreakCount": 0,
+        "burstUsage": 0,
+        "retryRate": 0
+      },
+      "break_heavy": {
+        "winRate": 1,
+        "medianClearTimeMs": 10000,
+        "p10ClearTimeMs": 10000,
+        "p90ClearTimeMs": 10000,
+        "averageDefeatedUnits": 0,
+        "averageDamageTaken": 23.6,
+        "averageBreakCount": 0,
+        "burstUsage": 0,
+        "retryRate": 0
+      },
+      "healer_light": {
+        "winRate": 1,
+        "medianClearTimeMs": 15000,
+        "p10ClearTimeMs": 15000,
+        "p90ClearTimeMs": 15000,
+        "averageDefeatedUnits": 0,
+        "averageDamageTaken": 59.5,
+        "averageBreakCount": 0,
+        "burstUsage": 0,
+        "retryRate": 0
+      },
+      "low_rarity": {
+        "winRate": 1,
+        "medianClearTimeMs": 15000,
+        "p10ClearTimeMs": 15000,
+        "p90ClearTimeMs": 15000,
+        "averageDefeatedUnits": 0,
+        "averageDamageTaken": 42.6,
+        "averageBreakCount": 0,
+        "burstUsage": 0,
+        "retryRate": 0
+      }
+    },
+    "act3_3": {
+      "story_default": {
+        "winRate": 1,
+        "medianClearTimeMs": 20000,
+        "p10ClearTimeMs": 20000,
+        "p90ClearTimeMs": 20000,
+        "averageDefeatedUnits": 0,
+        "averageDamageTaken": 91.7,
+        "averageBreakCount": 0,
+        "burstUsage": 0,
+        "retryRate": 0
+      },
+      "attacker_heavy": {
+        "winRate": 1,
+        "medianClearTimeMs": 15000,
+        "p10ClearTimeMs": 15000,
+        "p90ClearTimeMs": 15000,
+        "averageDefeatedUnits": 0,
+        "averageDamageTaken": 90.9,
+        "averageBreakCount": 0,
+        "burstUsage": 0,
+        "retryRate": 0
+      },
+      "break_heavy": {
+        "winRate": 1,
+        "medianClearTimeMs": 10000,
+        "p10ClearTimeMs": 10000,
+        "p90ClearTimeMs": 10000,
+        "averageDefeatedUnits": 0,
+        "averageDamageTaken": 30.5,
+        "averageBreakCount": 2,
+        "burstUsage": 0,
+        "retryRate": 0
+      },
+      "healer_light": {
+        "winRate": 1,
+        "medianClearTimeMs": 15000,
+        "p10ClearTimeMs": 15000,
+        "p90ClearTimeMs": 15000,
+        "averageDefeatedUnits": 0,
+        "averageDamageTaken": 74.4,
+        "averageBreakCount": 0.6,
+        "burstUsage": 0,
+        "retryRate": 0
+      },
+      "low_rarity": {
+        "winRate": 1,
+        "medianClearTimeMs": 20000,
+        "p10ClearTimeMs": 20000,
+        "p90ClearTimeMs": 20000,
+        "averageDefeatedUnits": 0,
+        "averageDamageTaken": 45.4,
+        "averageBreakCount": 1,
+        "burstUsage": 0,
+        "retryRate": 0
+      }
+    },
+    "act3_5": {
+      "story_default": {
+        "winRate": 1,
+        "medianClearTimeMs": 25000,
+        "p10ClearTimeMs": 25000,
+        "p90ClearTimeMs": 25000,
+        "averageDefeatedUnits": 0,
+        "averageDamageTaken": 179.8,
+        "averageBreakCount": 0,
+        "burstUsage": 0,
+        "retryRate": 0
+      },
+      "attacker_heavy": {
+        "winRate": 1,
+        "medianClearTimeMs": 15000,
+        "p10ClearTimeMs": 15000,
+        "p90ClearTimeMs": 20000,
+        "averageDefeatedUnits": 0,
+        "averageDamageTaken": 156,
+        "averageBreakCount": 1.1,
+        "burstUsage": 0,
+        "retryRate": 0
+      },
+      "break_heavy": {
+        "winRate": 1,
+        "medianClearTimeMs": 15000,
+        "p10ClearTimeMs": 15000,
+        "p90ClearTimeMs": 15000,
+        "averageDefeatedUnits": 0,
+        "averageDamageTaken": 146.1,
+        "averageBreakCount": 2,
+        "burstUsage": 0,
+        "retryRate": 0
+      },
+      "healer_light": {
+        "winRate": 1,
+        "medianClearTimeMs": 20000,
+        "p10ClearTimeMs": 20000,
+        "p90ClearTimeMs": 25000,
+        "averageDefeatedUnits": 0,
+        "averageDamageTaken": 213.8,
+        "averageBreakCount": 1,
+        "burstUsage": 0.5,
+        "retryRate": 0
+      },
+      "low_rarity": {
+        "winRate": 1,
+        "medianClearTimeMs": 25000,
+        "p10ClearTimeMs": 25000,
+        "p90ClearTimeMs": 25000,
+        "averageDefeatedUnits": 0,
+        "averageDamageTaken": 162.6,
+        "averageBreakCount": 1,
+        "burstUsage": 0,
+        "retryRate": 0
+      }
+    },
+    "act3_6": {
+      "story_default": {
+        "winRate": 1,
+        "medianClearTimeMs": 20000,
+        "p10ClearTimeMs": 20000,
+        "p90ClearTimeMs": 20000,
+        "averageDefeatedUnits": 0,
+        "averageDamageTaken": 82.9,
+        "averageBreakCount": 0,
+        "burstUsage": 0,
+        "retryRate": 0
+      },
+      "attacker_heavy": {
+        "winRate": 1,
+        "medianClearTimeMs": 15000,
+        "p10ClearTimeMs": 15000,
+        "p90ClearTimeMs": 15000,
+        "averageDefeatedUnits": 0,
+        "averageDamageTaken": 84,
+        "averageBreakCount": 0,
+        "burstUsage": 0,
+        "retryRate": 0
+      },
+      "break_heavy": {
+        "winRate": 1,
+        "medianClearTimeMs": 10000,
+        "p10ClearTimeMs": 10000,
+        "p90ClearTimeMs": 10000,
+        "averageDefeatedUnits": 0,
+        "averageDamageTaken": 35.9,
+        "averageBreakCount": 1,
+        "burstUsage": 0,
+        "retryRate": 0
+      },
+      "healer_light": {
+        "winRate": 1,
+        "medianClearTimeMs": 15000,
+        "p10ClearTimeMs": 15000,
+        "p90ClearTimeMs": 20000,
+        "averageDefeatedUnits": 0,
+        "averageDamageTaken": 73.1,
+        "averageBreakCount": 0.2,
+        "burstUsage": 0,
+        "retryRate": 0
+      },
+      "low_rarity": {
+        "winRate": 1,
+        "medianClearTimeMs": 20000,
+        "p10ClearTimeMs": 20000,
+        "p90ClearTimeMs": 20000,
+        "averageDefeatedUnits": 0,
+        "averageDamageTaken": 84,
+        "averageBreakCount": 0,
+        "burstUsage": 0,
+        "retryRate": 0
+      }
+    },
+    "act3_7": {
+      "story_default": {
+        "winRate": 1,
+        "medianClearTimeMs": 30000,
+        "p10ClearTimeMs": 30000,
+        "p90ClearTimeMs": 30000,
+        "averageDefeatedUnits": 0,
+        "averageDamageTaken": 85.9,
+        "averageBreakCount": 0,
+        "burstUsage": 0,
+        "retryRate": 0
+      },
+      "attacker_heavy": {
+        "winRate": 1,
+        "medianClearTimeMs": 20000,
+        "p10ClearTimeMs": 20000,
+        "p90ClearTimeMs": 20000,
+        "averageDefeatedUnits": 0,
+        "averageDamageTaken": 168.2,
+        "averageBreakCount": 1.8,
+        "burstUsage": 0,
+        "retryRate": 0
+      },
+      "break_heavy": {
+        "winRate": 1,
+        "medianClearTimeMs": 15000,
+        "p10ClearTimeMs": 15000,
+        "p90ClearTimeMs": 15000,
+        "averageDefeatedUnits": 0,
+        "averageDamageTaken": 96.1,
+        "averageBreakCount": 3,
+        "burstUsage": 0,
+        "retryRate": 0
+      },
+      "healer_light": {
+        "winRate": 1,
+        "medianClearTimeMs": 25000,
+        "p10ClearTimeMs": 20000,
+        "p90ClearTimeMs": 25000,
+        "averageDefeatedUnits": 0,
+        "averageDamageTaken": 227.7,
+        "averageBreakCount": 1.6,
+        "burstUsage": 0.4,
+        "retryRate": 0
+      },
+      "low_rarity": {
+        "winRate": 1,
+        "medianClearTimeMs": 30000,
+        "p10ClearTimeMs": 30000,
+        "p90ClearTimeMs": 30000,
+        "averageDefeatedUnits": 0,
+        "averageDamageTaken": 175.4,
+        "averageBreakCount": 1.4,
+        "burstUsage": 0,
+        "retryRate": 0
+      }
+    },
+    "act4_1": {
+      "story_default": {
+        "winRate": 1,
+        "medianClearTimeMs": 15000,
+        "p10ClearTimeMs": 15000,
+        "p90ClearTimeMs": 15000,
+        "averageDefeatedUnits": 0,
+        "averageDamageTaken": 70.8,
+        "averageBreakCount": 0,
+        "burstUsage": 0,
+        "retryRate": 0
+      },
+      "attacker_heavy": {
+        "winRate": 1,
+        "medianClearTimeMs": 10000,
+        "p10ClearTimeMs": 10000,
+        "p90ClearTimeMs": 10000,
+        "averageDefeatedUnits": 0,
+        "averageDamageTaken": 61.6,
+        "averageBreakCount": 0,
+        "burstUsage": 0,
+        "retryRate": 0
+      },
+      "break_heavy": {
+        "winRate": 1,
+        "medianClearTimeMs": 10000,
+        "p10ClearTimeMs": 10000,
+        "p90ClearTimeMs": 10000,
+        "averageDefeatedUnits": 0,
+        "averageDamageTaken": 50.2,
+        "averageBreakCount": 0,
+        "burstUsage": 0,
+        "retryRate": 0
+      },
+      "healer_light": {
+        "winRate": 1,
+        "medianClearTimeMs": 15000,
+        "p10ClearTimeMs": 10000,
+        "p90ClearTimeMs": 15000,
+        "averageDefeatedUnits": 0,
+        "averageDamageTaken": 80.3,
+        "averageBreakCount": 0,
+        "burstUsage": 0,
+        "retryRate": 0
+      },
+      "low_rarity": {
+        "winRate": 1,
+        "medianClearTimeMs": 15000,
+        "p10ClearTimeMs": 15000,
+        "p90ClearTimeMs": 15000,
+        "averageDefeatedUnits": 0,
+        "averageDamageTaken": 67.6,
+        "averageBreakCount": 0,
+        "burstUsage": 0,
+        "retryRate": 0
+      }
+    },
+    "act4_2": {
+      "story_default": {
+        "winRate": 1,
+        "medianClearTimeMs": 30000,
+        "p10ClearTimeMs": 30000,
+        "p90ClearTimeMs": 35000,
+        "averageDefeatedUnits": 0,
+        "averageDamageTaken": 97.6,
+        "averageBreakCount": 0,
+        "burstUsage": 0,
+        "retryRate": 0
+      },
+      "attacker_heavy": {
+        "winRate": 1,
+        "medianClearTimeMs": 20000,
+        "p10ClearTimeMs": 15000,
+        "p90ClearTimeMs": 20000,
+        "averageDefeatedUnits": 0,
+        "averageDamageTaken": 197.4,
+        "averageBreakCount": 1.9,
+        "burstUsage": 0.1,
+        "retryRate": 0
+      },
+      "break_heavy": {
+        "winRate": 1,
+        "medianClearTimeMs": 15000,
+        "p10ClearTimeMs": 15000,
+        "p90ClearTimeMs": 15000,
+        "averageDefeatedUnits": 0,
+        "averageDamageTaken": 137.1,
+        "averageBreakCount": 2,
+        "burstUsage": 0,
+        "retryRate": 0
+      },
+      "healer_light": {
+        "winRate": 1,
+        "medianClearTimeMs": 25000,
+        "p10ClearTimeMs": 25000,
+        "p90ClearTimeMs": 25000,
+        "averageDefeatedUnits": 0,
+        "averageDamageTaken": 254.6,
+        "averageBreakCount": 2,
+        "burstUsage": 0.2,
+        "retryRate": 0
+      },
+      "low_rarity": {
+        "winRate": 1,
+        "medianClearTimeMs": 30000,
+        "p10ClearTimeMs": 30000,
+        "p90ClearTimeMs": 30000,
+        "averageDefeatedUnits": 0,
+        "averageDamageTaken": 225.6,
+        "averageBreakCount": 2,
+        "burstUsage": 0,
+        "retryRate": 0
+      }
+    },
+    "act4_3": {
+      "story_default": {
+        "winRate": 1,
+        "medianClearTimeMs": 20000,
+        "p10ClearTimeMs": 20000,
+        "p90ClearTimeMs": 25000,
+        "averageDefeatedUnits": 0,
+        "averageDamageTaken": 108.9,
+        "averageBreakCount": 0,
+        "burstUsage": 0,
+        "retryRate": 0
+      },
+      "attacker_heavy": {
+        "winRate": 1,
+        "medianClearTimeMs": 15000,
+        "p10ClearTimeMs": 15000,
+        "p90ClearTimeMs": 15000,
+        "averageDefeatedUnits": 0,
+        "averageDamageTaken": 60.4,
+        "averageBreakCount": 1.6,
+        "burstUsage": 0,
+        "retryRate": 0
+      },
+      "break_heavy": {
+        "winRate": 1,
+        "medianClearTimeMs": 10000,
+        "p10ClearTimeMs": 10000,
+        "p90ClearTimeMs": 10000,
+        "averageDefeatedUnits": 0,
+        "averageDamageTaken": 36.4,
+        "averageBreakCount": 1.1,
+        "burstUsage": 0,
+        "retryRate": 0
+      },
+      "healer_light": {
+        "winRate": 1,
+        "medianClearTimeMs": 20000,
+        "p10ClearTimeMs": 20000,
+        "p90ClearTimeMs": 20000,
+        "averageDefeatedUnits": 0,
+        "averageDamageTaken": 133.1,
+        "averageBreakCount": 1,
+        "burstUsage": 0.3,
+        "retryRate": 0
+      },
+      "low_rarity": {
+        "winRate": 1,
+        "medianClearTimeMs": 20000,
+        "p10ClearTimeMs": 20000,
+        "p90ClearTimeMs": 20000,
+        "averageDefeatedUnits": 0,
+        "averageDamageTaken": 111.5,
+        "averageBreakCount": 1,
+        "burstUsage": 0,
+        "retryRate": 0
+      }
+    },
+    "act4_4": {
+      "story_default": {
+        "winRate": 1,
+        "medianClearTimeMs": 35000,
+        "p10ClearTimeMs": 30000,
+        "p90ClearTimeMs": 35000,
+        "averageDefeatedUnits": 0,
+        "averageDamageTaken": 120.6,
+        "averageBreakCount": 0,
+        "burstUsage": 0,
+        "retryRate": 0
+      },
+      "attacker_heavy": {
+        "winRate": 1,
+        "medianClearTimeMs": 20000,
+        "p10ClearTimeMs": 20000,
+        "p90ClearTimeMs": 20000,
+        "averageDefeatedUnits": 0,
+        "averageDamageTaken": 178.7,
+        "averageBreakCount": 1.8,
+        "burstUsage": 0.1,
+        "retryRate": 0
+      },
+      "break_heavy": {
+        "winRate": 1,
+        "medianClearTimeMs": 15000,
+        "p10ClearTimeMs": 15000,
+        "p90ClearTimeMs": 15000,
+        "averageDefeatedUnits": 0,
+        "averageDamageTaken": 99,
+        "averageBreakCount": 3,
+        "burstUsage": 0,
+        "retryRate": 0
+      },
+      "healer_light": {
+        "winRate": 1,
+        "medianClearTimeMs": 25000,
+        "p10ClearTimeMs": 25000,
+        "p90ClearTimeMs": 30000,
+        "averageDefeatedUnits": 0,
+        "averageDamageTaken": 311.6,
+        "averageBreakCount": 2.6,
+        "burstUsage": 0.3,
+        "retryRate": 0
+      },
+      "low_rarity": {
+        "winRate": 1,
+        "medianClearTimeMs": 35000,
+        "p10ClearTimeMs": 30000,
+        "p90ClearTimeMs": 35000,
+        "averageDefeatedUnits": 0,
+        "averageDamageTaken": 226.2,
+        "averageBreakCount": 2.9,
+        "burstUsage": 0,
+        "retryRate": 0
+      }
+    },
+    "act4_5": {
+      "story_default": {
+        "winRate": 1,
+        "medianClearTimeMs": 20000,
+        "p10ClearTimeMs": 20000,
+        "p90ClearTimeMs": 25000,
+        "averageDefeatedUnits": 0,
+        "averageDamageTaken": 157,
+        "averageBreakCount": 0,
+        "burstUsage": 0,
+        "retryRate": 0
+      },
+      "attacker_heavy": {
+        "winRate": 1,
+        "medianClearTimeMs": 15000,
+        "p10ClearTimeMs": 15000,
+        "p90ClearTimeMs": 15000,
+        "averageDefeatedUnits": 0,
+        "averageDamageTaken": 105.1,
+        "averageBreakCount": 1,
+        "burstUsage": 0,
+        "retryRate": 0
+      },
+      "break_heavy": {
+        "winRate": 1,
+        "medianClearTimeMs": 15000,
+        "p10ClearTimeMs": 15000,
+        "p90ClearTimeMs": 15000,
+        "averageDefeatedUnits": 0,
+        "averageDamageTaken": 103.4,
+        "averageBreakCount": 1,
+        "burstUsage": 0,
+        "retryRate": 0
+      },
+      "healer_light": {
+        "winRate": 1,
+        "medianClearTimeMs": 20000,
+        "p10ClearTimeMs": 20000,
+        "p90ClearTimeMs": 20000,
+        "averageDefeatedUnits": 0,
+        "averageDamageTaken": 145.5,
+        "averageBreakCount": 1.1,
+        "burstUsage": 0.2,
+        "retryRate": 0
+      },
+      "low_rarity": {
+        "winRate": 1,
+        "medianClearTimeMs": 20000,
+        "p10ClearTimeMs": 20000,
+        "p90ClearTimeMs": 20000,
+        "averageDefeatedUnits": 0,
+        "averageDamageTaken": 153.2,
+        "averageBreakCount": 1,
+        "burstUsage": 0,
+        "retryRate": 0
+      }
+    },
+    "act4_6": {
+      "story_default": {
+        "winRate": 1,
+        "medianClearTimeMs": 30000,
+        "p10ClearTimeMs": 30000,
+        "p90ClearTimeMs": 40000,
+        "averageDefeatedUnits": 0,
+        "averageDamageTaken": 133.5,
+        "averageBreakCount": 0,
+        "burstUsage": 0,
+        "retryRate": 0
+      },
+      "attacker_heavy": {
+        "winRate": 1,
+        "medianClearTimeMs": 20000,
+        "p10ClearTimeMs": 20000,
+        "p90ClearTimeMs": 20000,
+        "averageDefeatedUnits": 0,
+        "averageDamageTaken": 197.6,
+        "averageBreakCount": 2.2,
+        "burstUsage": 0.4,
+        "retryRate": 0
+      },
+      "break_heavy": {
+        "winRate": 1,
+        "medianClearTimeMs": 15000,
+        "p10ClearTimeMs": 15000,
+        "p90ClearTimeMs": 15000,
+        "averageDefeatedUnits": 0,
+        "averageDamageTaken": 145.8,
+        "averageBreakCount": 3,
+        "burstUsage": 0,
+        "retryRate": 0
+      },
+      "healer_light": {
+        "winRate": 1,
+        "medianClearTimeMs": 30000,
+        "p10ClearTimeMs": 30000,
+        "p90ClearTimeMs": 35000,
+        "averageDefeatedUnits": 0,
+        "averageDamageTaken": 470.4,
+        "averageBreakCount": 2.5,
+        "burstUsage": 0.3,
+        "retryRate": 0
+      },
+      "low_rarity": {
+        "winRate": 1,
+        "medianClearTimeMs": 30000,
+        "p10ClearTimeMs": 30000,
+        "p90ClearTimeMs": 30000,
+        "averageDefeatedUnits": 0,
+        "averageDamageTaken": 227.5,
+        "averageBreakCount": 2,
+        "burstUsage": 0,
+        "retryRate": 0
+      }
+    },
+    "act4_7": {
+      "story_default": {
+        "winRate": 0,
+        "medianClearTimeMs": 0,
+        "p10ClearTimeMs": 0,
+        "p90ClearTimeMs": 0,
+        "averageDefeatedUnits": 0,
+        "averageDamageTaken": 371.4,
+        "averageBreakCount": 0,
+        "burstUsage": 0,
+        "retryRate": 0
+      },
+      "attacker_heavy": {
+        "winRate": 0,
+        "medianClearTimeMs": 0,
+        "p10ClearTimeMs": 0,
+        "p90ClearTimeMs": 0,
+        "averageDefeatedUnits": 0,
+        "averageDamageTaken": 542.6,
+        "averageBreakCount": 0,
+        "burstUsage": 0,
+        "retryRate": 0
+      },
+      "break_heavy": {
+        "winRate": 0,
+        "medianClearTimeMs": 0,
+        "p10ClearTimeMs": 0,
+        "p90ClearTimeMs": 0,
+        "averageDefeatedUnits": 0,
+        "averageDamageTaken": 544.4,
+        "averageBreakCount": 0,
+        "burstUsage": 0,
+        "retryRate": 0
+      },
+      "healer_light": {
+        "winRate": 0,
+        "medianClearTimeMs": 0,
+        "p10ClearTimeMs": 0,
+        "p90ClearTimeMs": 0,
+        "averageDefeatedUnits": 0,
+        "averageDamageTaken": 410.1,
+        "averageBreakCount": 0,
+        "burstUsage": 0,
+        "retryRate": 0
+      },
+      "low_rarity": {
+        "winRate": 0,
+        "medianClearTimeMs": 0,
+        "p10ClearTimeMs": 0,
+        "p90ClearTimeMs": 0,
+        "averageDefeatedUnits": 0,
+        "averageDamageTaken": 284.2,
+        "averageBreakCount": 0,
+        "burstUsage": 0,
+        "retryRate": 0
+      }
+    }
+  }
+}

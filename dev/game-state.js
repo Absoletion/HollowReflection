@@ -214,7 +214,7 @@ const GameState = (function (E, Registry) {
       if (!Array.isArray(party) || party.length > E.PARTY_SIZE || new Set(party).size !== party.length || party.some(id => !E.UNITS[id])) fail('INVALID_PARTY', `Mission parties require up to ${E.PARTY_SIZE} unique known units.`);
       if (mission.encounter && !party.length) fail('INVALID_PARTY', 'Battle missions require at least one unit.');
       const partyMode = mission.partyMode || (mission.party && mission.party.length ? 'fixed' : 'player');
-      const fixedParty = mission.party || [];
+      const fixedParty = mission.fixedParty || mission.party || [];
       if (partyMode === 'fixed') {
         if (JSON.stringify(party) !== JSON.stringify(fixedParty)) fail('INVALID_PARTY', 'This mission uses a fixed authored party.');
       } else if (partyMode === 'player') {

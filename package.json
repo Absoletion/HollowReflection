@@ -3,6 +3,10 @@
   "private": true,
   "scripts": {
     "validate:ids": "node tools/validate_content_ids.js --self-test",
+    "validate:story": "node tools/validate_story_quality.js",
+    "validate:passives": "node tools/validate_passive_parity.js",
+    "test:story": "node dev/story-registry.test.js",
+    "test:balance": "node tools/balance-report.js",
     "test:engine": "node dev/tests-dev.js",
     "test:state": "node dev/game-state.test.js",
     "test:stage": "node dev/stage-results.test.js",
@@ -15,7 +19,7 @@
     "test:browser": "node tools/browser-smoke.js",
     "verify:art": "node tools/audit_splash_art.js && node tools/audit_initial_cast_sprites.js",
     "verify:art:masters": "node tools/audit_splash_art.js --masters",
-    "verify:core": "pnpm validate:ids && pnpm test:engine && pnpm test:state && pnpm test:stage && pnpm test:renderer && pnpm test:pixellab && pnpm test:sprites && pnpm test:summon && pnpm build && pnpm validate:standalone && pnpm verify:art",
+    "verify:core": "pnpm validate:ids && pnpm validate:story && pnpm test:story && pnpm validate:passives && pnpm test:engine && pnpm test:state && pnpm test:stage && pnpm test:renderer && pnpm test:pixellab && pnpm test:sprites && pnpm test:summon && pnpm build && pnpm validate:standalone && pnpm verify:art",
     "verify:browser": "pnpm build && pnpm test:browser",
     "verify": "pnpm verify:core && pnpm test:browser"
   },

@@ -6,7 +6,11 @@ let seed = 0x484f4c4c;
 const rng = () => ((seed = Math.imul(seed ^ seed >>> 15, 1 | seed) + 0x6d2b79f5 | 0) >>> 0) / 4294967296;
 let fourStars = 0;
 for (let account = 0; account < 10000; account++) {
-  const result = GameState.performSummon(Engine.normalizeSaveState({ sigils: 90, missionClears: Object.fromEntries(Array.from({ length: 9 }, (_, i) => [`act1_${i + 1}`, true])) }), 'standard', 10, rng, { transactionId: `summon:sim:${account}` });
+  const result = GameState.performSummon(Engine.normalizeSaveState({ sigils: 90, missionClears: Object.fromEntries([
+    ...Array.from({ length: 10 }, (_, i) => [`act1_${i + 1}`, true]),
+    ...Array.from({ length: 8 }, (_, i) => [`act2_${i + 1}`, true]),
+    ['act3_1', true], ['act3_2', true], ['act3_3', true],
+  ]) }), 'standard', 10, rng, { transactionId: `summon:sim:${account}` });
   assert(result.ok && result.rewards.length === 10);
   assert(result.rewards.some(x => x.rarity === 4), `account ${account} missed guarantee`);
   fourStars += result.rewards.filter(x => x.rarity === 4).length;

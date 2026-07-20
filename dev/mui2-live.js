@@ -96,7 +96,7 @@ function startBattle(key, partyKeys, onEnd) {
     return `${m}:${String(s).padStart(2, '0')}`;
   }
   function battleSummary(victory) {
-    return { battleId, encounterId: key, seed: S.seed, victory: !!victory, elapsedMs: Math.round(elapsed * 1000), unitsDefeated: S.party.filter(u => !u.alive).length, breakCount: S.enemies.reduce((n, e) => n + (e.staggers || 0), 0), burstUsed, eventHash: Engine.combatEventHash(S), party: S.party.map(unit => unit.key) };
+    return { battleId, encounterId: key, seed: S.seed, victory: !!victory && (!S.objective || S.objective.alive), elapsedMs: Math.round(elapsed * 1000), unitsDefeated: S.party.filter(u => !u.alive).length, breakCount: S.enemies.reduce((n, e) => n + (e.staggers || 0), 0), burstUsed, eventHash: Engine.combatEventHash(S), party: S.party.map(unit => unit.key) };
   }
   function actionCooldown(u, a) {
     if (a.id === 'guard') return 5;
@@ -123,6 +123,7 @@ function startBattle(key, partyKeys, onEnd) {
 
   function chipsFor(u) {
     const c = [];
+    if (u.componentShield > 0) c.push(['GLASS WARD ' + u.componentShield, 'shield']);
     if (u.guarding) c.push(['GUARD', 'good']);
     if (u.guardedBy) c.push(['GUARDED', 'good']);
     if (S.party.some(x => x.guardedBy === u.uid)) c.push(['COVER', 'good']);
@@ -219,6 +220,11 @@ function startBattle(key, partyKeys, onEnd) {
     else if (!tips.guard && S.party.some(u => u.guardedBy)) { tips.guard = true; tips.current = 'GUARDED: a Defender intercepts incoming damage for that ally while the protection remains active.'; }
     return tips.current ? `<div class="tipbar">${esc(tips.current)}</div>` : '';
   }
+  function objectiveBar() {
+    const o = S.objective;
+    if (!o) return '';
+    return `<div class="live-objective" data-objective-id="${esc(o.id)}"><b>PROTECT · ${esc(o.name)}</b><div class="bar" data-objective-hp="${esc(o.id)}"><i style="width:${pct(o.hp, o.maxhp)}%"></i><span>${o.hp}/${o.maxhp}</span></div></div>`;
+  }
 
   function commandTray() {
     const u = Engine.byUid(S, selectedUid) || Engine.livingParty(S)[0];
@@ -280,7 +286,7 @@ function startBattle(key, partyKeys, onEnd) {
       <div id="stagehost"></div>
       <div class="bfield"><div class="ezone">${sym(BSCENE[key] || 'sc-arena', 'scenebg')}
         <div class="row-enemies">${S.enemies.map(e => { const i = seen[e.name] || 0; seen[e.name] = i + 1; return enemyCard(e, i, duplicates[e.name]); }).join('')}</div></div>
-        ${tutorialTip()}${trainingTools()}<div class="live-party">${S.party.map(partyCard).join('')}</div></div>
+        ${objectiveBar()}${tutorialTip()}${trainingTools()}<div class="live-party">${S.party.map(partyCard).join('')}</div></div>
       ${logTab()}${commandTray()}${logSheet()}${pauseSheet()}</div>`;
     wire();
     Stage.mount(document.getElementById('stagehost'));
@@ -300,6 +306,11 @@ function startBattle(key, partyKeys, onEnd) {
       const u = Engine.byUid(S, bar.dataset.arts); if (!u) return;
       const gauge = gaugeValue(u); const fill = bar.querySelector('i'); if (fill) fill.style.width = (gauge / 3) + '%';
       const label = bar.querySelector('span'); if (label) label.textContent = `ARTS ${gauge}/300`;
+    });
+    app.querySelectorAll('[data-objective-hp]').forEach(bar => {
+      const o = S.objective; if (!o || o.id !== bar.dataset.objectiveHp) return;
+      const fill = bar.querySelector('i'); if (fill) fill.style.width = pct(o.hp, o.maxhp) + '%';
+      const label = bar.querySelector('span'); if (label) label.textContent = `${o.hp}/${o.maxhp}`;
     });
     app.querySelectorAll('[data-form-badge]').forEach(badge => {
       const u = Engine.byUid(S, badge.dataset.formBadge); if (!u) return;

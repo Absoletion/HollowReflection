@@ -75,6 +75,8 @@ const parts = [
   spriteShim,
   fs.readFileSync(p('challenges.js'), 'utf8'),
   fs.readFileSync(p('market.js'), 'utf8'),
+  fs.readFileSync(p('encounter-components.js'), 'utf8'),
+  fs.readFileSync(p('passive-registry.js'), 'utf8'),
   fs.readFileSync(p('engine-dev.js'), 'utf8'),
   ...(buildMode === 'dev' ? [fs.readFileSync(p('tests-dev.js'), 'utf8')] : []),
   fs.readFileSync(p('story-registry.js'), 'utf8'),

@@ -119,6 +119,41 @@ Object.assign(STORY_REGISTRY.chapters[0].missions[9], {
   post:[{sp:'',tx:'They return to the same warm hall at evening. Cinnia cooks. Tobin reads the water in a cup. Hearthgar cleans the suit’s joints.'},{sp:'Aldric',tx:'Every person through that door learns they are better than they thought. Cinnia was just a cook. Tobin was a kid everyone gave up on. Hearthgar could not look anyone in the eye.'},{sp:'Aldric',tx:'Hale. Adventurer of the Garrison. The charter is yours if you still want it.'},{sp:'Hale',tx:'I have decided.'},{sp:'Cinnia',tx:'Good. Dinner was going to be awkward otherwise.'}]
 });
 
+// Chapters 2-4 authored battle beats. These are intentionally compact scene
+// records: the full narrative remains in the chapter outlines, while every
+// live battle has an explicit lesson and a deterministic pre/post handoff.
+const authoredBattleScenes = {
+  act2_2: { lesson:'Repeat contracts and escalating Hollow signs', pre:[{sp:'Cinnia',tx:'The guild keeps moving while Aldric is away. We take the work in front of us.'}], post:[{sp:'Hale',tx:'The road feels quieter.'},{sp:'Tobin',tx:'The water agrees.'}] },
+  act2_4: { lesson:'Marlowe and Brant join the field party', pre:[{sp:'Marlowe',tx:'A wrecked ship, a missing crew, and no audience. Tragic.'},{sp:'Brant',tx:'Anchor down.'}], post:[{sp:'Marlowe',tx:'I am joining until the mystery receives a proper finale.'},{sp:'Brant',tx:'We stay together.'}], unlocks:{units:['marlowe','brant']} },
+  act2_6: { lesson:'Read enemy intent and preserve the formation', pre:[{sp:'Milla',tx:'The tracks turn inland. Something is herding the Hollowed.'}], post:[{sp:'Milla',tx:'The trail is fresh. Greywick is closer than the map says.'}] },
+  act2_7: { lesson:'Escort a moving ally through a pressured fight', pre:[{sp:'Milla',tx:'I can run the road. You make sure it stays open.'}], post:[{sp:'Milla',tx:'I know a shortcut. It is not safer, just faster.'}] },
+  act3_1: { lesson:'Formation order on the Greywick road', pre:[{sp:'',tx:'The road narrows between old marker stones. Every sound carries.'}], post:[{sp:'Hale',tx:'We keep the line and keep moving.'}] },
+  act3_3: { lesson:'Proto-Hollowed terrain and unstable targets', pre:[{sp:'Cinnia',tx:'The waystation is intact, but the floor keeps reflecting the wrong room.'}], post:[{sp:'Tobin',tx:'The reflection moved first.'}] },
+  act3_5: { lesson:'Hollowed behavior patterns repeat under pressure', pre:[{sp:'Milla',tx:'The same tracks cross the road twice. Nothing walked back.'}], post:[{sp:'Hale',tx:'They are learning our route.'}] },
+  act3_6: { lesson:'Resource check before Greywick', pre:[{sp:'Cinnia',tx:'Last inn before Greywick. Eat, repair, and spend nothing you cannot replace.'}], post:[{sp:'Tobin',tx:'The water has stopped showing the horizon.'}] },
+  act3_7: { lesson:'Environmental Hollow hazards at the frontier edge', pre:[{sp:'',tx:'Greywick waits beyond the ridge, silent beneath a column of smoke that does not move.'}], post:[{sp:'Hale',tx:'We report what we saw and go back prepared.'},{sp:'Cinnia',tx:'Tomorrow, we enter together.'}] },
+  act4_1: { lesson:'True Hollowed enemies repeat and resist ordinary patterns', partyMode:'player', pre:[{ch:'Chapter Four — Greywick'},{sp:'',tx:'No people move in Greywick. Smoke hangs above the village without drifting.'},{sp:'Cinnia',tx:'Something is wrong with the silence.'}], post:[{sp:'Cinnia',tx:'Something did this to them.'},{sp:'Tobin',tx:'Or something copied them and wanted to see if it could make another.'}] },
+  act4_2: { lesson:'Mixed Hollowed types punish a static formation', partyMode:'player', pre:[{sp:'Milla',tx:'Guild boot prints. Recent.'},{sp:'Marlowe',tx:'An organized camp, abandoned mid-watch.'}], post:[{sp:'Cinnia',tx:'Aldric made it three days.'},{sp:'Milla',tx:'The prints go toward the center.'}] },
+  act4_3: { lesson:'Protect an injured NPC while defeating incoming waves', partyMode:'player', pre:[{sp:'',tx:'Metal strikes stone in the eastern quarter. Garrick is still fighting from the rubble.'},{sp:'Garrick',tx:'Took you long enough.'},{sp:'Cinnia',tx:'Hold still. I can slow the glass in your arm.'}], post:[{sp:'Garrick',tx:'The Hollowed came from the village itself. Aldric went deeper.'},{sp:'Garrick',tx:'I know the herdsman here. I am not leaving without knowing.'}] },
+  act4_4: { lesson:'Break and stagger Hollowed formations', partyMode:'player', pre:[{sp:'Brigga',tx:'Step left. You are in my light.'},{sp:'Brigga',tx:'The lattice has a fault line. Hit there.'}], post:[{sp:'Brigga',tx:'I am not joining your club. I am going the same direction.'},{sp:'Marlowe',tx:'Noted.'}], unlocks:{units:['brigga']} },
+  act4_5: { lesson:'Hollow terrain creates elemental pressure zones', partyMode:'player', pre:[{sp:'Brigga',tx:'Every glass face points inward. Something at the center is still making it.'},{sp:'Garrick',tx:'Oren’s house.'}], post:[{sp:'Wren',tx:'You are real? I thought everyone left.'},{sp:'Garrick',tx:'Stay with us.'}] },
+  act4_6: { lesson:'Boss-tier Hollowed coordinate and reform', partyMode:'player', pre:[{sp:'Brigga',tx:'That is not a formation. It is a focal point.'},{sp:'Tobin',tx:'Do not look at the water.'}], post:[{sp:'Brigga',tx:'I could crack it. I do not know what is inside.'},{sp:'Cinnia',tx:'We regroup before the center takes another step.'}] },
+  act4_7: { lesson:'Survive the Glasswright’s scripted crystallization', partyMode:'player', pre:[{sp:'',tx:'A gaunt figure stands atop the central glass. The village begins to crystallize from his hand.'},{sp:'Cinnia',tx:'Everyone move!'},{sp:'Hale',tx:'Get Wren out.'}], post:[{sp:'Cinnia',tx:'Greywick is gone.'},{sp:'Garrick',tx:'We report. Then we come back ready.'},{sp:'',tx:'On the ridge, Hale presses one hand to the new scar at his neck.'}] }
+};
+for (const [id, data] of Object.entries(authoredBattleScenes)) {
+  const mission = STORY_REGISTRY.missions && STORY_REGISTRY.missions[id]
+    ? STORY_REGISTRY.missions[id]
+    : STORY_REGISTRY.chapters.flatMap(ch => ch.missions).find(m => m.id === id);
+  if (mission) Object.assign(mission, data);
+}
+for (const chapter of STORY_REGISTRY.chapters) {
+  for (const mission of chapter.missions) {
+    if (mission.partyMode === 'fixed' && !mission.fixedParty) mission.fixedParty = [...(mission.party || [])];
+  }
+}
+const act3_6 = STORY_REGISTRY.chapters.find(ch => ch.id === 'chapter3').missions.find(m => m.id === 'act3_6');
+if (act3_6) { act3_6.type = 'battle'; act3_6.encounter = 'act3_6'; }
+
 STORY_REGISTRY.missions = STORY_REGISTRY.chapters.reduce(function (all, chapter) {
   chapter.missions.forEach(function (mission) { mission.chapterId = chapter.id; mission.scene = mission.scene || chapter.scene; all[mission.id] = mission; });
   return all;

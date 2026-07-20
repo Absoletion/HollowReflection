@@ -1172,7 +1172,9 @@ function showTown() {
     const sideCards = Object.values(Engine.SIDE_MISSIONS).map(cfg => {
       const unlocked = Engine.sideMissionUnlocked(state, cfg.id), progress = META.sideMissionProgress[cfg.id] || { clearCount: 0, rewardTier: tier, rewardedClears: 0 };
       const used = progress.rewardTier === tier ? progress.rewardedClears : 0, remaining = Math.max(0, cfg.rewardLimit - used), available = unlocked && remaining > 0;
-      return `<button class="quest-preview" data-side-mission="${cfg.id}" ${available ? '' : 'disabled'}><div><b>${esc(cfg.title)}</b><span>Side Mission - ${esc(cfg.description)}</span><span>${unlocked ? `Clears: ${progress.clearCount} - ${remaining}/${cfg.rewardLimit} rewards remain this story tier` : 'Unlocks after 1-5 - The Quest Board'}</span></div><i>${available ? 'ENTER' : unlocked ? 'REFRESH LATER' : 'LOCKED'}</i></button>`;
+      const battle = Engine.BATTLES[cfg.battle], first = battle.rewards.first, repeat = battle.rewards.repeat;
+      const label = progress.firstClear ? 'REPLAY' : 'ENTER';
+      return `<button class="quest-preview" data-side-mission="${cfg.id}" ${available ? '' : 'disabled'}><div><b>${esc(cfg.title)}</b><span>Side Mission - ${esc(cfg.description)}</span><span>Recommended Lv. ${cfg.recommendedLevel} · First clear: ${first.gold} Gold / ${first.xp} XP · Repeat: ${repeat.gold} Gold / ${repeat.xp} XP</span><span>${unlocked ? `Clears: ${progress.clearCount} · ${remaining}/${cfg.rewardLimit} rewarded repeats remain this story tier` : 'Unlocks after 1-5 - The Quest Board'}</span></div><i>${available ? label : unlocked ? 'REFRESH LATER' : 'LOCKED'}</i></button>`;
     }).join('');
     panel.innerHTML = panelHead('Outside the Inn', 'Quest Board', 'Local contracts, character missions, and the guild training grounds are posted here.') + `<button class="quest-preview training-contract" id="traininggrounds"><div><b>Training Grounds</b><span>Practice Map - No rewards - Infinite-HP dummy</span></div><i>OPEN</i></button>${sideCards}`;
     document.getElementById('traininggrounds').onclick = () => launchTraining(META.owned[0] || 'hale', false);
